@@ -1,0 +1,10 @@
+{
+  "extends": ["standard", "standard-react"],
+  "rules": {
+    "comma-dangle": 0
+  },
+  "env": {
+    "browser": true,
+    "jest": true
+  }
+}
