@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "dev": "concurrently --prefix \"{name}\" --names \"RAILS,REACT,STYLES\" -c \"bgBlue,black.bgGreen,black.bgYellow\" \"rails s -p 3001\" \"(cd client && npm run start)\" \"(cd client && npm run watch-css)\""
+  },
+  "devDependencies": {
+    "concurrently": "^3.4.0"
+  }
+}
