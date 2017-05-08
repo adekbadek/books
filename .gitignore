@@ -19,4 +19,22 @@
 
 .byebug_history
 
+# client
+
 client/src/**/*.css
+
+# dependencies
+node_modules
+
+# testing
+client/coverage
+
+# production
+client/build
+
+# misc
+.DS_Store
+.env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
