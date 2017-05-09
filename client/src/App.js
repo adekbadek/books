@@ -3,17 +3,23 @@ import React, { Component } from 'react'
 class App extends Component {
   constructor () {
     super()
+    this.getBooks = this.getBooks.bind(this)
     this.setCreateBookInputState = this.setCreateBookInputState.bind(this)
+    this.setSearchInputState = this.setSearchInputState.bind(this)
     this.createBook = this.createBook.bind(this)
     this.deleteBook = this.deleteBook.bind(this)
     this.refreshBooks = this.refreshBooks.bind(this)
     this.state = {
       books: [],
       createBookInputVal: '',
+      searchInputVal: '',
     }
   }
   setCreateBookInputState (e) {
     this.setState({createBookInputVal: e.target.value})
+  }
+  setSearchInputState (e) {
+    this.setState({searchInputVal: e.target.value})
   }
   createBook (e) {
     e.preventDefault()
@@ -43,11 +49,16 @@ class App extends Component {
   componentDidMount () {
     this.refreshBooks()
   }
+  getBooks () {
+    const query = this.state.searchInputVal
+    return this.state.books.filter(v => !query || v.title.match(new RegExp(query, 'i')))
+  }
   render () {
     return (
       <div>
         <h1>books</h1>
-        {this.state.books.map(book => {
+        <input type='text' value={this.state.searchInputVal} onChange={this.setSearchInputState} />
+        {this.getBooks().map(book => {
           return (
             <div key={book.id}>
               <button onClick={() => {
