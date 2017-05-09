@@ -16,13 +16,9 @@ class BooksController < ApplicationController
   end
 
   def create
-    new_book = JSON.parse request.body.read
-    Book.create(new_book)
+    Book.create(JSON.parse request.body.read)
 
-    render(
-      status: 200,
-      json: new_book
-    )
+    render status: 200
   end
 
   def remove

@@ -3,39 +3,36 @@ import React, { Component } from 'react'
 class App extends Component {
   constructor () {
     super()
-    this.setInputState = this.setInputState.bind(this)
-    this.submit = this.submit.bind(this)
+    this.setCreateBookInputState = this.setCreateBookInputState.bind(this)
+    this.createBook = this.createBook.bind(this)
     this.deleteBook = this.deleteBook.bind(this)
     this.refreshBooks = this.refreshBooks.bind(this)
     this.state = {
       books: [],
-      inputVal: '',
+      createBookInputVal: '',
     }
   }
-  setInputState (e) {
-    this.setState({inputVal: e.target.value})
+  setCreateBookInputState (e) {
+    this.setState({createBookInputVal: e.target.value})
   }
-  submit (e) {
+  createBook (e) {
     e.preventDefault()
 
     fetch('api/books', {
       method: 'POST',
       body: JSON.stringify({
-        title: this.state.inputVal,
+        title: this.state.createBookInputVal,
       })
     })
-      .then(res => res.json())
       .then(() => {
         this.refreshBooks()
-        this.setState({inputVal: ''})
+        this.setState({createBookInputVal: ''})
       })
   }
   refreshBooks () {
     fetch('/api/books')
       .then(res => res.json())
-      .then(books => {
-        this.setState({books})
-      })
+      .then(books => this.setState({books}))
   }
   deleteBook (id) {
     fetch(`api/books/${id}`, {
@@ -60,8 +57,8 @@ class App extends Component {
             </div>
           )
         })}
-        <form onSubmit={this.submit}>
-          <input type='text' value={this.state.inputVal} onChange={this.setInputState} />
+        <form onSubmit={this.createBook}>
+          <input type='text' value={this.state.createBookInputVal} onChange={this.setCreateBookInputState} />
           <input type='submit' value='add' />
         </form>
       </div>
