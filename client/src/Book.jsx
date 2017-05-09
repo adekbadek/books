@@ -31,20 +31,22 @@ export default props =>
     <td className='pv2 pr3 bb b--black-20'>
       <DatePicker
         locale='en-gb'
+        isClearable
         selected={props.book.start_date ? moment(props.book.start_date) : null}
         maxDate={moment()}
         placeholderText='Select a start date'
-        onChange={e => props.updateHandler({start_date: e.format()})}
+        onChange={e => props.updateHandler({start_date: e ? e.format() : null})}
       />
     </td>
     <td className='pv2 pr3 bb b--black-20'>
       <DatePicker
         locale='en-gb'
+        isClearable
         selected={props.book.end_date ? moment(props.book.end_date) : null}
         minDate={props.book.start_date ? moment(props.book.start_date) : null}
         maxDate={moment()}
         placeholderText='Select an end date'
-        onChange={e => props.updateHandler({end_date: e.format()})}
+        onChange={e => props.updateHandler({end_date: e ? e.format() : null})}
       />
     </td>
     <td className='pv2 pr3 bb b--black-20'>
