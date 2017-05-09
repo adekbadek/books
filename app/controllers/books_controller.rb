@@ -17,15 +17,11 @@ class BooksController < ApplicationController
 
   def create
     Book.create(JSON.parse request.body.read)
-
     render status: 200
   end
 
   def remove
     Book.destroy(params[:id])
-
-    render(
-      status: 200
-    )
+    render status: 200
   end
 end
