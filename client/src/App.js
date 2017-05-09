@@ -4,8 +4,6 @@ class App extends Component {
   constructor () {
     super()
     this.getBooks = this.getBooks.bind(this)
-    this.setCreateBookInputState = this.setCreateBookInputState.bind(this)
-    this.setSearchInputState = this.setSearchInputState.bind(this)
     this.createBook = this.createBook.bind(this)
     this.deleteBook = this.deleteBook.bind(this)
     this.refreshBooks = this.refreshBooks.bind(this)
@@ -14,12 +12,6 @@ class App extends Component {
       createBookInputVal: '',
       searchInputVal: '',
     }
-  }
-  setCreateBookInputState (e) {
-    this.setState({createBookInputVal: e.target.value})
-  }
-  setSearchInputState (e) {
-    this.setState({searchInputVal: e.target.value})
   }
   createBook (e) {
     e.preventDefault()
@@ -57,7 +49,9 @@ class App extends Component {
     return (
       <div>
         <h1>books</h1>
-        <input type='text' value={this.state.searchInputVal} onChange={this.setSearchInputState} />
+        <input type='text' value={this.state.searchInputVal} onChange={e => {
+          this.setState({searchInputVal: e.target.value})
+        }} />
         {this.getBooks().map(book => {
           return (
             <div key={book.id}>
@@ -69,7 +63,9 @@ class App extends Component {
           )
         })}
         <form onSubmit={this.createBook}>
-          <input type='text' value={this.state.createBookInputVal} onChange={this.setCreateBookInputState} />
+          <input type='text' value={this.state.createBookInputVal} onChange={e => {
+            this.setState({createBookInputVal: e.target.value})
+          }} />
           <input type='submit' value='add' />
         </form>
       </div>
