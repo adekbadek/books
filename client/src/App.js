@@ -1,16 +1,20 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-class App extends Component {
+import Book from './Book'
+
+class App extends React.Component {
   constructor () {
     super()
     this.getBooks = this.getBooks.bind(this)
     this.createBook = this.createBook.bind(this)
     this.deleteBook = this.deleteBook.bind(this)
+    this.updateBook = this.updateBook.bind(this)
     this.refreshBooks = this.refreshBooks.bind(this)
     this.state = {
       books: [],
       createBookInputVal: '',
       searchInputVal: '',
+      editedBookId: null,
     }
   }
   createBook (e) {
@@ -38,6 +42,16 @@ class App extends Component {
     })
       .then(this.refreshBooks)
   }
+  updateBook (id, updatedBook) {
+    fetch(`api/books/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(updatedBook)
+    })
+      .then(() => {
+        this.refreshBooks()
+        this.setState({editedBookId: null})
+      })
+  }
   componentDidMount () {
     this.refreshBooks()
   }
@@ -54,12 +68,16 @@ class App extends Component {
         }} />
         {this.getBooks().map(book => {
           return (
-            <div key={book.id}>
-              <button onClick={() => {
-                this.deleteBook(book.id)
-              }}>delete</button>
-              <span>{book.title}</span>
-            </div>
+            <Book
+              key={book.id}
+              book={book}
+              deleteHandler={this.deleteBook}
+              isEdited={this.state.editedBookId === book.id}
+              onClickHandler={() => {
+                this.setState({editedBookId: book.id})
+              }}
+              onSaveHandler={(title) => this.updateBook(book.id, {title})}
+            />
           )
         })}
         <form onSubmit={this.createBook}>
