@@ -24,4 +24,12 @@ class BooksController < ApplicationController
       json: new_book
     )
   end
+
+  def remove
+    Book.destroy(params[:id])
+
+    render(
+      status: 200
+    )
+  end
 end
