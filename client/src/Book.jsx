@@ -38,7 +38,7 @@ export default props =>
         isClearable
         selected={props.book.start_date ? moment(props.book.start_date) : null}
         highlightDates={props.book.end_date && [moment(props.book.end_date)]}
-        maxDate={moment()}
+        maxDate={props.book.end_date ? moment(props.book.end_date) : moment()}
         placeholderText='Select a start date'
         onChange={e => props.updateHandler({start_date: e ? e.format() : null})}
       />
