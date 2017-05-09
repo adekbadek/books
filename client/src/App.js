@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Book from './Book'
+import Calendar from './Calendar'
 
 class App extends React.Component {
   constructor () {
@@ -111,6 +112,7 @@ class App extends React.Component {
           }} />
           <input type='submit' value='add' className='ml1 ba b--black bg-transparent pointer' />
         </form>
+        <Calendar />
       </div>
     )
   }
