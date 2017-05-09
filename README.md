@@ -6,3 +6,4 @@
 
 - CSS Modules
 - HMR
+- fetch polyfill
