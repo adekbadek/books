@@ -24,4 +24,9 @@ class BooksController < ApplicationController
     Book.destroy(params[:id])
     render status: 200
   end
+
+  def edit
+    Book.update(params[:id], (JSON.parse request.body.read))
+    render status: 200
+  end
 end
