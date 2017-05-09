@@ -68,32 +68,48 @@ class App extends React.Component {
   }
   render () {
     return (
-      <div>
-        <h1>books</h1>
+      <div className='pa4'>
+        <h1 className='mt0'>books</h1>
         <input type='text' placeholder='filter' value={this.state.searchInputVal} onChange={e => {
           this.setState({searchInputVal: e.target.value})
         }} />
-        {this.getBooks().map(book => {
-          return (
-            <Book
-              key={book.id}
-              book={book}
-              deleteHandler={this.deleteBook}
-              updateHandler={data => {
-                this.updateBook(book.id, data)
-              }}
-              isEdited={this.state.editedBookId === book.id}
-              onClickHandler={() => {
-                this.setState({editedBookId: book.id})
-              }}
-            />
-          )
-        })}
+        <div className='pv4'>
+          <div className='overflow-auto'>
+            <table className='f6 w-100 mw8 center' cellSpacing='0'>
+              <thead>
+                <tr>
+                  <th className='fw6 bb b--black-20 tl pb2 pr3 bg-white'>Title</th>
+                  <th className='fw6 bb b--black-20 tl pb2 pr3 bg-white'>Start</th>
+                  <th className='fw6 bb b--black-20 tl pb2 pr3 bg-white'>End</th>
+                  <th className='fw6 bb b--black-20 tl pb2 pr3 bg-white'>Actions</th>
+                </tr>
+              </thead>
+              <tbody className='lh-copy'>
+                {this.getBooks().map(book => {
+                  return (
+                    <Book
+                      key={book.id}
+                      book={book}
+                      deleteHandler={this.deleteBook}
+                      updateHandler={data => {
+                        this.updateBook(book.id, data)
+                      }}
+                      isEdited={this.state.editedBookId === book.id}
+                      onClickHandler={() => {
+                        this.setState({editedBookId: book.id})
+                      }}
+                    />
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
         <form onSubmit={this.createBook}>
           <input type='text' placeholder='title' value={this.state.createBookInputVal} onChange={e => {
             this.setState({createBookInputVal: e.target.value})
           }} />
-          <input type='submit' value='add' />
+          <input type='submit' value='add' className='ml1 ba b--black bg-transparent pointer' />
         </form>
       </div>
     )
