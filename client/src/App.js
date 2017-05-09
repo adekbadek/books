@@ -49,7 +49,7 @@ class App extends Component {
     return (
       <div>
         <h1>books</h1>
-        <input type='text' value={this.state.searchInputVal} onChange={e => {
+        <input type='text' placeholder='filter' value={this.state.searchInputVal} onChange={e => {
           this.setState({searchInputVal: e.target.value})
         }} />
         {this.getBooks().map(book => {
@@ -63,7 +63,7 @@ class App extends Component {
           )
         })}
         <form onSubmit={this.createBook}>
-          <input type='text' value={this.state.createBookInputVal} onChange={e => {
+          <input type='text' placeholder='title' value={this.state.createBookInputVal} onChange={e => {
             this.setState({createBookInputVal: e.target.value})
           }} />
           <input type='submit' value='add' />
