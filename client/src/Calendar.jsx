@@ -3,7 +3,7 @@ import moment from 'moment'
 
 import './styles/calendar.css'
 import { buttonClasses } from './utils/styling.js'
-import { DATE_FORMAT } from './utils/time.js'
+import { DATE_FORMAT, isDateInRange } from './utils/time.js'
 
 const DIMENSIONS = {
   columns: 53,
@@ -43,6 +43,7 @@ class Calendar extends React.Component {
               {[...Array(DIMENSIONS.rows)].map((_, j) => {
                 const dayOfYearIndex = i * 7 + j + 1
                 const date = moment(this.state.startDate).dayOfYear(dayOfYearIndex - this.state.startDate.day())
+                const isInRange = isDateInRange(date, this.props.ranges)
                 return (
                   <div
                     key={j}
@@ -50,6 +51,7 @@ class Calendar extends React.Component {
                     style={{
                       opacity: this.state.startDate.get('year') === date.get('year') ? 1 : 0.5,
                       borderTopColor: date.date() === 1 && '#000',
+                      backgroundColor: isInRange && '#2de650',
                     }}
                     title={date.format(DATE_FORMAT)}
                     data-weekday={date.format('dddd')}

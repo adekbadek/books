@@ -112,7 +112,11 @@ class App extends React.Component {
           }} />
           <input type='submit' value='add' className='ml1 ba b--black bg-transparent pointer' />
         </form>
-        <Calendar />
+        <Calendar
+          ranges={this.state.books.map(book => {
+            return {start: book.start_date, end: book.end_date, name: book.title}
+          })}
+        />
       </div>
     )
   }
