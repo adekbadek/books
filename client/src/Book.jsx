@@ -5,6 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import 'tachyons/css/tachyons.min.css'
 
 import { buttonClasses } from './utils/styling.js'
+import { DATE_FORMAT } from './utils/time.js'
 
 class EditBookTitle extends React.Component {
   render () {
@@ -32,9 +33,11 @@ export default props =>
     </td>
     <td className='pv2 pr3 bb b--black-20'>
       <DatePicker
+        dateFormat={DATE_FORMAT}
         locale='en-gb'
         isClearable
         selected={props.book.start_date ? moment(props.book.start_date) : null}
+        highlightDates={props.book.end_date && [moment(props.book.end_date)]}
         maxDate={moment()}
         placeholderText='Select a start date'
         onChange={e => props.updateHandler({start_date: e ? e.format() : null})}
@@ -42,9 +45,11 @@ export default props =>
     </td>
     <td className='pv2 pr3 bb b--black-20'>
       <DatePicker
+        dateFormat={DATE_FORMAT}
         locale='en-gb'
         isClearable
         selected={props.book.end_date ? moment(props.book.end_date) : null}
+        highlightDates={props.book.start_date && [moment(props.book.start_date)]}
         minDate={props.book.start_date ? moment(props.book.start_date) : null}
         maxDate={moment()}
         placeholderText='Select an end date'

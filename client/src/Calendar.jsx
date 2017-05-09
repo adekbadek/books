@@ -3,6 +3,7 @@ import moment from 'moment'
 
 import './styles/calendar.css'
 import { buttonClasses } from './utils/styling.js'
+import { DATE_FORMAT } from './utils/time.js'
 
 const DIMENSIONS = {
   columns: 53,
@@ -50,7 +51,7 @@ class Calendar extends React.Component {
                       opacity: this.state.startDate.get('year') === date.get('year') ? 1 : 0.5,
                       borderTopColor: date.date() === 1 && '#000',
                     }}
-                    title={date.format('DD/MM/YYYY')}
+                    title={date.format(DATE_FORMAT)}
                     data-weekday={date.format('dddd')}
                   />
                 )
