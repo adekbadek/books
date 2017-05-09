@@ -5,6 +5,7 @@ class App extends Component {
     super()
     this.setInputState = this.setInputState.bind(this)
     this.submit = this.submit.bind(this)
+    this.deleteBook = this.deleteBook.bind(this)
     this.refreshBooks = this.refreshBooks.bind(this)
     this.state = {
       books: [],
@@ -36,6 +37,12 @@ class App extends Component {
         this.setState({books})
       })
   }
+  deleteBook (id) {
+    fetch(`api/books/${id}`, {
+      method: 'DELETE'
+    })
+      .then(this.refreshBooks)
+  }
   componentDidMount () {
     this.refreshBooks()
   }
@@ -45,7 +52,12 @@ class App extends Component {
         <h1>books</h1>
         {this.state.books.map(book => {
           return (
-            <p key={book.id}>{book.title}</p>
+            <div key={book.id}>
+              <button onClick={() => {
+                this.deleteBook(book.id)
+              }}>delete</button>
+              <span>{book.title}</span>
+            </div>
           )
         })}
         <form onSubmit={this.submit}>
