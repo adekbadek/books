@@ -79,11 +79,13 @@ class App extends React.Component {
               key={book.id}
               book={book}
               deleteHandler={this.deleteBook}
+              updateHandler={data => {
+                this.updateBook(book.id, data)
+              }}
               isEdited={this.state.editedBookId === book.id}
               onClickHandler={() => {
                 this.setState({editedBookId: book.id})
               }}
-              onSaveHandler={(title) => this.updateBook(book.id, {title})}
             />
           )
         })}
