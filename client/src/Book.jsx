@@ -4,6 +4,8 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import 'tachyons/css/tachyons.min.css'
 
+import { buttonClasses } from './utils/styling.js'
+
 class EditBookTitle extends React.Component {
   render () {
     return (
@@ -12,7 +14,7 @@ class EditBookTitle extends React.Component {
         this.props.updateHandler({title: this.refs.input.value})
       }}>
         <input autoFocus type='text' defaultValue={this.props.book.title} ref='input' />
-        <input type='submit' value='submit' className='ml1 ba b--black bg-transparent pointer' />
+        <input type='submit' value='submit' className={`ml1 ${buttonClasses}`} />
       </form>
     )
   }
@@ -51,7 +53,7 @@ export default props =>
     </td>
     <td className='pv2 pr3 bb b--black-20'>
       <button
-        className='ba b--black bg-transparent pointer'
+        className={buttonClasses}
         onClick={() => {
           props.deleteHandler(props.book.id)
         }}
