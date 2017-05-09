@@ -17,7 +17,7 @@ class App extends Component {
   submit (e) {
     e.preventDefault()
 
-    fetch('api/create', {
+    fetch('api/books', {
       method: 'POST',
       body: JSON.stringify({
         title: this.state.inputVal,
