@@ -26,9 +26,12 @@ class App extends React.Component {
         title: this.state.createBookInputVal,
       })
     })
-      .then(() => {
-        this.refreshBooks()
-        this.setState({createBookInputVal: ''})
+      .then(res => res.json())
+      .then((book) => {
+        this.setState({
+          books: this.state.books.concat([book]),
+          createBookInputVal: ''
+        })
       })
   }
   refreshBooks () {
@@ -40,7 +43,11 @@ class App extends React.Component {
     fetch(`api/books/${id}`, {
       method: 'DELETE'
     })
-      .then(this.refreshBooks)
+      .then(() => {
+        this.setState({
+          books: this.state.books.filter(v => v.id !== id)
+        })
+      })
   }
   updateBook (id, updatedBook) {
     fetch(`api/books/${id}`, {
