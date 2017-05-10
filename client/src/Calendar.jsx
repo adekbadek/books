@@ -27,7 +27,7 @@ class Calendar extends React.Component {
             onClick={() => {
               this.setState({startDate: moment(this.state.startDate).subtract(1, 'year')})
             }}
-          >-</button>
+          >&lt;</button>
           <span className='ph4'>
             {this.state.startDate.format('YYYY')}
           </span>
@@ -35,7 +35,7 @@ class Calendar extends React.Component {
             onClick={() => {
               this.setState({startDate: moment(this.state.startDate).add(1, 'year')})
             }}
-          >+</button>
+          >&gt;</button>
         </div>
         {[...Array(DIMENSIONS.columns)].map((_, i) => {
           return (
