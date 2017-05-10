@@ -4,6 +4,7 @@ import moment from 'moment'
 import './styles/calendar.css'
 import { buttonClasses } from './utils/styling.js'
 import { DATE_FORMAT, isDateInRange } from './utils/time.js'
+import { times } from './utils/aux.js'
 
 const DIMENSIONS = {
   columns: 53,
@@ -37,10 +38,10 @@ class Calendar extends React.Component {
             }}
           >&gt;</button>
         </div>
-        {[...Array(DIMENSIONS.columns)].map((_, i) => {
+        {times(DIMENSIONS.columns).map((_, i) => {
           return (
             <div key={i} className='dib'>
-              {[...Array(DIMENSIONS.rows)].map((_, j) => {
+              {times(DIMENSIONS.rows).map((_, j) => {
                 const dayOfYearIndex = i * 7 + j + 1
                 const date = moment(this.state.startDate).dayOfYear(dayOfYearIndex - this.state.startDate.day())
                 const isInRange = isDateInRange(date, this.props.ranges)
