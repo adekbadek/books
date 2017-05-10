@@ -113,6 +113,9 @@ class App extends React.Component {
           ranges={this.state.books.map(book => {
             return {start: book.start_date, end: book.end_date, name: book.title}
           })}
+          points={this.state.books.map(book => {
+            return {name: book.title, points: [book.rep_1, book.rep_2, book.rep_3]}
+          })}
         />
       </div>
     )

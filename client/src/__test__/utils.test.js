@@ -1,15 +1,15 @@
 import moment from 'moment'
 
-import { isDateInRange } from '../utils/time.js'
+import { getRangesForDate } from '../utils/time.js'
 
-it('isDateInRange', () => {
+it('getRangesForDate', () => {
   expect(
-    isDateInRange(moment('2017-05-09'), [{start: '2017-05-01', end: '2017-05-19'}])
+    getRangesForDate(moment('2017-05-09'), [{start: '2017-05-01', end: '2017-05-19'}])
   ).toBeTruthy()
   expect(
-    isDateInRange(moment('2017-04-09'), [{start: '2017-05-01', end: '2017-05-19'}])
-  ).not.toBeTruthy()
+    getRangesForDate(moment('2017-04-09'), [{start: '2017-05-01', end: '2017-05-19'}])
+  ).toEqual([])
   expect(
-    isDateInRange(moment('2016-05-09'), [{start: '2017-05-01', end: '2017-05-19'}])
-  ).not.toBeTruthy()
+    getRangesForDate(moment('2016-05-09'), [{start: '2017-05-01', end: '2017-05-19'}])
+  ).toEqual([])
 })
