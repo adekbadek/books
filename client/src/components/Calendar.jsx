@@ -2,9 +2,9 @@ import React from 'react'
 import moment from 'moment'
 import cx from 'classnames'
 
-import { buttonClasses } from './utils/styling.js'
-import { getRangesForDate } from './utils/time.js'
-import { times } from './utils/aux.js'
+import { buttonClasses } from 'utils/styling.js'
+import { getRangesForDate } from 'utils/time.js'
+import { times } from 'utils/aux.js'
 
 const DIMENSIONS = {
   columns: 53,

@@ -4,9 +4,9 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import 'tachyons/css/tachyons.min.css'
 
-import { buttonClasses } from './utils/styling.js'
-import { DATE_FORMAT } from './utils/time.js'
-import { getRepDates } from './utils/aux.js'
+import { buttonClasses } from 'utils/styling.js'
+import { DATE_FORMAT } from 'utils/time.js'
+import { getRepDates } from 'utils/aux.js'
 
 const ROW_CLASSES = 'pv2 pr3 bb b--black-20'
 

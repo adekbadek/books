@@ -1,6 +1,6 @@
 import moment from 'moment'
 
-import { getRangesForDate } from '../utils/time.js'
+import { getRangesForDate } from 'utils/time.js'
 
 it('getRangesForDate', () => {
   expect(

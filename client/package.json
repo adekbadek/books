@@ -23,9 +23,9 @@
     "tachyons": "^4.7.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "start": "NODE_PATH=src react-scripts start",
+    "build": "NODE_PATH=src react-scripts build",
+    "test": "NODE_PATH=src react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "build-css": "node-sass src/styles/index.sass -o src/styles/",
     "watch-css": "npm run build-css && node-sass src/styles/index.sass -o src/styles/ --watch"

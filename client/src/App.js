@@ -1,12 +1,12 @@
 import React from 'react'
 import moment from 'moment'
 
-import Book from './Book'
-import Calendar from './Calendar'
-import Table from './Table'
+import Book from 'components/Book'
+import Calendar from 'components/Calendar'
+import Table from 'components/Table'
 
-import { getAllReps } from './utils/aux.js'
-import { DATE_FORMAT } from './utils/time.js'
+import { getAllReps } from 'utils/aux.js'
+import { DATE_FORMAT } from 'utils/time.js'
 
 class App extends React.Component {
   constructor () {
