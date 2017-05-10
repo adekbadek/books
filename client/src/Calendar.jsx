@@ -3,7 +3,7 @@ import moment from 'moment'
 import cx from 'classnames'
 
 import { buttonClasses } from './utils/styling.js'
-import { DATE_FORMAT, getRangesForDate } from './utils/time.js'
+import { getRangesForDate } from './utils/time.js'
 import { times } from './utils/aux.js'
 
 const DIMENSIONS = {
@@ -60,14 +60,14 @@ class Calendar extends React.Component {
                     key={j}
                     className={cx(
                       CELL_CLASSNAME,
+                      {[`${CELL_CLASSNAME}--with-data`]: !!isInRange.length || isAPoint},
                       {[`${CELL_CLASSNAME}--in-range`]: !!isInRange.length},
                       {[`${CELL_CLASSNAME}--point`]: isAPoint},
                       {[`${CELL_CLASSNAME}--point--dimmed`]: isAPoint && date.isBefore(moment())},
                       {[`${CELL_CLASSNAME}--border-top`]: date.date() === 1},
                       {[`${CELL_CLASSNAME}--dimmed`]: this.state.startDate.get('year') !== date.get('year')}
                     )}
-                    title={`${date.format(DATE_FORMAT)}${isInRange.length ? ` / ${isInRange.join(', ')}` : ''}${isAPoint ? ` / rep - ${points.join(', ')}` : ''}`}
-                    data-weekday={date.format('dddd')}
+                    data-info={`${date.format('DD MMM')}${isInRange.length ? ` | ${isInRange.join(', ')}` : ''}${isAPoint ? ` | rep - ${points.join(', ')}` : ''}`}
                   />
                 )
               })}
