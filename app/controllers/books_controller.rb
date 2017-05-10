@@ -34,9 +34,7 @@ class BooksController < ApplicationController
     book.update(updates)
 
     # TODO if reps are in updates (manual update), don't app_reps
-    if book.end_date
-      ApplicationController.add_reps(book)
-    end
+    ApplicationController.change_reps(book)
 
     render status: 200
   end

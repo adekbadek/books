@@ -17,5 +17,5 @@ books.each do |book|
     end_date: end_date
   )
 
-  ApplicationController.add_reps(new_book)
+  ApplicationController.change_reps(new_book)
 end
