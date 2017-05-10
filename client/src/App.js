@@ -1,8 +1,12 @@
 import React from 'react'
+import moment from 'moment'
 
 import Book from './Book'
 import Calendar from './Calendar'
 import Table from './Table'
+
+import { getAllReps } from './utils/aux.js'
+import { DATE_FORMAT } from './utils/time.js'
 
 class App extends React.Component {
   constructor () {
@@ -68,10 +72,37 @@ class App extends React.Component {
     const query = this.state.searchInputVal
     return this.state.books.filter(v => !query || v.title.match(new RegExp(query, 'i')))
   }
+
   render () {
     return (
       <div className='pa4'>
         <h1 className='mt0'>books</h1>
+        <Table
+          className='table--align-top'
+          headers={['Currently reading', 'Upcoming repetitions']}
+        >
+          <tr>
+            <td>
+              {
+                this.state.books
+                  .filter(v => !v.end_date && moment().isAfter(v.start_date))
+                  .map(book => <div className='pt1' key={book.id}>{book.title}</div>)
+              }
+            </td>
+            <td>
+              <table>
+                <tbody>
+                  {getAllReps(this.state.books).map((rep, i) => {
+                    return moment().isBefore(rep.date) && <tr key={i}>
+                      <td>{moment(rep.date).format(DATE_FORMAT)}</td>
+                      <td>{rep.title}</td>
+                    </tr>
+                  })}
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </Table>
         <Calendar
           ranges={this.state.books.map(book => {
             return {start: book.start_date, end: book.end_date, name: book.title}
