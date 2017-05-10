@@ -79,7 +79,7 @@ class App extends React.Component {
             <table className='f6 w-100 mw8 center' cellSpacing='0'>
               <thead>
                 <tr>
-                  {['Title', 'Start', 'End', 'Actions'].map((t, i) => <th key={i} className='bb b--black-20 tl pb2 pr3'>{t}</th>)}
+                  {['Title', 'Start', 'End', 'Reps', 'Actions'].map((t, i) => <th key={i} className='bb b--black-20 tl pb2 pr3'>{t}</th>)}
                 </tr>
               </thead>
               <tbody className='lh-copy'>
