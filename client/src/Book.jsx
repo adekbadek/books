@@ -6,7 +6,7 @@ import 'tachyons/css/tachyons.min.css'
 
 import { buttonClasses } from './utils/styling.js'
 import { DATE_FORMAT } from './utils/time.js'
-import { times } from './utils/aux.js'
+import { getRepDates } from './utils/aux.js'
 
 const ROW_CLASSES = 'pv2 pr3 bb b--black-20'
 
@@ -60,16 +60,13 @@ export default props =>
       />
     </td>
     <td className={ROW_CLASSES}>
-      {times(3).map((_, i) => {
-        const repDate = props.book[`rep_${i + 1}`]
-        return (
-          repDate && <div
-            key={i}
-            className={`dib reps-indicator ${moment().isBefore(repDate) ? 'reps-indicator__upcoming' : ''}`}
-            title={moment(repDate).format(DATE_FORMAT)}
-          />
-        )
-      })}
+      {getRepDates(props.book).map((date, i) =>
+        date && <div
+          key={i}
+          className={`dib reps-indicator ${moment().isBefore(date) ? 'reps-indicator__upcoming' : ''}`}
+          title={moment(date).format(DATE_FORMAT)}
+        />
+      )}
     </td>
     <td className={ROW_CLASSES}>
       <button
