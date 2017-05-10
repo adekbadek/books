@@ -1,7 +1,6 @@
 import React from 'react'
 import moment from 'moment'
 
-import './styles/calendar.css'
 import { buttonClasses } from './utils/styling.js'
 import { DATE_FORMAT, isDateInRange } from './utils/time.js'
 import { times } from './utils/aux.js'
@@ -48,11 +47,10 @@ class Calendar extends React.Component {
                 return (
                   <div
                     key={j}
-                    className='calendar__cell'
+                    className={`calendar__cell ${isInRange ? 'calendar__cell--marked' : ''}`}
                     style={{
                       opacity: this.state.startDate.get('year') === date.get('year') ? 1 : 0.5,
                       borderTopColor: date.date() === 1 && '#000',
-                      backgroundColor: isInRange && '#2de650',
                     }}
                     title={date.format(DATE_FORMAT)}
                     data-weekday={date.format('dddd')}
