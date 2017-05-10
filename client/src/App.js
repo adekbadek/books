@@ -71,6 +71,14 @@ class App extends React.Component {
     return (
       <div className='pa4'>
         <h1 className='mt0'>books</h1>
+        <Calendar
+          ranges={this.state.books.map(book => {
+            return {start: book.start_date, end: book.end_date, name: book.title}
+          })}
+          points={this.state.books.map(book => {
+            return {name: book.title, points: [book.rep_1, book.rep_2, book.rep_3]}
+          })}
+        />
         <input type='text' placeholder='filter' value={this.state.searchInputVal} onChange={e => {
           this.setState({searchInputVal: e.target.value})
         }} />
@@ -109,14 +117,6 @@ class App extends React.Component {
           }} />
           <input type='submit' value='add' className='ml1 ba b--black bg-transparent pointer' />
         </form>
-        <Calendar
-          ranges={this.state.books.map(book => {
-            return {start: book.start_date, end: book.end_date, name: book.title}
-          })}
-          points={this.state.books.map(book => {
-            return {name: book.title, points: [book.rep_1, book.rep_2, book.rep_3]}
-          })}
-        />
       </div>
     )
   }
