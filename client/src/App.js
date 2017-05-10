@@ -94,7 +94,9 @@ class App extends React.Component {
                 <tbody>
                   {getAllReps(this.state.books).map((rep, i) => {
                     return moment().isBefore(rep.date) && <tr key={i}>
-                      <td>{moment(rep.date).format(DATE_FORMAT)}</td>
+                      <td className='tooltip' data-info={moment(rep.date).format(DATE_FORMAT)}>
+                        {moment(rep.date).fromNow(true)}
+                      </td>
                       <td>{rep.title}</td>
                     </tr>
                   })}
