@@ -72,11 +72,22 @@ class App extends React.Component {
     const query = this.state.searchInputVal
     return this.state.books.filter(v => !query || v.title.match(new RegExp(query, 'i')))
   }
-
+  getTodaysReps () {
+    return getAllReps(this.state.books).filter(rep => moment().isSame(rep.date, 'day'))
+  }
   render () {
+    const todaysReps = this.getTodaysReps()
     return (
       <div className='pa4'>
         <h1 className='mt0'>books</h1>
+        {!!todaysReps.length && (
+          <Table
+            wrapperClassName='pt2'
+            headers={['Today\'s repetitions']}
+          >
+            {todaysReps.map((rep, i) => <tr key={i}><td>{rep.title}</td></tr>)}
+          </Table>
+        )}
         <Table
           wrapperClassName='pt4'
           tableClassName='table--align-top'
