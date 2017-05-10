@@ -78,7 +78,8 @@ class App extends React.Component {
       <div className='pa4'>
         <h1 className='mt0'>books</h1>
         <Table
-          className='table--align-top'
+          wrapperClassName='pt4'
+          tableClassName='table--align-top'
           headers={['Currently reading', 'Upcoming repetitions']}
         >
           <tr>
