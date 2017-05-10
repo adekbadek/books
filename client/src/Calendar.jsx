@@ -1,5 +1,6 @@
 import React from 'react'
 import moment from 'moment'
+import cx from 'classnames'
 
 import { buttonClasses } from './utils/styling.js'
 import { DATE_FORMAT, isDateInRange } from './utils/time.js'
@@ -9,6 +10,8 @@ const DIMENSIONS = {
   columns: 53,
   rows: 7,
 }
+
+const CELL_CLASSNAME = 'calendar__cell'
 
 class Calendar extends React.Component {
   constructor () {
@@ -47,11 +50,12 @@ class Calendar extends React.Component {
                 return (
                   <div
                     key={j}
-                    className={`calendar__cell ${isInRange ? 'calendar__cell--marked' : ''}`}
-                    style={{
-                      opacity: this.state.startDate.get('year') === date.get('year') ? 1 : 0.5,
-                      borderTopColor: date.date() === 1 && '#000',
-                    }}
+                    className={cx(
+                      CELL_CLASSNAME,
+                      {[`${CELL_CLASSNAME}--marked`]: isInRange},
+                      {[`${CELL_CLASSNAME}--border-top`]: date.date() === 1},
+                      {[`${CELL_CLASSNAME}--dimmed`]: this.state.startDate.get('year') !== date.get('year')}
+                    )}
                     title={date.format(DATE_FORMAT)}
                     data-weekday={date.format('dddd')}
                   />

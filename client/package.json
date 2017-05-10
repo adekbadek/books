@@ -8,6 +8,7 @@
   },
   "proxy": "http://localhost:3001/",
   "devDependencies": {
+    "classnames": "^2.2.5",
     "eslint": "^3.19.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-config-standard-react": "^5.0.0",
