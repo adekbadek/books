@@ -73,6 +73,6 @@ export default props =>
         onClick={() => {
           props.deleteHandler(props.book.id)
         }}
-      >delete</button>
+      >rm</button>
     </td>
   </tr>
