@@ -3,9 +3,9 @@
     position: relative
     background-color: $dark-grey
     width: 10px
-    height: 9px
+    height: 10px
     margin: 1px
-    border-top: 1px solid
+    border: 1px solid transparent
     border-top-color: transparent
     &--in-range
       background-color: $main
@@ -13,7 +13,7 @@
       &:after
         position: absolute
         top: 1px
-        left: 2px
+        left: 1px
         width: 6px
         height: 6px
         content: ''
@@ -24,7 +24,8 @@
         &:after
           opacity: .3
     &--border-top
-      border-top-color: rgba($black, .5)
+      border: none
+      border-top: 1px solid rgba($black, .5)
     &--dimmed
       opacity: .5
     &--today
