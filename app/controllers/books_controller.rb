@@ -29,7 +29,15 @@ class BooksController < ApplicationController
   end
 
   def edit
-    Book.update(params[:id], (JSON.parse request.body.read))
+    book = Book.find(params[:id])
+    updates = JSON.parse request.body.read
+    book.update(updates)
+
+    # TODO if reps are in updates (manual update), don't app_reps
+    if book.end_date
+      ApplicationController.add_reps(book)
+    end
+
     render status: 200
   end
 end
