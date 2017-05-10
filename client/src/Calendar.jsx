@@ -60,7 +60,7 @@ class Calendar extends React.Component {
                     key={j}
                     className={cx(
                       CELL_CLASSNAME,
-                      {[`${CELL_CLASSNAME}--with-data`]: !!isInRange.length || isAPoint},
+                      {tooltip: !!isInRange.length || isAPoint},
                       {[`${CELL_CLASSNAME}--in-range`]: !!isInRange.length},
                       {[`${CELL_CLASSNAME}--point`]: isAPoint},
                       {[`${CELL_CLASSNAME}--point--dimmed`]: isAPoint && date.isBefore(moment())},
