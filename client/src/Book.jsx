@@ -63,7 +63,11 @@ export default props =>
       {times(3).map((_, i) => {
         const repDate = props.book[`rep_${i + 1}`]
         return (
-          repDate ? <div key={i} className={`dib reps-indicator ${moment().isBefore(repDate) ? 'reps-indicator__upcoming' : ''}`} title={repDate} /> : null
+          repDate && <div
+            key={i}
+            className={`dib reps-indicator ${moment().isBefore(repDate) ? 'reps-indicator__upcoming' : ''}`}
+            title={moment(repDate).format(DATE_FORMAT)}
+          />
         )
       })}
     </td>
