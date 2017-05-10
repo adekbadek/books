@@ -61,6 +61,7 @@ class Calendar extends React.Component {
                     className={cx(
                       CELL_CLASSNAME,
                       {tooltip: !!isInRange.length || isAPoint},
+                      {[`${CELL_CLASSNAME}--today`]: moment().isSame(date, 'day')},
                       {[`${CELL_CLASSNAME}--in-range`]: !!isInRange.length},
                       {[`${CELL_CLASSNAME}--point`]: isAPoint},
                       {[`${CELL_CLASSNAME}--point--dimmed`]: isAPoint && date.isBefore(moment())},
