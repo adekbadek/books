@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
-  before_action :authenticate_request
+  before_action :get_authenticated_user
   attr_reader :current_user
 
   def self.change_reps(book)
@@ -15,10 +15,12 @@ class ApplicationController < ActionController::API
     book.save
   end
 
-  private
-
-  def authenticate_request
+  def get_authenticated_user
     @current_user = AuthorizeApiRequest.call(request.headers).result
-    render json: { error: 'Not Authorized' }, status: 401 unless @current_user
+    if @current_user
+      @current_user
+    else
+      render json: { error: 'Not Authorized' }, status: 401
+    end
   end
 end

@@ -1,22 +1,13 @@
 class BooksController < ApplicationController
   def index
-    q = params[:q]
-
-    if q.blank?
-      render(
-        status: 200,
-        json: Book.all
-      )
-    else
-      render(
-        status: 200,
-        json: Book.where(["title LIKE ?", "%#{q}%"]).limit(100)
-      )
-    end
+    render(
+      status: 200,
+      json: self.get_authenticated_user.books
+    )
   end
 
   def create
-    new_book = Book.create(JSON.parse request.body.read)
+    new_book = self.get_authenticated_user.books.create(JSON.parse request.body.read)
     render(
       status: 200,
       json: new_book
@@ -24,12 +15,12 @@ class BooksController < ApplicationController
   end
 
   def remove
-    Book.destroy(params[:id])
+    self.get_authenticated_user.books.destroy(params[:id])
     render status: 200
   end
 
   def edit
-    book = Book.find(params[:id])
+    book = self.get_authenticated_user.books.find(params[:id])
     updates = JSON.parse request.body.read
     book.update(updates)
 
