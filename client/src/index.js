@@ -5,21 +5,15 @@ import {
   Route
 } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
 
 import FlashMessage from 'components/FlashMessage'
 import HistoryObserver from 'components/HistoryObserver'
 import Auth from 'views/Auth'
 import Main from 'views/Main'
 
-import reducerApp from 'store/reducers'
+import store from 'store'
 
 import './styles/index.css'
-
-let store = createStore(
-  reducerApp,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-)
 
 class App extends React.Component {
   render () {
