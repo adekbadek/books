@@ -1,12 +1,15 @@
 import React from 'react'
 import moment from 'moment'
+import { Redirect } from 'react-router-dom'
 
 import Book from 'components/Book'
 import Calendar from 'components/Calendar'
 import Table from 'components/Table'
+import RouteLink from 'components/RouteLink'
 
 import { getAllReps } from 'utils/aux.js'
 import { DATE_FORMAT } from 'utils/time.js'
+import { readCredentials, revokeCredentials } from 'utils/auth'
 
 class Main extends React.Component {
   constructor () {
@@ -21,6 +24,7 @@ class Main extends React.Component {
       createBookInputVal: '',
       searchInputVal: '',
       editedBookId: null,
+      authenticated: !!readCredentials(),
     }
   }
   createBook (e) {
@@ -41,7 +45,11 @@ class Main extends React.Component {
       })
   }
   refreshBooks () {
-    fetch('/api/books')
+    fetch('/api/books', {
+      headers: {
+        'Authorization': readCredentials(),
+      }
+    })
       .then(res => {
         if (res.status === 401) {
           // TODO: handle unauthed
@@ -83,10 +91,19 @@ class Main extends React.Component {
     return getAllReps(this.state.books).filter(rep => moment().isSame(rep.date, 'day'))
   }
   render () {
+    if (!this.state.authenticated) {
+      return <Redirect to='/auth' />
+    }
+
     const todaysReps = this.getTodaysReps()
     return (
       <div className='pa4'>
-        <h1 className='mt0'>books</h1>
+        <h1 className='dib mt0'>books</h1>
+        <RouteLink
+          url='/auth'
+          className='fr'
+          beforeAction={revokeCredentials}
+        >logout</RouteLink>
         {!!todaysReps.length && (
           <Table
             wrapperClassName='pt2'
