@@ -4,6 +4,7 @@ import {
   Route
 } from 'react-router-dom'
 
+import Auth from 'views/Auth'
 import Main from 'views/Main'
 
 class App extends React.Component {
@@ -12,6 +13,7 @@ class App extends React.Component {
       <Router>
         <div>
           <Route exact path='/' component={Main} />
+          <Route path='/auth' component={Auth} />
         </div>
       </Router>
     )
