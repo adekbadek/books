@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default props =>
-  <div className='pt4'>
+  <div className='pt5'>
     <form onSubmit={props.handleSubmit} className='measure center'>
       <fieldset id='sign_up' className='ba b--transparent ph0 mh0'>
         <legend className='f4 fw6 ph0 mh0'>Sign In</legend>
