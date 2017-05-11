@@ -7,6 +7,7 @@ import Calendar from 'components/Calendar'
 import Table from 'components/Table'
 import RouteLink from 'components/RouteLink'
 
+import { request } from 'utils/api.js'
 import { getAllReps } from 'utils/aux.js'
 import { DATE_FORMAT } from 'utils/time.js'
 import { readCredentials, revokeCredentials } from 'utils/auth'
@@ -30,11 +31,12 @@ class Main extends React.Component {
   createBook (e) {
     e.preventDefault()
 
-    fetch('api/books', {
+    request({
+      url: 'api/books',
       method: 'POST',
-      body: JSON.stringify({
+      data: {
         title: this.state.createBookInputVal,
-      })
+      },
     })
       .then(res => res.json())
       .then((book) => {
@@ -45,11 +47,7 @@ class Main extends React.Component {
       })
   }
   refreshBooks () {
-    fetch('/api/books', {
-      headers: {
-        'Authorization': readCredentials(),
-      }
-    })
+    request({url: '/api/books'})
       .then(res => {
         if (res.status === 401) {
           // TODO: handle unauthed
@@ -61,7 +59,8 @@ class Main extends React.Component {
       .then(books => books && this.setState({books}))
   }
   deleteBook (id) {
-    fetch(`api/books/${id}`, {
+    request({
+      url: `api/books/${id}`,
       method: 'DELETE'
     })
       .then(() => {
@@ -71,9 +70,10 @@ class Main extends React.Component {
       })
   }
   updateBook (id, updatedBook) {
-    fetch(`api/books/${id}`, {
+    request({
+      url: `api/books/${id}`,
       method: 'PATCH',
-      body: JSON.stringify(updatedBook)
+      data: updatedBook,
     })
       .then(() => {
         this.refreshBooks()
