@@ -1,14 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import cx from 'classnames'
 
 import { buttonClasses } from 'utils/styling.js'
 
 const FlashMessage = props =>
   props.message && (
     <div
-      className={`pa2 flash-message`}
+      className={cx(
+        'pa2 flash-message',
+        {[`flash-message--${props.message.modifier}`]: props.message.modifier}
+      )}
     >
-      {props.message}
+      {props.message.text}
       <button
         className={`fr ${buttonClasses}`}
         onClick={props.closeFlashMessage}

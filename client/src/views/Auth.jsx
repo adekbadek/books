@@ -31,7 +31,10 @@ class Auth extends React.Component {
         if (res.status === 200) {
           return res.json()
         } else {
-          this.props.setFlashMessage('this email/password combination won\'t work')
+          this.props.setFlashMessage({
+            text: 'this email/password combination won\'t work',
+            modifier: 'error',
+          })
         }
       })
       .then(res => {
