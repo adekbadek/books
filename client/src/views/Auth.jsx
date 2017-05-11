@@ -2,7 +2,7 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 
 import LoginForm from 'components/LoginForm'
-import { saveCredentials, readCredentials } from 'utils/auth'
+import { saveCredentials, readCredentials } from 'utils/api'
 
 class Auth extends React.Component {
   constructor () {

@@ -7,10 +7,9 @@ import Calendar from 'components/Calendar'
 import Table from 'components/Table'
 import RouteLink from 'components/RouteLink'
 
-import { request } from 'utils/api.js'
+import { request, readCredentials, revokeCredentials } from 'utils/api.js'
 import { getAllReps } from 'utils/aux.js'
 import { DATE_FORMAT } from 'utils/time.js'
-import { readCredentials, revokeCredentials } from 'utils/auth'
 
 class Main extends React.Component {
   constructor () {
