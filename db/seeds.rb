@@ -22,3 +22,5 @@ books.each_with_index do |book, i|
 
   ApplicationController.change_reps(new_book)
 end
+
+User.create(email: 'example@mail.com' , password: '123')
