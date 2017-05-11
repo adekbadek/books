@@ -8,6 +8,7 @@ import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 
 import FlashMessage from 'components/FlashMessage'
+import HistoryObserver from 'components/HistoryObserver'
 import Auth from 'views/Auth'
 import Main from 'views/Main'
 
@@ -27,10 +28,10 @@ class App extends React.Component {
         <div>
           <FlashMessage />
           <Router>
-            <div>
+            <HistoryObserver>
               <Route exact path='/' component={Main} />
               <Route path='/auth' component={Auth} />
-            </div>
+            </HistoryObserver>
           </Router>
         </div>
       </Provider>
