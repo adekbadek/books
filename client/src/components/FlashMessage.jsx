@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import cx from 'classnames'
 
 import { buttonClasses } from 'utils/styling.js'
+import { setFlashMessage } from 'store/actions'
 
 const FlashMessage = props =>
   props.message && (
@@ -15,26 +16,16 @@ const FlashMessage = props =>
       {props.message.text}
       <button
         className={`fr ${buttonClasses}`}
-        onClick={props.closeFlashMessage}
+        onClick={() => props.setFlashMessage(null)}
       >close</button>
     </div>
   )
 
-const mapStateToProps = (state) => {
-  return {
-    message: state.ui.message
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    closeFlashMessage: () => {
-      dispatch({type: 'SET_FLASH_MESSAGE', message: null})
-    }
-  }
-}
+const mapStateToProps = (state) => ({
+  message: state.ui.message
+})
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {setFlashMessage}
 )(FlashMessage)

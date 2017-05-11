@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import LoginForm from 'components/LoginForm'
 import { saveCredentials, readCredentials } from 'utils/api'
+import { setFlashMessage } from 'store/actions'
 
 class Auth extends React.Component {
   constructor () {
@@ -53,15 +54,7 @@ class Auth extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setFlashMessage: message => {
-      dispatch({type: 'SET_FLASH_MESSAGE', message})
-    }
-  }
-}
-
 export default connect(
   null,
-  mapDispatchToProps
+  {setFlashMessage}
 )(Auth)
