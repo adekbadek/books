@@ -5,6 +5,7 @@ import {
   Route
 } from 'react-router-dom'
 
+import FlashMessage from 'components/FlashMessage'
 import Auth from 'views/Auth'
 import Main from 'views/Main'
 
@@ -13,12 +14,15 @@ import './styles/index.css'
 class App extends React.Component {
   render () {
     return (
-      <Router>
-        <div>
-          <Route exact path='/' component={Main} />
-          <Route path='/auth' component={Auth} />
-        </div>
-      </Router>
+      <div>
+        <FlashMessage />
+        <Router>
+          <div>
+            <Route exact path='/' component={Main} />
+            <Route path='/auth' component={Auth} />
+          </div>
+        </Router>
+      </div>
     )
   }
 }
