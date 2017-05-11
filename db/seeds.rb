@@ -6,21 +6,28 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-books = ['The Redux Book', 'Slaughterhouse Five', 'Sapiens: A Brief History of Humankind', 'Widnokrąg', 'Ciemno, prawie noc']
+user1 = User.create(email: 'user1@mail.com' , password: '123')
+user2 = User.create(email: 'user2@mail.com' , password: '123')
 
-books.each_with_index do |book, i|
-  end_date = Time.now - (Random.new.rand * 200).days
+book_titles_user_1 = ['The Redux Book', 'Slaughterhouse Five', 'Sapiens: A Brief History of Humankind', 'Widnokrąg', 'Ciemno, prawie noc']
+book_titles_user_2 = ['Atlas Shrugger', 'The Fontanaheads', 'Why The Buying']
 
-  new_book = Book.create(
-    title: book,
-    start_date: end_date - (Random.new.rand * 20 + 5).days
-  )
+def add_books_to_user(user, titles)
+  titles.each_with_index do |book, i|
+    end_date = Time.now - (Random.new.rand * 200).days
 
-  if i != 0
-    new_book.end_date = end_date    
+    new_book = user.books.create(
+      title: book,
+      start_date: end_date - (Random.new.rand * 20 + 5).days
+    )
+
+    if i != 0
+      new_book.end_date = end_date
+    end
+
+    ApplicationController.change_reps(new_book)
   end
-
-  ApplicationController.change_reps(new_book)
 end
 
-User.create(email: 'example@mail.com' , password: '123')
+add_books_to_user(user1, book_titles_user_1)
+add_books_to_user(user2, book_titles_user_2)
