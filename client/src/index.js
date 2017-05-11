@@ -5,10 +5,10 @@ import {
   Route
 } from 'react-router-dom'
 
-import './styles/index.css'
-
 import Auth from 'views/Auth'
 import Main from 'views/Main'
+
+import './styles/index.css'
 
 class App extends React.Component {
   render () {
