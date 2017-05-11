@@ -19,8 +19,10 @@
     "eslint-plugin-standard": "^3.0.1",
     "moment": "^2.18.1",
     "react-datepicker": "^0.46.0",
+    "react-redux": "^5.0.4",
     "react-router-dom": "^4.1.1",
     "react-scripts": "0.9.5",
+    "redux": "^3.6.0",
     "tachyons": "^4.7.1"
   },
   "scripts": {

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import LoginForm from 'components/LoginForm'
 import { saveCredentials, readCredentials } from 'utils/api'
@@ -30,8 +31,7 @@ class Auth extends React.Component {
         if (res.status === 200) {
           return res.json()
         } else {
-          // TODO: handle unsuccessful login attempt
-          console.log('unsuccessful login attempt')
+          this.props.setFlashMessage('this email/password combination won\'t work')
         }
       })
       .then(res => {
@@ -50,4 +50,15 @@ class Auth extends React.Component {
   }
 }
 
-export default Auth
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setFlashMessage: message => {
+      dispatch({type: 'SET_FLASH_MESSAGE', message})
+    }
+  }
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Auth)
