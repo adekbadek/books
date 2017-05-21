@@ -12,6 +12,7 @@ import Loader from 'components/Loader'
 import Auth from 'views/Auth'
 import Main from 'views/Main'
 
+import { getAuthViewURL, getRootViewURL } from 'utils/api.js'
 import store from 'store'
 
 import './styles/index.css'
@@ -25,8 +26,8 @@ class App extends React.Component {
           <Loader />
           <Router>
             <HistoryObserver>
-              <Route exact path='/' component={Main} />
-              <Route path='/auth' component={Auth} />
+              <Route exact path={getRootViewURL()} component={Main} />
+              <Route path={getAuthViewURL()} component={Auth} />
             </HistoryObserver>
           </Router>
         </div>

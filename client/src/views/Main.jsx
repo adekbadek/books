@@ -7,7 +7,13 @@ import Calendar from 'components/Calendar'
 import Table from 'components/Table'
 import RouteLink from 'components/RouteLink'
 
-import { request, readCredentials, revokeCredentials } from 'utils/api.js'
+import {
+  request,
+  readCredentials,
+  revokeCredentials,
+  getBooksURL,
+  getAuthViewURL,
+} from 'utils/api.js'
 import { getAllReps } from 'utils/aux.js'
 import { DATE_FORMAT } from 'utils/time.js'
 
@@ -31,7 +37,7 @@ class Main extends React.Component {
     e.preventDefault()
 
     request({
-      url: 'api/books',
+      url: getBooksURL(),
       method: 'POST',
       data: {
         title: this.state.createBookInputVal,
@@ -46,7 +52,7 @@ class Main extends React.Component {
       })
   }
   refreshBooks () {
-    request({url: '/api/books'})
+    request({url: getBooksURL()})
       .then(res => {
         if (res.status === 401) {
           // TODO: handle unauthed
@@ -59,7 +65,7 @@ class Main extends React.Component {
   }
   deleteBook (id) {
     request({
-      url: `api/books/${id}`,
+      url: getBooksURL(id),
       method: 'DELETE'
     })
       .then(() => {
@@ -70,7 +76,7 @@ class Main extends React.Component {
   }
   updateBook (id, updatedBook) {
     request({
-      url: `api/books/${id}`,
+      url: getBooksURL(id),
       method: 'PATCH',
       data: updatedBook,
     })
@@ -91,7 +97,7 @@ class Main extends React.Component {
   }
   render () {
     if (!this.state.authenticated) {
-      return <Redirect to='/auth' />
+      return <Redirect to={getAuthViewURL()} />
     }
 
     const todaysReps = this.getTodaysReps()
@@ -99,7 +105,7 @@ class Main extends React.Component {
       <div className='pa4'>
         <h1 className='dib mt0'>books</h1>
         <RouteLink
-          url='/auth'
+          url={getAuthViewURL()}
           className='fr'
           beforeAction={revokeCredentials}
         >logout</RouteLink>

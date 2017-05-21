@@ -25,3 +25,10 @@ export const request = ({url, method, data}) => {
     return v
   })
 }
+
+// URLs
+export const getRootViewURL = () => '/'
+export const getAuthViewURL = () => '/auth'
+
+export const getBooksURL = id => `/api/books${id ? `/${id}` : ''}`
+export const getAuthenticateURL = () => '/authenticate'
