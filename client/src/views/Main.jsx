@@ -141,12 +141,12 @@ class Main extends React.Component {
           </tr>
         </Table>
         <Calendar
-          ranges={this.state.books.map(book => {
-            return {start: book.start_date, end: book.end_date, name: book.title}
-          })}
-          points={this.state.books.map(book => {
-            return {name: book.title, points: [book.rep_1, book.rep_2, book.rep_3]}
-          })}
+          ranges={this.state.books.map(book => (
+            {start: book.start_date, end: book.end_date, name: book.title}
+          ))}
+          points={this.state.books.map(book => (
+            {name: book.title, points: [book.rep_1, book.rep_2, book.rep_3]}
+          ))}
         />
         <input type='text' placeholder='filter' value={this.state.searchInputVal} onChange={e => {
           this.setState({searchInputVal: e.target.value})
