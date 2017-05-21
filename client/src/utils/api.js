@@ -26,9 +26,17 @@ export const request = ({url, method, data}) => {
   })
 }
 
+const isProduction = process.env.NODE_ENV === 'production'
+
 // URLs
 export const getRootViewURL = () => '/'
 export const getAuthViewURL = () => '/auth'
 
-export const getBooksURL = id => `/api/books${id ? `/${id}` : ''}`
-export const getAuthenticateURL = () => '/authenticate'
+const PROD_API_URL = ''
+
+export const getBooksURL = id => (
+  `${isProduction ? PROD_API_URL : ''}/api/books${id ? `/${id}` : ''}`
+)
+export const getAuthenticateURL = () => (
+  `${isProduction ? PROD_API_URL : ''}/authenticate`
+)
