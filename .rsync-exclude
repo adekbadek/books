@@ -1,0 +1,15 @@
+.git
+.gitignore
+client
+node_modules
+.eslintrc
+.DS_Store
+.env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+tmp
+log
+README.md
+db/*.sqlite3
+db/*.sqlite3-journal
