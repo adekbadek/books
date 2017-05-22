@@ -1,3 +1,5 @@
+require 'json_web_token'
+
 class AuthorizeApiRequest
   prepend SimpleCommand
 
