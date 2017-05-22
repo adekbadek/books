@@ -31,6 +31,9 @@ gem 'simple_command'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors', :require => 'rack/cors'
 
+# load env vars from and .env file
+gem 'dotenv-rails'
+
 group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'

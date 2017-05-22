@@ -43,6 +43,10 @@ GEM
     builder (3.2.3)
     byebug (9.0.6)
     concurrent-ruby (1.0.5)
+    dotenv (2.2.1)
+    dotenv-rails (2.2.1)
+      dotenv (= 2.2.1)
+      railties (>= 3.2, < 5.2)
     erubi (1.6.0)
     ffi (1.9.18)
     globalid (0.4.0)
@@ -128,6 +132,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt (~> 3.1.7)
   byebug
+  dotenv-rails
   jwt
   listen (>= 3.0.5, < 3.2)
   pg
