@@ -1,0 +1,21 @@
+# https://blog.codeship.com/running-rails-development-environment-docker
+
+version: '2'
+services:
+  app:
+    build: .
+    command: bundle exec rails server -p 3000 -b '0.0.0.0'
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    links:
+      - postgres
+    env_file:
+      - .env
+  postgres:
+    image: postgres:9.4
+    ports:
+      - "5432"
+    env_file:
+      - .env
