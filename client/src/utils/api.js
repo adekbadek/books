@@ -40,3 +40,6 @@ export const getBooksURL = id => (
 export const getAuthenticateURL = () => (
   `${isProduction ? PROD_API_URL : ''}/authenticate`
 )
+export const getSignupURL = () => (
+  `${isProduction ? PROD_API_URL : ''}/signup`
+)

@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import LoginForm from 'components/LoginForm'
-import { saveCredentials, readCredentials, getAuthenticateURL } from 'utils/api'
+import { saveCredentials, readCredentials, getAuthenticateURL, getSignupURL } from 'utils/api'
 import { setFlashMessage } from 'store/actions'
 
 const authFetch = (url, fields) => {
@@ -32,7 +32,7 @@ class Auth extends React.Component {
     this.setState({authenticated: true})
   }
   handleSignUp (fields) {
-    authFetch('/signup', fields)
+    authFetch(getSignupURL(), fields)
       .then(res => res.json())
       .then(res => {
         // TODO: other errors?
