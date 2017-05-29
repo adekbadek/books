@@ -21,7 +21,7 @@ class App extends React.Component {
   render () {
     return (
       <Provider store={store}>
-        <div>
+        <div className='mw7 m-auto'>
           <FlashMessage />
           <Loader />
           <Router>
