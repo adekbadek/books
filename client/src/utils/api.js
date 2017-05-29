@@ -32,7 +32,7 @@ const isProduction = process.env.NODE_ENV === 'production'
 export const getRootViewURL = () => '/'
 export const getAuthViewURL = () => '/auth'
 
-const PROD_API_URL = 'http://198.211.105.126:3000'
+const PROD_API_URL = 'https://books-api.adamboro.com'
 
 export const getBooksURL = id => (
   `${isProduction ? PROD_API_URL : ''}/api/books${id ? `/${id}` : ''}`
