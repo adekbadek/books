@@ -18,22 +18,14 @@ import { getAllReps } from 'utils/aux.js'
 import { DATE_FORMAT } from 'utils/time.js'
 
 class Main extends React.Component {
-  constructor () {
-    super()
-    this.getBooks = this.getBooks.bind(this)
-    this.createBook = this.createBook.bind(this)
-    this.deleteBook = this.deleteBook.bind(this)
-    this.updateBook = this.updateBook.bind(this)
-    this.refreshBooks = this.refreshBooks.bind(this)
-    this.state = {
-      books: [],
-      createBookInputVal: '',
-      searchInputVal: '',
-      editedBookId: null,
-      authenticated: !!readCredentials(),
-    }
+  state = {
+    books: [],
+    createBookInputVal: '',
+    searchInputVal: '',
+    editedBookId: null,
+    authenticated: !!readCredentials(),
   }
-  createBook (e) {
+  createBook = (e) => {
     e.preventDefault()
 
     request({
@@ -51,7 +43,7 @@ class Main extends React.Component {
         })
       })
   }
-  refreshBooks () {
+  refreshBooks = () => {
     request({url: getBooksURL()})
       .then(res => {
         if (res.status === 401) {
@@ -63,7 +55,7 @@ class Main extends React.Component {
       })
       .then(books => books && this.setState({books}))
   }
-  deleteBook (id) {
+  deleteBook = (id) => {
     request({
       url: getBooksURL(id),
       method: 'DELETE'
@@ -74,7 +66,7 @@ class Main extends React.Component {
         })
       })
   }
-  updateBook (id, updatedBook) {
+  updateBook = (id, updatedBook) => {
     request({
       url: getBooksURL(id),
       method: 'PATCH',
@@ -88,7 +80,7 @@ class Main extends React.Component {
   componentDidMount () {
     this.refreshBooks()
   }
-  getBooks () {
+  getBooks = () => {
     const query = this.state.searchInputVal
     return this.state.books.filter(v => !query || v.title.match(new RegExp(query, 'i')))
   }

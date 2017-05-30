@@ -23,21 +23,16 @@ const serializeMessage = object => {
   }).join(' // ')
 }
 
-class Auth extends React.Component {
-  constructor () {
-    super()
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleSignUp = this.handleSignUp.bind(this)
-    this.authenticate = this.authenticate.bind(this)
-    this.state = {
-      authenticated: !!readCredentials(),
-    }
+@connect(null, {setFlashMessage})
+export default class Auth extends React.Component {
+  state = {
+    authenticated: !!readCredentials(),
   }
-  authenticate (token) {
+  authenticate = (token) => {
     saveCredentials(token)
     this.setState({authenticated: true})
   }
-  handleSignUp (fields) {
+  handleSignUp = (fields) => {
     authFetch(getSignupURL(), fields)
       .then(res => res.json())
       .then(res => {
@@ -51,7 +46,7 @@ class Auth extends React.Component {
         }
       })
   }
-  handleSubmit (e, fields) {
+  handleSubmit = (e, fields) => {
     e.preventDefault()
 
     authFetch(getAuthenticateURL(), fields)
@@ -79,8 +74,3 @@ class Auth extends React.Component {
     }
   }
 }
-
-export default connect(
-  null,
-  {setFlashMessage}
-)(Auth)

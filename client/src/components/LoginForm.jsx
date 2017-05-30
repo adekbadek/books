@@ -3,17 +3,13 @@ import React from 'react'
 const BUTTON_CLASSES = 'b ph3 pv2 mr2 input-reset ba b--black bg-transparent pointer f6 dib'
 
 class LoginForm extends React.Component {
-  constructor () {
-    super()
-    this.submitForm = this.submitForm.bind(this)
-  }
   getFields () {
     return {
       email: this.refs.email.value,
       password: this.refs.password.value,
     }
   }
-  submitForm (e) {
+  submitForm = (e) => {
     this.props.handleSubmit(e, this.getFields())
   }
   render () {
