@@ -7,7 +7,7 @@ class UsersController < ApplicationController
       command = AuthenticateUser.call(params[:email], params[:password])
       render json: { auth_token: command.result }
     else
-      render json: { email: params[:email], error: new_user.errors }, status: 400
+      render json: { error: new_user.errors }, status: 400
     end
   end
 

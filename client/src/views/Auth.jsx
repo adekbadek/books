@@ -17,6 +17,12 @@ const authFetch = (url, fields) => {
   })
 }
 
+const serializeMessage = object => {
+  return Object.keys(object).map(key => {
+    return `${key}: ${object[key].join(', ')}`
+  }).join(' // ')
+}
+
 class Auth extends React.Component {
   constructor () {
     super()
@@ -35,10 +41,9 @@ class Auth extends React.Component {
     authFetch(getSignupURL(), fields)
       .then(res => res.json())
       .then(res => {
-        // TODO: other errors?
-        if (res.error && res.error.email) {
+        if (res.error) {
           this.props.setFlashMessage({
-            text: `${res.email} ${res.error.email}`,
+            text: serializeMessage(res.error),
             modifier: 'error',
           })
         } else if (!res.error && res.auth_token) {
