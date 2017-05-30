@@ -15,7 +15,7 @@ import Main from 'views/Main'
 import { getAuthViewURL, getRootViewURL } from 'utils/api.js'
 import store from 'store'
 
-import './styles/index.css'
+import './styles/index.sass'
 
 class App extends React.Component {
   render () {

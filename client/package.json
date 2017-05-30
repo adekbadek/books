@@ -9,6 +9,7 @@
   "proxy": "http://localhost:3001/",
   "devDependencies": {
     "classnames": "^2.2.5",
+    "custom-react-scripts": "0.0.23",
     "eslint": "^3.19.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-config-standard-react": "^5.0.0",
@@ -21,7 +22,6 @@
     "react-datepicker": "^0.46.0",
     "react-redux": "^5.0.4",
     "react-router-dom": "^4.1.1",
-    "react-scripts": "0.9.5",
     "redux": "^3.6.0",
     "tachyons": "^4.7.1"
   },
@@ -29,8 +29,6 @@
     "start": "NODE_PATH=src react-scripts start",
     "build": "NODE_PATH=src react-scripts build",
     "test": "NODE_PATH=src react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "build-css": "node-sass src/styles/index.sass -o src/styles/",
-    "watch-css": "npm run build-css && node-sass src/styles/index.sass -o src/styles/ --watch"
+    "eject": "react-scripts eject"
   }
 }

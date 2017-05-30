@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "concurrently --prefix \"{name}\" --names \"RAILS,REACT,STYLES\" -c \"bgBlue,black.bgGreen,black.bgYellow\" \"rails s -p 3001\" \"(cd client && npm run start)\" \"(cd client && npm run watch-css)\"",
+    "dev": "concurrently --prefix \"{name}\" --names \"RAILS,REACT\" -c \"bgBlue,black.bgGreen,black.bgYellow\" \"rails s -p 3001\" \"(cd client && npm run start)\"",
     "deploy": "rsync -avz -e 'ssh' --exclude-from '.rsync-exclude' . scylla:/home/scylla/books",
     "build": "(cd client && npm run build)"
   },
