@@ -1,6 +1,9 @@
 .git
 .gitignore
-client
+client/node_modules
+client/public
+client/src
+client/package.json
 node_modules
 .eslintrc
 .DS_Store

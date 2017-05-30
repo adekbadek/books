@@ -2,7 +2,7 @@
 
 version: '2'
 services:
-  app:
+  api:
     build: .
     command: bundle exec rails server -p 3000 -b '0.0.0.0'
     volumes:
@@ -14,8 +14,15 @@ services:
     env_file:
       - .env
   postgres:
-    image: postgres:9.4
+    image: postgres:9.6.3
     ports:
       - "5432"
     env_file:
       - .env
+  web:
+    image: kyma/docker-nginx
+    command: nginx
+    volumes:
+      - ./client/build:/var/www
+    ports:
+      - "8080:80"
