@@ -1,13 +1,13 @@
 import store from 'store'
 import { setLoaderState } from 'store/actions'
 
-const LOCAL_STOREGE_ITEM = 'JWT'
+const LOCAL_STORAGE_ITEM = 'JWT'
 
-export const saveCredentials = token => localStorage.setItem(LOCAL_STOREGE_ITEM, token)
+export const saveCredentials = token => localStorage.setItem(LOCAL_STORAGE_ITEM, token)
 
-export const readCredentials = () => localStorage.getItem(LOCAL_STOREGE_ITEM)
+export const readCredentials = () => localStorage.getItem(LOCAL_STORAGE_ITEM)
 
-export const revokeCredentials = () => localStorage.removeItem(LOCAL_STOREGE_ITEM)
+export const revokeCredentials = () => localStorage.removeItem(LOCAL_STORAGE_ITEM)
 
 export const request = ({url, method, data}) => {
   store.dispatch(setLoaderState(true))
