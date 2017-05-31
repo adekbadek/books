@@ -35,12 +35,8 @@ export const getAuthViewURL = () => '/auth'
 
 const PROD_API_URL = 'https://books-api.adamboro.com'
 
-export const getBooksURL = id => (
-  `${isProduction ? PROD_API_URL : ''}/api/books${id ? `/${id}` : ''}`
-)
-export const getAuthenticateURL = () => (
-  `${isProduction ? PROD_API_URL : ''}/authenticate`
-)
-export const getSignupURL = () => (
-  `${isProduction ? PROD_API_URL : ''}/signup`
-)
+const getURL = endpoint => `${isProduction ? PROD_API_URL : ''}${endpoint}`
+
+export const getBooksURL = id => getURL(`/api/books${id ? `/${id}` : ''}`)
+export const getAuthenticateURL = () => getURL(`/authenticate`)
+export const getSignupURL = () => getURL(`/signup`)
