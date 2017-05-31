@@ -1,5 +1,6 @@
 import store from 'store'
-import { setLoaderState } from 'store/actions'
+import actions from 'store/actions'
+const { setLoaderState } = actions
 
 const LOCAL_STORAGE_ITEM = 'JWT'
 

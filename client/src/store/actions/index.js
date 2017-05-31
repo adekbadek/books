@@ -1,13 +1,6 @@
-export const setFlashMessage = message => ({
-  type: 'SET_FLASH_MESSAGE',
-  payload: {
-    message,
-  },
-})
+const actionCreator = type => payload => ({type, payload})
 
-export const setLoaderState = displayLoader => ({
-  type: 'SET_LOADER_STATE',
-  payload: {
-    displayLoader,
-  },
-})
+export default {
+  setFlashMessage: actionCreator('SET_FLASH_MESSAGE'),
+  setLoaderState: actionCreator('SET_LOADER_STATE'),
+}

@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 
 import LoginForm from 'components/LoginForm'
 import { saveCredentials, readCredentials, getAuthenticateURL, getSignupURL } from 'utils/api'
-import { setFlashMessage } from 'store/actions'
+import actions from 'store/actions'
+const { setFlashMessage } = actions
 
 const authFetch = (url, fields) => {
   return fetch(url, {

@@ -2,7 +2,8 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { setFlashMessage } from 'store/actions'
+import actions from 'store/actions'
+const { setFlashMessage } = actions
 
 class HistoryObserver extends React.Component {
   constructor (props) {

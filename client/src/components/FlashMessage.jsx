@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import cx from 'classnames'
 
 import { buttonClasses } from 'utils/styling.js'
-import { setFlashMessage } from 'store/actions'
+import actions from 'store/actions'
+const { setFlashMessage } = actions
 
 const FlashMessage = props =>
   props.message && (
