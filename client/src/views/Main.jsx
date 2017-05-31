@@ -26,7 +26,7 @@ import { DATE_FORMAT } from 'utils/time.js'
   state => ({user: state.user}),
   {setUserData}
 )
-class Main extends React.Component {
+export default class Main extends React.Component {
   state = {
     books: [],
     createBookInputVal: '',
@@ -193,5 +193,3 @@ class Main extends React.Component {
     )
   }
 }
-
-export default Main

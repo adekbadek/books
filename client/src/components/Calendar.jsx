@@ -13,7 +13,7 @@ const DIMENSIONS = {
 
 const CELL_CLASSNAME = 'calendar__cell'
 
-class Calendar extends React.Component {
+export default class Calendar extends React.Component {
   constructor () {
     super()
     const startDate = moment().startOf('year')
@@ -79,5 +79,3 @@ class Calendar extends React.Component {
     )
   }
 }
-
-export default Calendar

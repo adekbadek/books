@@ -2,7 +2,7 @@ import React from 'react'
 
 const BUTTON_CLASSES = 'b ph3 pv2 mr2 input-reset ba b--black bg-transparent pointer f6 dib'
 
-class LoginForm extends React.Component {
+export default class LoginForm extends React.Component {
   getFields () {
     return {
       email: this.refs.email.value,
@@ -43,5 +43,3 @@ class LoginForm extends React.Component {
     )
   }
 }
-
-export default LoginForm

@@ -5,7 +5,12 @@ import { connect } from 'react-redux'
 import actions from 'store/actions'
 const { setFlashMessage } = actions
 
-class HistoryObserver extends React.Component {
+@withRouter
+@connect(
+  null,
+  {setFlashMessage}
+)
+export default class HistoryObserver extends React.Component {
   constructor (props) {
     super(props)
     this.props.history.listen((location, action) => {
@@ -16,10 +21,3 @@ class HistoryObserver extends React.Component {
     return <div>{this.props.children}</div>
   }
 }
-
-export default withRouter(
-  connect(
-    null,
-    {setFlashMessage}
-  )(HistoryObserver)
-)
