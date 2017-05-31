@@ -12,6 +12,12 @@ class AuthenticateUser
     JsonWebToken.encode(user_id: user.id) if user
   end
 
+  def get_user_details
+    if user
+      user.slice(:name, :email)
+    end
+  end
+
   private
 
   attr_accessor :email, :password
