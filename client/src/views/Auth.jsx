@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import LoginForm from 'components/LoginForm'
 import { saveCredentials, readCredentials, getAuthenticateURL, getSignupURL } from 'utils/api'
 import actions from 'store/actions'
-const { setFlashMessage } = actions
+const { setFlashMessage, setUserData } = actions
 
 const authFetch = (url, fields) => {
   return fetch(url, {
@@ -24,7 +24,7 @@ const serializeMessage = object => {
   }).join(' // ')
 }
 
-@connect(null, {setFlashMessage})
+@connect(null, {setFlashMessage, setUserData})
 export default class Auth extends React.Component {
   state = {
     authenticated: !!readCredentials(),
@@ -63,6 +63,7 @@ export default class Auth extends React.Component {
       })
       .then(res => {
         if (res && res.auth_token) {
+          this.props.setUserData({...res.user})
           this.authenticate(res.auth_token)
         }
       })
