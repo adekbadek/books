@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   post 'authenticate', to: 'users#authenticate'
   post 'signup', to: 'users#signup'
+  get 'user', to: 'users#user'
 
   scope '/api' do
     get :books, to: 'books#index'

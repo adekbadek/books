@@ -1,5 +1,12 @@
 class UsersController < ApplicationController
-  skip_before_action :get_authenticated_user
+  skip_before_action :get_authenticated_user, only: [:signup, :authenticate]
+
+  def user
+    render(
+      status: 200,
+      json: self.get_authenticated_user.slice(:name, :email)
+    )
+  end
 
   def signup
     new_user = User.create(email: params[:email] , password: params[:password])
