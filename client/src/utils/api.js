@@ -40,3 +40,4 @@ const getURL = endpoint => `${isProduction ? PROD_API_URL : ''}${endpoint}`
 export const getBooksURL = id => getURL(`/api/books${id ? `/${id}` : ''}`)
 export const getAuthenticateURL = () => getURL(`/authenticate`)
 export const getSignupURL = () => getURL(`/signup`)
+export const getUserInfoURL = () => getURL(`/user`)

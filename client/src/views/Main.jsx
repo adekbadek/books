@@ -1,5 +1,6 @@
 import React from 'react'
 import moment from 'moment'
+import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
 import Book from 'components/Book'
@@ -7,16 +8,24 @@ import Calendar from 'components/Calendar'
 import Table from 'components/Table'
 import RouteLink from 'components/RouteLink'
 
+import actions from 'store/actions'
+const { setUserData } = actions
+
 import {
   request,
   readCredentials,
   revokeCredentials,
   getBooksURL,
   getAuthViewURL,
+  getUserInfoURL,
 } from 'utils/api.js'
 import { getAllReps } from 'utils/aux.js'
 import { DATE_FORMAT } from 'utils/time.js'
 
+@connect(
+  state => ({user: state.user}),
+  {setUserData}
+)
 class Main extends React.Component {
   state = {
     books: [],
@@ -24,6 +33,13 @@ class Main extends React.Component {
     searchInputVal: '',
     editedBookId: null,
     authenticated: !!readCredentials(),
+  }
+  getCurrentUser = () => {
+    request({
+      url: getUserInfoURL(),
+    })
+      .then(res => res.json())
+      .then(this.props.setUserData)
   }
   createBook = (e) => {
     e.preventDefault()
@@ -79,6 +95,7 @@ class Main extends React.Component {
   }
   componentDidMount () {
     this.refreshBooks()
+    this.getCurrentUser()
   }
   getBooks = () => {
     const query = this.state.searchInputVal
@@ -95,12 +112,15 @@ class Main extends React.Component {
     const todaysReps = this.getTodaysReps()
     return (
       <div className='pa4'>
-        <h1 className='dib mt0'>books</h1>
-        <RouteLink
-          url={getAuthViewURL()}
-          className='fr'
-          beforeAction={revokeCredentials}
-        >logout</RouteLink>
+        <div className='top'>
+          <h1 className='dib mt0'>books</h1>
+          <RouteLink
+            url={getAuthViewURL()}
+            className='fr'
+            beforeAction={revokeCredentials}
+          >logout</RouteLink>
+          <div className='fr pa1'>{this.props.user.email}</div>
+        </div>
         {!!todaysReps.length && (
           <Table
             wrapperClassName='pt2'
