@@ -1,15 +1,12 @@
 import React from 'react'
 import moment from 'moment'
-import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
 import Book from 'components/Book'
 import Calendar from 'components/Calendar'
 import Table from 'components/Table'
 import RouteLink from 'components/RouteLink'
-
-import actions from 'store/actions'
-const { setUserData } = actions
+import withUserInfo from 'components/hoc/withUserInfo'
 
 import {
   request,
@@ -17,15 +14,11 @@ import {
   revokeCredentials,
   getBooksURL,
   getAuthViewURL,
-  getUserInfoURL,
 } from 'utils/api.js'
 import { getAllReps } from 'utils/aux.js'
 import { DATE_FORMAT } from 'utils/time.js'
 
-@connect(
-  state => ({user: state.user}),
-  {setUserData}
-)
+@withUserInfo
 export default class Main extends React.Component {
   state = {
     books: [],
@@ -33,13 +26,6 @@ export default class Main extends React.Component {
     searchInputVal: '',
     editedBookId: null,
     authenticated: !!readCredentials(),
-  }
-  getCurrentUser = () => {
-    request({
-      url: getUserInfoURL(),
-    })
-      .then(res => res.json())
-      .then(this.props.setUserData)
   }
   createBook = (e) => {
     e.preventDefault()
@@ -95,7 +81,6 @@ export default class Main extends React.Component {
   }
   componentDidMount () {
     this.refreshBooks()
-    this.getCurrentUser()
   }
   getBooks = () => {
     const query = this.state.searchInputVal
