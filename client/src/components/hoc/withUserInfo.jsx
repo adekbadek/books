@@ -15,11 +15,13 @@ export default WrappedComponent => {
   )
   class WithUserInfo extends React.Component {
     getCurrentUser = () => {
-      request({
-        url: getUserInfoURL(),
-      })
-        .then(res => res.json())
-        .then(this.props.setUserData)
+      if (!this.props.user.email) {
+        request({
+          url: getUserInfoURL(),
+        })
+          .then(res => res.json())
+          .then(this.props.setUserData)
+      }
     }
     componentDidMount () {
       this.getCurrentUser()
