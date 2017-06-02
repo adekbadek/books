@@ -2,7 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import cx from 'classnames'
 
-import { buttonClasses } from 'utils/styling.js'
+import { borderButtonClasses } from 'utils/styling.js'
 import { getRangesForDate } from 'utils/time.js'
 import { times } from 'utils/aux.js'
 
@@ -26,7 +26,7 @@ export default class Calendar extends React.Component {
     return (
       <div className='pv4'>
         <div className='pb2 tc'>
-          <button className={buttonClasses}
+          <button className={borderButtonClasses}
             onClick={() => {
               this.setState({startDate: moment(this.state.startDate).subtract(1, 'year')})
             }}
@@ -34,7 +34,7 @@ export default class Calendar extends React.Component {
           <span className='ph4'>
             {this.state.startDate.format('YYYY')}
           </span>
-          <button className={buttonClasses}
+          <button className={borderButtonClasses}
             onClick={() => {
               this.setState({startDate: moment(this.state.startDate).add(1, 'year')})
             }}

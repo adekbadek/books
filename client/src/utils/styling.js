@@ -1,1 +1,1 @@
-export const buttonClasses = 'ba b--black bg-transparent pointer'
+export const borderButtonClasses = 'ba b--black bg-transparent pointer pa1'

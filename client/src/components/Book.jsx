@@ -4,7 +4,7 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import 'tachyons/css/tachyons.min.css'
 
-import { buttonClasses } from 'utils/styling.js'
+import { borderButtonClasses } from 'utils/styling.js'
 import { DATE_FORMAT } from 'utils/time.js'
 import { getRepDates } from 'utils/aux.js'
 
@@ -18,7 +18,7 @@ class EditBookTitle extends React.Component {
         this.props.updateHandler({title: this.refs.input.value})
       }}>
         <input autoFocus type='text' defaultValue={this.props.book.title} ref='input' />
-        <input type='submit' value='submit' className={`ml1 ${buttonClasses}`} />
+        <input type='submit' value='submit' className={`ml1 ${borderButtonClasses}`} />
       </form>
     )
   }
@@ -70,7 +70,7 @@ export default props =>
     </td>
     <td className={ROW_CLASSES}>
       <button
-        className={buttonClasses}
+        className={borderButtonClasses}
         onClick={() => {
           props.deleteHandler(props.book.id)
         }}

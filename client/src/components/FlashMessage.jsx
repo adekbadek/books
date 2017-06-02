@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import cx from 'classnames'
 
-import { buttonClasses } from 'utils/styling.js'
+import { borderButtonClasses } from 'utils/styling.js'
 import actions from 'store/actions'
 const { setFlashMessage } = actions
 
@@ -16,7 +16,7 @@ const FlashMessage = props =>
     >
       {props.message.text}
       <button
-        className={`fr ${buttonClasses}`}
+        className={`fr ${borderButtonClasses}`}
         onClick={() => props.setFlashMessage(null)}
       >close</button>
     </div>
