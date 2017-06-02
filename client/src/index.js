@@ -9,10 +9,12 @@ import { Provider } from 'react-redux'
 import FlashMessage from 'components/FlashMessage'
 import HistoryObserver from 'components/HistoryObserver'
 import Loader from 'components/Loader'
+
 import Auth from 'views/Auth'
 import Main from 'views/Main'
+import UserSettings from 'views/UserSettings'
 
-import { getAuthViewURL, getRootViewURL } from 'utils/api.js'
+import { getAuthViewURL, getRootViewURL, getUserSettingsViewURL } from 'utils/api.js'
 import store from 'store'
 
 import './styles/index.sass'
@@ -29,6 +31,7 @@ class App extends React.Component {
               <div className='pa4'>
                 <Route exact path={getRootViewURL()} component={Main} />
                 <Route path={getAuthViewURL()} component={Auth} />
+                <Route path={getUserSettingsViewURL()} component={UserSettings} />
               </div>
             </HistoryObserver>
           </Router>

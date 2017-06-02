@@ -14,6 +14,7 @@ import {
   revokeCredentials,
   getBooksURL,
   getAuthViewURL,
+  getUserSettingsViewURL,
 } from 'utils/api.js'
 import { getAllReps } from 'utils/aux.js'
 import { DATE_FORMAT } from 'utils/time.js'
@@ -102,9 +103,13 @@ export default class Main extends React.Component {
           <RouteLink
             url={getAuthViewURL()}
             className='fr'
+            borderButton
             beforeAction={revokeCredentials}
           >logout</RouteLink>
-          <div className='fr pa1'>{this.props.user.email}</div>
+          <RouteLink
+            url={getUserSettingsViewURL()}
+            className='fr pa1 pr2'
+          >{this.props.user.email}</RouteLink>
         </div>
         {!!todaysReps.length && (
           <Table

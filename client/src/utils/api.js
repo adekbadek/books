@@ -32,6 +32,7 @@ const isProduction = process.env.NODE_ENV === 'production'
 // URLs
 export const getRootViewURL = () => '/'
 export const getAuthViewURL = () => '/auth'
+export const getUserSettingsViewURL = () => '/settings'
 
 const PROD_API_URL = 'https://books-api.adamboro.com'
 
