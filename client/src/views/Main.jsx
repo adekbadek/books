@@ -111,7 +111,7 @@ export default class Main extends React.Component {
 
     const todaysReps = this.getTodaysReps()
     return (
-      <div className='pa4'>
+      <div>
         <div className='top'>
           <h1 className='dib mt0'>books</h1>
           <RouteLink

@@ -26,8 +26,10 @@ class App extends React.Component {
           <Loader />
           <Router>
             <HistoryObserver>
-              <Route exact path={getRootViewURL()} component={Main} />
-              <Route path={getAuthViewURL()} component={Auth} />
+              <div className='pa4'>
+                <Route exact path={getRootViewURL()} component={Main} />
+                <Route path={getAuthViewURL()} component={Auth} />
+              </div>
             </HistoryObserver>
           </Router>
         </div>

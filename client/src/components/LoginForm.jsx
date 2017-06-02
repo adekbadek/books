@@ -14,7 +14,7 @@ export default class LoginForm extends React.Component {
   }
   render () {
     return (
-      <div className='pt5 measure center'>
+      <div className='measure center'>
         <form onSubmit={this.submitForm}>
           <fieldset id='sign_up' className='ba b--transparent ph0 mh0'>
             <legend className='f4 fw6 ph0 mh0'>Log in or sign up</legend>
