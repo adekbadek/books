@@ -2,6 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { update } from 'ramda'
 
 import Book from 'components/Book'
 import Calendar from 'components/Calendar'
@@ -78,14 +79,15 @@ export default class Main extends React.Component {
         this.props.setBooks({books: this.props.books.filter(v => v.id !== id)})
       })
   }
-  updateBook = (id, updatedBook) => {
+  updateBook = (id, updatedBookIndex, updateData) => {
     request({
       url: getBooksURL(id),
       method: 'PATCH',
-      data: updatedBook,
+      data: updateData,
     })
-      .then(() => {
-        this.refreshBooks()
+      .then(res => res.json())
+      .then(book => {
+        this.props.setBooks({books: update(updatedBookIndex, book, this.props.books)})
         this.setState({editedBookId: null})
       })
   }
@@ -177,7 +179,7 @@ export default class Main extends React.Component {
               key={book.id}
               book={book}
               deleteHandler={this.deleteBook}
-              updateHandler={data => this.updateBook(book.id, data)}
+              updateHandler={data => this.updateBook(book.id, this.props.books.indexOf(book), data)}
               isEdited={this.state.editedBookId === book.id}
               onClickHandler={() => this.setState({editedBookId: book.id})}
             />

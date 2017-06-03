@@ -27,6 +27,9 @@ class BooksController < ApplicationController
     # TODO if reps are in updates (manual update), don't app_reps
     ApplicationController.change_reps(book)
 
-    render status: 200
+    render(
+      status: 200,
+      json: book
+    )
   end
 end
