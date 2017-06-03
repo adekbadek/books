@@ -22,7 +22,7 @@ const FlashMessage = props =>
     </div>
   )
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   message: state.ui.message
 })
 

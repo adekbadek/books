@@ -29,11 +29,11 @@ export default class Auth extends React.Component {
   state = {
     authenticated: !!readCredentials(),
   }
-  authenticate = (token) => {
+  authenticate = token => {
     saveCredentials(token)
     this.setState({authenticated: true})
   }
-  handleSignUp = (fields) => {
+  handleSignUp = fields => {
     authFetch(getSignupURL(), fields)
       .then(res => res.json())
       .then(res => {

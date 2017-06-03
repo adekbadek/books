@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 const Loader = props =>
   props.displayLoader && <div className='loader flex flex--center'>LOADING</div>
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   displayLoader: state.ui.displayLoader
 })
 

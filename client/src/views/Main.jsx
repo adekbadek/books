@@ -39,7 +39,7 @@ export default class Main extends React.Component {
       },
     })
       .then(res => res.json())
-      .then((book) => {
+      .then(book => {
         this.setState({
           books: this.state.books.concat([book]),
           createBookInputVal: ''
@@ -58,7 +58,7 @@ export default class Main extends React.Component {
       })
       .then(books => books && this.setState({books}))
   }
-  deleteBook = (id) => {
+  deleteBook = id => {
     request({
       url: getBooksURL(id),
       method: 'DELETE'
