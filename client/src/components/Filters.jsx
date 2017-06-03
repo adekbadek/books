@@ -11,9 +11,8 @@ const Filters = props => {
     props.setFilterInput(e.target.value)
   }
   return (
-    <div>
-      <input type='text' placeholder='filter' value={props.filterInput || ''} onChange={handleInputChange} />
-      <div className='mt2'>
+    <div className='mt2'>
+      <div className='dib'>
         {FILTER_NAMES.map((name, i) => (
           <button
             className={`${borderButtonClasses} mr2 ${props.filterType === name ? 'filter--active' : ''}`}
@@ -24,6 +23,7 @@ const Filters = props => {
           </button>
         ))}
       </div>
+      <input className='fr' type='text' placeholder='filter' value={props.filterInput || ''} onChange={handleInputChange} />
     </div>
   )
 }
