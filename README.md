@@ -1,9 +1,7 @@
 # Books
 
-## TODO?
+Book journal with spaced repetitions.
 
-### client
+## requirements
 
-- CSS Modules
-- HMR
-- fetch polyfill
+`node`
