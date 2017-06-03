@@ -10,10 +10,10 @@ export const readCredentials = () => localStorage.getItem(LOCAL_STORAGE_ITEM)
 
 export const revokeCredentials = () => localStorage.removeItem(LOCAL_STORAGE_ITEM)
 
-export const request = ({url, method, data}) => {
-  store.dispatch(setLoaderState(true))
+export const request = ({url, method = 'GET', data}) => {
+  method === 'GET' && store.dispatch(setLoaderState(true))
   const conf = {
-    method: method || 'GET',
+    method,
     headers: {
       'Authorization': readCredentials(),
     }
@@ -22,7 +22,7 @@ export const request = ({url, method, data}) => {
     conf.body = JSON.stringify(data)
   }
   return fetch(url, conf).then(v => {
-    store.dispatch(setLoaderState(null))
+    method === 'GET' && store.dispatch(setLoaderState(null))
     return v
   })
 }
