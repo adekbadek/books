@@ -10,6 +10,9 @@ import RouteLink from 'components/RouteLink'
 import Filters from 'components/Filters'
 import withUserInfo from 'components/hoc/withUserInfo'
 
+import actions from 'store/actions'
+const { setBooks } = actions
+
 import {
   request,
   readCredentials,
@@ -23,14 +26,15 @@ import { DATE_FORMAT } from 'utils/time.js'
 
 @connect(
   state => ({
+    books: state.books.books,
     filterInput: state.books.filterInput,
     filterType: state.books.filterType,
-  })
+  }),
+  {setBooks}
 )
 @withUserInfo
 export default class Main extends React.Component {
   state = {
-    books: [],
     createBookInputVal: '',
     editedBookId: null,
     authenticated: !!readCredentials(),
@@ -47,8 +51,8 @@ export default class Main extends React.Component {
     })
       .then(res => res.json())
       .then(book => {
+        this.props.setBooks({books: this.props.books.concat([book])})
         this.setState({
-          books: this.state.books.concat([book]),
           createBookInputVal: ''
         })
       })
@@ -63,7 +67,7 @@ export default class Main extends React.Component {
           return res.json()
         }
       })
-      .then(books => books && this.setState({books}))
+      .then(books => books && this.props.setBooks({books}))
   }
   deleteBook = id => {
     request({
@@ -71,9 +75,7 @@ export default class Main extends React.Component {
       method: 'DELETE'
     })
       .then(() => {
-        this.setState({
-          books: this.state.books.filter(v => v.id !== id)
-        })
+        this.props.setBooks({books: this.props.books.filter(v => v.id !== id)})
       })
   }
   updateBook = (id, updatedBook) => {
@@ -93,12 +95,12 @@ export default class Main extends React.Component {
   getBooks = () => {
     const query = this.props.filterInput
     const regexp = new RegExp(query, 'i')
-    return this.state.books
+    return this.props.books
       .filter(v => !query || v.title.match(regexp))
       .filter(FILTERS[this.props.filterType].predicate)
   }
   getTodaysReps () {
-    return getAllReps(this.state.books).filter(rep => moment().isSame(rep.date, 'day'))
+    return getAllReps(this.props.books).filter(rep => moment().isSame(rep.date, 'day'))
   }
   render () {
     if (!this.state.authenticated) {
@@ -137,7 +139,7 @@ export default class Main extends React.Component {
           <tr>
             <td>
               {
-                this.state.books
+                this.props.books
                   .filter(v => !v.end_date && moment().isAfter(v.start_date))
                   .map(book => <div className='pt1' key={book.id}>{book.title}</div>)
               }
@@ -145,7 +147,7 @@ export default class Main extends React.Component {
             <td>
               <table>
                 <tbody>
-                  {getAllReps(this.state.books).map((rep, i) => {
+                  {getAllReps(this.props.books).map((rep, i) => {
                     return moment().isBefore(rep.date) && <tr key={i}>
                       <td className='tooltip' data-info={moment(rep.date).format(DATE_FORMAT)}>
                         {moment(rep.date).fromNow(true)}
@@ -159,10 +161,10 @@ export default class Main extends React.Component {
           </tr>
         </Table>
         <Calendar
-          ranges={this.state.books.map(book => (
+          ranges={this.props.books.map(book => (
             {start: book.start_date, end: book.end_date, name: book.title}
           ))}
-          points={this.state.books.map(book => (
+          points={this.props.books.map(book => (
             {name: book.title, points: [book.rep_1, book.rep_2, book.rep_3]}
           ))}
         />
