@@ -1,11 +1,13 @@
 import React from 'react'
 import moment from 'moment'
 import { Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import Book from 'components/Book'
 import Calendar from 'components/Calendar'
 import Table from 'components/Table'
 import RouteLink from 'components/RouteLink'
+import Filters from 'components/Filters'
 import withUserInfo from 'components/hoc/withUserInfo'
 
 import {
@@ -16,15 +18,20 @@ import {
   getAuthViewURL,
   getUserSettingsViewURL,
 } from 'utils/api.js'
-import { getAllReps } from 'utils/aux.js'
+import { getAllReps, FILTERS } from 'utils/aux.js'
 import { DATE_FORMAT } from 'utils/time.js'
 
+@connect(
+  state => ({
+    filterInput: state.books.filterInput,
+    filterType: state.books.filterType,
+  })
+)
 @withUserInfo
 export default class Main extends React.Component {
   state = {
     books: [],
     createBookInputVal: '',
-    searchInputVal: '',
     editedBookId: null,
     authenticated: !!readCredentials(),
   }
@@ -84,8 +91,11 @@ export default class Main extends React.Component {
     this.refreshBooks()
   }
   getBooks = () => {
-    const query = this.state.searchInputVal
-    return this.state.books.filter(v => !query || v.title.match(new RegExp(query, 'i')))
+    const query = this.props.filterInput
+    const regexp = new RegExp(query, 'i')
+    return this.state.books
+      .filter(v => !query || v.title.match(regexp))
+      .filter(FILTERS[this.props.filterType].predicate)
   }
   getTodaysReps () {
     return getAllReps(this.state.books).filter(rep => moment().isSame(rep.date, 'day'))
@@ -156,9 +166,7 @@ export default class Main extends React.Component {
             {name: book.title, points: [book.rep_1, book.rep_2, book.rep_3]}
           ))}
         />
-        <input type='text' placeholder='filter' value={this.state.searchInputVal} onChange={e => {
-          this.setState({searchInputVal: e.target.value})
-        }} />
+        <Filters />
         <Table
           headers={['Title', 'Start', 'End', 'Reps', 'Actions']}
         >
