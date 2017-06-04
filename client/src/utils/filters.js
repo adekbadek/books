@@ -1,15 +1,19 @@
+export const isCurrent = book => book.start_date && !book.end_date
+export const isRead = book => book.start_date && book.end_date
+export const isToRead = book => !book.start_date && !book.end_date
+
 export const FILTERS = {
   CURRENT: {
     label: 'current',
-    predicate: book => book.start_date && !book.end_date,
+    predicate: isCurrent,
   },
   READ: {
     label: 'read',
-    predicate: book => book.start_date && book.end_date,
+    predicate: isRead,
   },
   TO_READ: {
     label: 'to read',
-    predicate: book => !book.start_date && !book.end_date,
+    predicate: isToRead,
   },
   ALL: {
     label: 'all',
