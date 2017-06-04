@@ -74,6 +74,12 @@ export default props =>
         onClick={() => {
           props.deleteHandler(props.book.id)
         }}
-      >rm</button>
+      >x</button>
+      {props.book.rep_1 && <button
+        className={`${borderButtonClasses} ml1`}
+        onClick={() => {
+          console.log('rm reps for', props.book.id)
+        }}
+      >rm reps</button>}
     </td>
   </tr>
