@@ -80,7 +80,11 @@ export default props =>
         {props.book.rep_1 && <button
           className={borderButtonClasses}
           onClick={() => {
-            console.log('rm reps for', props.book.id)
+            props.updateHandler({
+              rep_1: null,
+              rep_2: null,
+              rep_3: null,
+            })
           }}
         >remove reps</button>}
       </PopUpMenu>

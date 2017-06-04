@@ -24,8 +24,10 @@ class BooksController < ApplicationController
     updates = JSON.parse request.body.read
     book.update(updates)
 
-    # TODO if reps are in updates (manual update), don't app_reps
-    ApplicationController.change_reps(book)
+    keys = %w[rep_1 rep_2 rep_3]
+    if !(updates.keys & keys).any?
+      ApplicationController.change_reps(book)
+    end
 
     render(
       status: 200,
