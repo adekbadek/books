@@ -4,6 +4,7 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import 'tachyons/css/tachyons.min.css'
 
+import PopUpMenu from 'components/PopUpMenu'
 import { borderButtonClasses } from 'utils/styling.js'
 import { DATE_FORMAT } from 'utils/time.js'
 import { getRepDates } from 'utils/aux.js'
@@ -69,17 +70,19 @@ export default props =>
       )}
     </td>
     <td className={ROW_CLASSES}>
-      <button
-        className={borderButtonClasses}
-        onClick={() => {
-          props.deleteHandler(props.book.id)
-        }}
-      >x</button>
-      {props.book.rep_1 && <button
-        className={`${borderButtonClasses} ml1`}
-        onClick={() => {
-          console.log('rm reps for', props.book.id)
-        }}
-      >rm reps</button>}
+      <PopUpMenu>
+        <button
+          className={`${borderButtonClasses} mb1`}
+          onClick={() => {
+            props.deleteHandler(props.book.id)
+          }}
+        >remove</button>
+        {props.book.rep_1 && <button
+          className={borderButtonClasses}
+          onClick={() => {
+            console.log('rm reps for', props.book.id)
+          }}
+        >remove reps</button>}
+      </PopUpMenu>
     </td>
   </tr>

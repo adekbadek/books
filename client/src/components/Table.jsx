@@ -2,7 +2,7 @@ import React from 'react'
 
 export default props =>
   <div className={props.wrapperClassName || 'pv4'}>
-    <div className='overflow-auto'>
+    <div>
       <table className={`f6 w-100 mw8 center ${props.tableClassName}`} cellSpacing='0'>
         <thead>
           <tr>
