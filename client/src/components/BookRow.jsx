@@ -72,7 +72,7 @@ export default props =>
     <td className={ROW_CLASSES}>
       <PopUpMenu>
         <button
-          className={`${borderButtonClasses} mb1`}
+          className={borderButtonClasses}
           onClick={() => {
             props.deleteHandler(props.book.id)
           }}
