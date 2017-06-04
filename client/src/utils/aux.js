@@ -18,6 +18,9 @@ export const getAllReps = books => {
   return [].concat.apply([], reps)
 }
 
+const MAX_TITLE_LEN = 45
+export const displayBookTitle = title => title.length > MAX_TITLE_LEN ? `${title.substring(0, MAX_TITLE_LEN).trim()}…` : title
+
 export const FILTERS = {
   CURRENT: {
     label: 'current',

@@ -22,7 +22,7 @@ import {
   getAuthViewURL,
   getUserSettingsViewURL,
 } from 'utils/api.js'
-import { getAllReps, FILTERS } from 'utils/aux.js'
+import { getAllReps, FILTERS, displayBookTitle } from 'utils/aux.js'
 import { DATE_FORMAT } from 'utils/time.js'
 
 @connect(
@@ -143,7 +143,9 @@ export default class Main extends React.Component {
               {
                 this.props.books
                   .filter(v => !v.end_date && moment().isAfter(v.start_date))
-                  .map(book => <div className='pt1' key={book.id}>{book.title}</div>)
+                  .map(book => (
+                    <div className='pt1' key={book.id}>{displayBookTitle(book.title)}</div>
+                  ))
               }
             </td>
             <td>
