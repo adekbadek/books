@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { update } from 'ramda'
 
-import Book from 'components/Book'
+import BookRow from 'components/BookRow'
 import Calendar from 'components/Calendar'
 import Table from 'components/Table'
 import RouteLink from 'components/RouteLink'
@@ -177,7 +177,7 @@ export default class Main extends React.Component {
           headers={['Title', 'Start', 'End', 'Reps', 'Actions']}
         >
           {this.getBooks().map(book =>
-            <Book
+            <BookRow
               key={book.id}
               book={book}
               deleteHandler={this.deleteBook}
