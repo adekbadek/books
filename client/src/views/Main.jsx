@@ -22,7 +22,8 @@ import {
   getAuthViewURL,
   getUserSettingsViewURL,
 } from 'utils/api.js'
-import { getAllReps, FILTERS, displayBookTitle } from 'utils/aux.js'
+import { getAllReps, displayBookTitle } from 'utils/aux.js'
+import { FILTERS } from 'utils/filters.js'
 import { DATE_FORMAT } from 'utils/time.js'
 
 @connect(

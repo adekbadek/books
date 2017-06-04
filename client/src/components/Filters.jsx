@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import { borderButtonClasses } from 'utils/styling.js'
-import { FILTERS, FILTER_NAMES } from 'utils/aux.js'
+import { FILTERS, FILTER_NAMES } from 'utils/filters.js'
 import actions from 'store/actions'
 const { setFilterInput, setFilterType } = actions
 

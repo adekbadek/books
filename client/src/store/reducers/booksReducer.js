@@ -1,4 +1,4 @@
-import { FILTER_NAMES } from 'utils/aux.js'
+import { FILTER_NAMES } from 'utils/filters.js'
 
 const initialState = {
   books: [],
