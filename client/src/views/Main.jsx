@@ -157,7 +157,7 @@ export default class Main extends React.Component {
                       <td className='tooltip' data-info={moment(rep.date).format(DATE_FORMAT)}>
                         {moment(rep.date).fromNow(true)}
                       </td>
-                      <td>{rep.title}</td>
+                      <td>{displayBookTitle(rep.title)}</td>
                     </tr>
                   })}
                 </tbody>
