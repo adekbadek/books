@@ -17,7 +17,7 @@ import UserSettings from 'views/UserSettings'
 import { getAuthViewURL, getRootViewURL, getUserSettingsViewURL } from 'utils/api.js'
 import store from 'store'
 
-import './styles/index.sass'
+import 'styles/index.css'
 
 class App extends React.Component {
   render () {
