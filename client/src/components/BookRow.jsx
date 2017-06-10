@@ -1,8 +1,6 @@
 import React from 'react'
 import moment from 'moment'
 import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
-import 'tachyons/css/tachyons.min.css'
 
 import PopUpMenu from 'components/PopUpMenu'
 import { borderButtonClasses } from 'utils/styling.js'

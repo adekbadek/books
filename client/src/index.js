@@ -17,6 +17,8 @@ import UserSettings from 'views/UserSettings'
 import { getAuthViewURL, getRootViewURL, getUserSettingsViewURL } from 'utils/api.js'
 import store from 'store'
 
+import 'react-datepicker/dist/react-datepicker.css'
+import 'tachyons/css/tachyons.min.css'
 import 'styles/index.css'
 
 class App extends React.Component {
