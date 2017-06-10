@@ -1,6 +1,10 @@
-export const isCurrent = book => book.start_date && !book.end_date
-export const isRead = book => book.start_date && book.end_date
-export const isToRead = book => !book.start_date && !book.end_date
+// @flow
+
+import type { Book } from 'utils/types'
+
+export const isCurrent = (book: Book) => book.start_date && !book.end_date
+export const isRead = (book: Book) => book.start_date && book.end_date
+export const isToRead = (book: Book) => !book.start_date && !book.end_date
 
 export const FILTERS = {
   CURRENT: {
@@ -17,7 +21,7 @@ export const FILTERS = {
   },
   ALL: {
     label: 'all',
-    predicate: book => book,
+    predicate: (book: Book) => (book: Book),
   },
 }
 
