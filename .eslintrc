@@ -2,7 +2,8 @@
   "extends": ["standard", "standard-react"],
   "rules": {
     "comma-dangle": 0,
-    "react/prop-types": 0
+    "react/prop-types": 0,
+    "flowtype/define-flow-type": 1,
   },
   "plugins": [
     "flowtype"
