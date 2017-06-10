@@ -4,6 +4,9 @@
     "comma-dangle": 0,
     "react/prop-types": 0
   },
+  "plugins": [
+    "flowtype"
+  ],
   "env": {
     "browser": true,
     "jest": true
