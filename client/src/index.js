@@ -11,7 +11,7 @@ import HistoryObserver from 'components/HistoryObserver'
 import Loader from 'components/Loader'
 
 import Auth from 'views/Auth'
-import Main from 'views/Main'
+import AsyncMain from 'views/AsyncMain'
 import UserSettings from 'views/UserSettings'
 
 import { getAuthViewURL, getRootViewURL, getUserSettingsViewURL } from 'utils/api.js'
@@ -31,7 +31,7 @@ class App extends React.Component {
           <Router>
             <HistoryObserver>
               <div className='pa4'>
-                <Route exact path={getRootViewURL()} component={Main} />
+                <Route exact path={getRootViewURL()} component={AsyncMain} />
                 <Route path={getAuthViewURL()} component={Auth} />
                 <Route path={getUserSettingsViewURL()} component={UserSettings} />
               </div>
