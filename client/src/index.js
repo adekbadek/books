@@ -10,9 +10,11 @@ import FlashMessage from 'components/FlashMessage'
 import HistoryObserver from 'components/HistoryObserver'
 import Loader from 'components/Loader'
 
-import Auth from 'views/Auth'
-import AsyncMain from 'views/AsyncMain'
-import UserSettings from 'views/UserSettings'
+import {
+  AsyncMain,
+  AsyncAuth,
+  AsyncUserSettings
+} from 'components/AsyncLoaded'
 
 import { getAuthViewURL, getRootViewURL, getUserSettingsViewURL } from 'utils/api.js'
 import store from 'store'
@@ -31,8 +33,8 @@ class App extends React.Component {
             <HistoryObserver>
               <div className='pa4'>
                 <Route exact path={getRootViewURL()} component={AsyncMain} />
-                <Route path={getAuthViewURL()} component={Auth} />
-                <Route path={getUserSettingsViewURL()} component={UserSettings} />
+                <Route path={getAuthViewURL()} component={AsyncAuth} />
+                <Route path={getUserSettingsViewURL()} component={AsyncUserSettings} />
               </div>
             </HistoryObserver>
           </Router>
