@@ -12,7 +12,7 @@ const Loading = ({ isLoading, pastDelay, error }) => {
 }
 
 let LoadableMain = Loadable({
-  loader: () => import('./Main.jsx'),
+  loader: () => import(/* webpackChunkName: 'Main' */ './Main.jsx'),
   LoadingComponent: Loading,
 })
 
