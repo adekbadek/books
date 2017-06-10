@@ -1,8 +1,8 @@
 import React from 'react'
 import moment from 'moment'
-import DatePicker from 'react-datepicker'
 
 import PopUpMenu from 'components/PopUpMenu'
+import DateChooser from 'components/DateChooser'
 import { borderButtonClasses } from 'utils/styling.js'
 import { DATE_FORMAT } from 'utils/time.js'
 import { getRepDates } from 'utils/aux.js'
@@ -34,10 +34,7 @@ export default props =>
       </div>
     </td>
     <td className={ROW_CLASSES}>
-      <DatePicker
-        dateFormat={DATE_FORMAT}
-        locale='en-gb'
-        isClearable
+      <DateChooser
         selected={props.book.start_date ? moment(props.book.start_date) : null}
         highlightDates={props.book.end_date && [moment(props.book.end_date)]}
         maxDate={props.book.end_date ? moment(props.book.end_date) : moment()}
@@ -46,10 +43,7 @@ export default props =>
       />
     </td>
     <td className={ROW_CLASSES}>
-      <DatePicker
-        dateFormat={DATE_FORMAT}
-        locale='en-gb'
-        isClearable
+      <DateChooser
         selected={props.book.end_date ? moment(props.book.end_date) : null}
         highlightDates={props.book.start_date && [moment(props.book.start_date)]}
         minDate={props.book.start_date ? moment(props.book.start_date) : null}
