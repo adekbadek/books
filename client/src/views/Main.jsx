@@ -12,7 +12,6 @@ import Filters from 'components/Filters'
 import withUserInfo from 'components/hoc/withUserInfo'
 
 import actions from 'store/actions'
-const { setBooks } = actions
 
 import {
   request,
@@ -25,6 +24,8 @@ import {
 import { getAllReps, displayBookTitle } from 'utils/aux.js'
 import { FILTERS } from 'utils/filters.js'
 import { DATE_FORMAT } from 'utils/time.js'
+
+const { setBooks } = actions
 
 @connect(
   state => ({
