@@ -20,6 +20,7 @@
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-react": "^7.0.0",
     "eslint-plugin-standard": "^3.0.1",
+    "flow-bin": "^0.47.0",
     "moment": "^2.18.1",
     "react-datepicker": "^0.46.0",
     "react-redux": "^5.0.4",
@@ -31,6 +32,7 @@
     "start": "NODE_PATH=src react-scripts start",
     "build": "NODE_PATH=src react-scripts build",
     "test": "NODE_PATH=src react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "flow": "flow"
   }
 }
