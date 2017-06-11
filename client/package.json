@@ -112,8 +112,5 @@
       "babel-plugin-transform-decorators-legacy",
       "ramda"
     ]
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   }
 }
