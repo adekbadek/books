@@ -15,3 +15,13 @@ export type Range = {
   end: string,
   name: string,
 }
+
+export type AuthFormFields = {
+  email: string,
+  password: string,
+}
+
+export type Repetition = {
+  title: string,
+  date: string
+}

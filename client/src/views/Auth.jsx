@@ -1,39 +1,34 @@
+// @flow
+
+import type { AuthFormFields } from 'utils/types'
+
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import LoginForm from 'components/LoginForm'
-import { saveCredentials, readCredentials, getAuthenticateURL, getSignupURL } from 'utils/api'
+import {
+  saveCredentials,
+  readCredentials,
+  getAuthenticateURL,
+  getSignupURL,
+  authFetch,
+  serializeMessage
+} from 'utils/api'
 import actions from 'store/actions'
+
 const { setFlashMessage, setUserData } = actions
-
-const authFetch = (url, fields) => {
-  return fetch(url, {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json, text/plain, */*',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(fields)
-  })
-}
-
-const serializeMessage = object => {
-  return Object.keys(object).map(key => {
-    return `${key}: ${object[key].join(', ')}`
-  }).join(' // ')
-}
 
 @connect(null, {setFlashMessage, setUserData})
 export default class Auth extends React.Component {
   state = {
     authenticated: !!readCredentials(),
   }
-  authenticate = token => {
+  authenticate = (token: string) => {
     saveCredentials(token)
     this.setState({authenticated: true})
   }
-  handleSignUp = fields => {
+  handleSignUp = (fields: AuthFormFields) => {
     authFetch(getSignupURL(), fields)
       .then(res => res.json())
       .then(res => {
@@ -47,7 +42,7 @@ export default class Auth extends React.Component {
         }
       })
   }
-  handleSubmit = (e, fields) => {
+  handleSubmit = (e: SyntheticEvent, fields: AuthFormFields) => {
     e.preventDefault()
 
     authFetch(getAuthenticateURL(), fields)

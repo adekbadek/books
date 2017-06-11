@@ -1,4 +1,5 @@
 [ignore]
+.*/node_modules/*
 
 [include]
 
@@ -6,6 +7,7 @@
 flow-typed/
 
 [options]
+esproposal.decorators=ignore
 
 module.name_mapper='^components\/\(.*\)$' -> '<PROJECT_ROOT>/src/components/\1'
 module.name_mapper='^components$' -> '<PROJECT_ROOT>/src/components'

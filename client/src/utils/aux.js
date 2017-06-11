@@ -1,6 +1,6 @@
 // @flow
 
-import type { Book } from 'utils/types'
+import type { Book, Repetition } from 'utils/types'
 
 export const times = (number: number) => [...Array(number)]
 
@@ -8,7 +8,7 @@ const NUMBER_OF_REPS = 3
 
 export const getRepDates = (book: Book): Array<string> => times(NUMBER_OF_REPS).map((_, i) => book[`rep_${i + 1}`])
 
-export const getAllReps = (books: Array<Book>): Array<{title: string, date: string}> => {
+export const getAllReps = (books: Array<Book>): Array<Repetition> => {
   const reps = books.map(book => {
     return getRepDates(book)
       .filter(v => !!v)

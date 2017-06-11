@@ -1,6 +1,6 @@
 // @flow
 
-import type { Book } from 'utils/types'
+import type { Book, AuthFormFields } from 'utils/types'
 
 import store from 'store'
 import actions from 'store/actions'
@@ -14,7 +14,7 @@ export const readCredentials = (): any => localStorage.getItem(LOCAL_STORAGE_ITE
 
 export const revokeCredentials = () => localStorage.removeItem(LOCAL_STORAGE_ITEM)
 
-export const request = ({url, method = 'GET', data} : {url: string, method: string, data: any}) => {
+export const request = ({url, method = 'GET', data} : {url: string, method?: string, data?: any}) => {
   method === 'GET' && store.dispatch(setLoaderState(true))
 
   const conf = {
@@ -31,6 +31,23 @@ export const request = ({url, method = 'GET', data} : {url: string, method: stri
   })
 }
 
+export const authFetch = (url: string, fields: AuthFormFields) => {
+  return fetch(url, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json, text/plain, */*',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(fields)
+  })
+}
+
+export const serializeMessage = (object: {}) => {
+  return Object.keys(object).map(key => {
+    return `${key}: ${object[key].join(', ')}`
+  }).join(' // ')
+}
+
 const isProduction = process.env.NODE_ENV === 'production'
 
 // URLs
@@ -42,7 +59,7 @@ const PROD_API_URL = 'https://books-api.adamboro.com'
 
 const getURL = endpoint => `${isProduction ? PROD_API_URL : ''}${endpoint}`
 
-export const getBooksURL = (id: $PropertyType<Book, 'id'>) => getURL(`/api/books${id ? `/${id}` : ''}`)
+export const getBooksURL = (id?: $PropertyType<Book, 'id'>) => getURL(`/api/books${id ? `/${id}` : ''}`)
 export const getAuthenticateURL = () => getURL(`/authenticate`)
 export const getSignupURL = () => getURL(`/signup`)
 export const getUserInfoURL = () => getURL(`/user`)

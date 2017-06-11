@@ -1,3 +1,7 @@
+// @flow
+
+import type { Book, Repetition } from 'utils/types'
+
 import React from 'react'
 import moment from 'moment'
 import { Redirect } from 'react-router-dom'
@@ -37,12 +41,16 @@ const { setBooks } = actions
 )
 @withUserInfo
 export default class Main extends React.Component {
-  state = {
+  state: {
+    createBookInputVal: string,
+    editedBookId: null | $PropertyType<Book, 'id'>,
+    authenticated: boolean,
+  } = {
     createBookInputVal: '',
     editedBookId: null,
     authenticated: !!readCredentials(),
   }
-  createBook = (e) => {
+  createBook = (e: SyntheticEvent) => {
     e.preventDefault()
 
     request({
@@ -72,7 +80,7 @@ export default class Main extends React.Component {
       })
       .then(books => books && this.props.setBooks({books}))
   }
-  deleteBook = id => {
+  deleteBook = (id: $PropertyType<Book, 'id'>) => {
     request({
       url: getBooksURL(id),
       method: 'DELETE'
@@ -81,7 +89,7 @@ export default class Main extends React.Component {
         this.props.setBooks({books: this.props.books.filter(v => v.id !== id)})
       })
   }
-  updateBook = (id, updatedBookIndex, updateData) => {
+  updateBook = (id: $PropertyType<Book, 'id'>, updatedBookIndex: number, updateData: {}) => {
     request({
       url: getBooksURL(id),
       method: 'PATCH',
@@ -96,14 +104,14 @@ export default class Main extends React.Component {
   componentDidMount () {
     this.refreshBooks()
   }
-  getBooks = () => {
+  getBooks = (): Array<Book> => {
     const query = this.props.filterInput
     const regexp = new RegExp(query, 'i')
     return this.props.books
       .filter(v => !query || v.title.match(regexp))
       .filter(FILTERS[this.props.filterType].predicate)
   }
-  getTodaysReps () {
+  getTodaysReps = (): Array<Repetition> => {
     return getAllReps(this.props.books).filter(rep => moment().isSame(rep.date, 'day'))
   }
   render () {

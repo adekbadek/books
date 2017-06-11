@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react'
 
 import withUserInfo from 'components/hoc/withUserInfo'
