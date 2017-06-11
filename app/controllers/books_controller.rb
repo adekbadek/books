@@ -2,7 +2,7 @@ class BooksController < ApplicationController
   def index
     render(
       status: 200,
-      json: self.get_authenticated_user.books
+      json: ApplicationController.serialize_books(self.get_authenticated_user.books)
     )
   end
 
