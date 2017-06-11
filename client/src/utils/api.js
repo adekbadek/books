@@ -8,13 +8,13 @@ const { setLoaderState } = actions
 
 const LOCAL_STORAGE_ITEM = 'JWT'
 
-export const saveCredentials = (token: string) => localStorage.setItem(LOCAL_STORAGE_ITEM, token)
+export const saveCredentials = (token: string): void => localStorage.setItem(LOCAL_STORAGE_ITEM, token)
 
 export const readCredentials = (): any => localStorage.getItem(LOCAL_STORAGE_ITEM)
 
-export const revokeCredentials = () => localStorage.removeItem(LOCAL_STORAGE_ITEM)
+export const revokeCredentials = (): void => localStorage.removeItem(LOCAL_STORAGE_ITEM)
 
-export const request = ({url, method = 'GET', data} : {url: string, method?: string, data?: any}) => {
+export const request = ({url, method = 'GET', data} : {url: string, method?: string, data?: any}): Promise<*> => {
   method === 'GET' && store.dispatch(setLoaderState(true))
 
   const conf = {
@@ -31,7 +31,7 @@ export const request = ({url, method = 'GET', data} : {url: string, method?: str
   })
 }
 
-export const authFetch = (url: string, fields: AuthFormFields) => {
+export const authFetch = (url: string, fields: AuthFormFields): Promise<*> => {
   return fetch(url, {
     method: 'POST',
     headers: {
@@ -42,7 +42,7 @@ export const authFetch = (url: string, fields: AuthFormFields) => {
   })
 }
 
-export const serializeMessage = (object: {}) => {
+export const serializeMessage = (object: {}): string => {
   return Object.keys(object).map(key => {
     return `${key}: ${object[key].join(', ')}`
   }).join(' // ')
