@@ -1,3 +1,7 @@
+// @flow
+
+import type { FiltersProps } from 'utils/types'
+
 import React from 'react'
 import { connect } from 'react-redux'
 
@@ -6,7 +10,9 @@ import { FILTERS, FILTER_NAMES } from 'utils/filters.js'
 import actions from 'store/actions'
 const { setFilterInput, setFilterType } = actions
 
-const Filters = props => {
+// TODO: define FiltersProps here (proptypes bug?)
+
+const Filters = (props: FiltersProps) => {
   const handleInputChange = e => {
     props.setFilterInput(e.target.value)
   }

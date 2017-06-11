@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react'
 import moment from 'moment'
 import cx from 'classnames'
@@ -14,13 +16,10 @@ const DIMENSIONS = {
 const CELL_CLASSNAME = 'calendar__cell'
 
 export default class Calendar extends React.Component {
-  constructor () {
-    super()
-    const startDate = moment().startOf('year')
-    this.state = {
-      startDate,
-      firstDayOfYear: startDate.dayOfYear(1).day(),
-    }
+  state: {
+    startDate: moment,
+  } = {
+    startDate: moment().startOf('year'),
   }
   render () {
     return (

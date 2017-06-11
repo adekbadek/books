@@ -1,3 +1,7 @@
+// @flow
+
+import type { Book } from 'utils/types'
+
 import React from 'react'
 import moment from 'moment'
 
@@ -23,7 +27,14 @@ class EditBookTitle extends React.Component {
   }
 }
 
-export default props =>
+type BookRowProps = {
+  book: Book,
+  deleteHandler: $PropertyType<Book, 'id'> => void,
+  onClickHandler: () => void,
+  updateHandler: ({}) => void,
+}
+
+export default (props: BookRowProps) =>
   <tr>
     <td className={ROW_CLASSES} onClick={props.onClickHandler}>
       <div className='dib'>

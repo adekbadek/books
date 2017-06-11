@@ -1,3 +1,7 @@
+// @flow
+
+import type { User, ActionFunction } from 'utils/types'
+
 import React from 'react'
 import { connect } from 'react-redux'
 
@@ -8,12 +12,16 @@ import {
 import actions from 'store/actions'
 const { setUserData } = actions
 
-export default WrappedComponent => {
+export default (WrappedComponent: () => any) => {
   @connect(
     state => ({user: state.user}),
     {setUserData}
   )
   class WithUserInfo extends React.Component {
+    props: {
+      user: User,
+      setUserData: ActionFunction,
+    }
     getCurrentUser = () => {
       if (!this.props.user.email) {
         request({

@@ -1,6 +1,6 @@
 // @flow
 
-import type { AuthFormFields, FlashMessage, User } from 'utils/types'
+import type { AuthFormFields, FlashMessageObject, User } from 'utils/types'
 
 import React from 'react'
 import { Redirect } from 'react-router-dom'
@@ -23,7 +23,7 @@ const { setFlashMessage, setUserData } = actions
 export default class Auth extends React.Component {
   props: {
     setUserData: User => void,
-    setFlashMessage: FlashMessage => void,
+    setFlashMessage: FlashMessageObject => void,
   }
   state: {
     authenticated: boolean,

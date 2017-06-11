@@ -1,3 +1,7 @@
+// @flow
+
+import type { FlashMessageObject, ActionFunction } from 'utils/types'
+
 import React from 'react'
 import { connect } from 'react-redux'
 import cx from 'classnames'
@@ -6,8 +10,13 @@ import { borderButtonClasses } from 'utils/styling.js'
 import actions from 'store/actions'
 const { setFlashMessage } = actions
 
-const FlashMessage = props =>
-  props.message && (
+type FlashMessageProps = {
+  message: FlashMessageObject,
+  setFlashMessage: ActionFunction,
+}
+
+const FlashMessage = (props: FlashMessageProps) =>
+  props.message ? (
     <div
       className={cx(
         'pa2 flash-message',
@@ -17,10 +26,10 @@ const FlashMessage = props =>
       {props.message.text}
       <button
         className={`fr ${borderButtonClasses}`}
-        onClick={() => props.setFlashMessage(null)}
+        onClick={() => props.setFlashMessage(false)}
       >close</button>
     </div>
-  )
+  ) : null
 
 const mapStateToProps = state => ({
   message: state.ui.message

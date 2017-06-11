@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react'
 
 const BUTTON_CLASSES = 'b ph3 pv2 mr2 input-reset ba b--black bg-transparent pointer f6 dib'
@@ -9,7 +11,7 @@ export default class LoginForm extends React.Component {
       password: this.refs.password.value,
     }
   }
-  submitForm = (e) => {
+  submitForm = (e: SyntheticEvent) => {
     this.props.handleSubmit(e, this.getFields())
   }
   render () {

@@ -39,7 +39,16 @@ export type Action = {
   +payload: any,
 }
 
-export type FlashMessage = {
+export type ActionFunction = ($PropertyType<Action, 'payload'>) => void
+
+export type FlashMessageObject = {
   text: string,
   modifier: string,
+}
+
+export type FiltersProps = {
+  filterInput: string,
+  filterType: string,
+  setFilterInput: ActionFunction,
+  setFilterType: ActionFunction,
 }
