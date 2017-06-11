@@ -19,10 +19,6 @@ class ApplicationController < ActionController::API
       book.rep_0 = book.end_date + 10.days
       book.rep_1 = book.end_date + 30.days
       book.rep_2 = book.end_date + 60.days
-    else
-      book.rep_0 = nil
-      book.rep_1 = nil
-      book.rep_2 = nil
     end
     book.save
   end
