@@ -5,9 +5,7 @@ export type Book = {
   title: string,
   start_date?: string,
   end_date?: string,
-  rep_1?: null | string,
-  rep_2?: null | string,
-  rep_3?: null | string,
+  reps: Array<string>,
 }
 
 export type Range = {

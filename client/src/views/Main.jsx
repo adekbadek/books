@@ -186,7 +186,7 @@ export default class Main extends React.Component {
             {start: book.start_date, end: book.end_date, name: book.title}
           ))}
           points={this.props.books.map(book => (
-            {name: book.title, points: [book.rep_1, book.rep_2, book.rep_3]}
+            {name: book.title, points: book.reps}
           ))}
         />
         <Filters />
