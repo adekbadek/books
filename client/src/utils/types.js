@@ -25,3 +25,13 @@ export type Repetition = {
   title: string,
   date: string
 }
+
+export type User = {
+  name: string | null,
+  email: string,
+}
+
+export type Action = {
+  +type: string,
+  +payload: any,
+}

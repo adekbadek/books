@@ -1,4 +1,8 @@
-const actionCreator = type => payload => ({type, payload})
+// @flow
+
+import type { Action } from 'utils/types'
+
+const actionCreator = (type: $PropertyType<Action, 'type'>) => (payload: $PropertyType<Action, 'payload'>) => ({type, payload})
 
 export default {
   setFlashMessage: actionCreator('SET_FLASH_MESSAGE'),
