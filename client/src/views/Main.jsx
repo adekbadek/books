@@ -1,6 +1,6 @@
 // @flow
 
-import type { Book, Repetition } from 'utils/types'
+import type { Book, User, Repetition } from 'utils/types'
 
 import React from 'react'
 import moment from 'moment'
@@ -41,6 +41,13 @@ const { setBooks } = actions
 )
 @withUserInfo
 export default class Main extends React.Component {
+  props: {
+    setBooks: {books: Array<Book>} => void,
+    books: Array<Book>,
+    user: User,
+    filterInput: string,
+    filterType: string,
+  }
   state: {
     createBookInputVal: string,
     editedBookId: null | $PropertyType<Book, 'id'>,

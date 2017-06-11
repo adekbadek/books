@@ -1,6 +1,6 @@
 // @flow
 
-import type { AuthFormFields } from 'utils/types'
+import type { AuthFormFields, FlashMessage, User } from 'utils/types'
 
 import React from 'react'
 import { Redirect } from 'react-router-dom'
@@ -21,7 +21,13 @@ const { setFlashMessage, setUserData } = actions
 
 @connect(null, {setFlashMessage, setUserData})
 export default class Auth extends React.Component {
-  state = {
+  props: {
+    setUserData: User => void,
+    setFlashMessage: FlashMessage => void,
+  }
+  state: {
+    authenticated: boolean,
+  } = {
     authenticated: !!readCredentials(),
   }
   authenticate = (token: string) => {
@@ -57,7 +63,7 @@ export default class Auth extends React.Component {
         }
       })
       .then(res => {
-        if (res && res.auth_token) {
+        if (res && res.auth_token && res.user) {
           this.props.setUserData({...res.user})
           this.authenticate(res.auth_token)
         }

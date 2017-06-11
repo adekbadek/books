@@ -8,6 +8,9 @@ export type Book = {
   user_id: number,
   start_date?: string,
   end_date?: string,
+  rep_1?: null | string,
+  rep_2?: null | string,
+  rep_3?: null | string,
 }
 
 export type Range = {
@@ -34,4 +37,9 @@ export type User = {
 export type Action = {
   +type: string,
   +payload: any,
+}
+
+export type FlashMessage = {
+  text: string,
+  modifier: string,
 }
