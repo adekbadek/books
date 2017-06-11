@@ -8,12 +8,10 @@ export const getAllReps = (books: Array<Book>): Array<Repetition> => {
   const reps = books.map(book => {
     return book.reps
       .filter(v => !!v)
-      .map(date => {
-        return {
-          title: book.title,
-          date,
-        }
-      })
+      .map(date => ({
+        title: book.title,
+        date,
+      }))
   })
   return [].concat.apply([], reps)
 }
