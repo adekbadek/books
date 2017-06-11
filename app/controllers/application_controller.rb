@@ -3,7 +3,7 @@ class ApplicationController < ActionController::API
   attr_reader :current_user
 
   def self.serialize_books(books)
-    rep_keys = %w[rep_1 rep_2 rep_3]
+    rep_keys = %w[rep_0 rep_1 rep_2]
 
     books.map{|book|
       book = book.as_json
@@ -16,13 +16,13 @@ class ApplicationController < ActionController::API
 
   def self.change_reps(book)
     if book.end_date
-      book.rep_1 = book.end_date + 10.days
-      book.rep_2 = book.end_date + 30.days
-      book.rep_3 = book.end_date + 60.days
+      book.rep_0 = book.end_date + 10.days
+      book.rep_1 = book.end_date + 30.days
+      book.rep_2 = book.end_date + 60.days
     else
+      book.rep_0 = nil
       book.rep_1 = nil
       book.rep_2 = nil
-      book.rep_3 = nil
     end
     book.save
   end

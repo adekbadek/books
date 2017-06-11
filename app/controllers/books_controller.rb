@@ -24,7 +24,7 @@ class BooksController < ApplicationController
     updates = JSON.parse request.body.read
     book.update(updates)
 
-    keys = %w[rep_1 rep_2 rep_3]
+    keys = %w[rep_0 rep_1 rep_2]
     if !(updates.keys & keys).any?
       ApplicationController.change_reps(book)
     end
