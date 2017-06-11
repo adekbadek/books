@@ -34,6 +34,7 @@ const { setBooks } = actions
 @connect(
   state => ({
     books: state.books.books,
+    repetitions: getAllReps(state.books.books),
     filterInput: state.books.filterInput,
     filterType: state.books.filterType,
   }),
@@ -44,6 +45,7 @@ export default class Main extends React.Component {
   props: {
     setBooks: {books: Array<Book>} => void,
     books: Array<Book>,
+    repetitions: Array<Repetition>,
     user: User,
     filterInput: string,
     filterType: string,
@@ -119,7 +121,7 @@ export default class Main extends React.Component {
       .filter(FILTERS[this.props.filterType].predicate)
   }
   getTodaysReps = (): Array<Repetition> => {
-    return getAllReps(this.props.books).filter(rep => moment().isSame(rep.date, 'day'))
+    return this.props.repetitions.filter(rep => moment().isSame(rep.date, 'day'))
   }
   render () {
     if (!this.state.authenticated) {
@@ -168,7 +170,7 @@ export default class Main extends React.Component {
             <td>
               <table>
                 <tbody>
-                  {getAllReps(this.props.books).map((rep, i) => {
+                  {this.props.repetitions.map((rep, i) => {
                     return moment().isBefore(rep.date) && <tr key={i}>
                       <td className='tooltip' data-info={moment(rep.date).format(DATE_FORMAT)}>
                         {moment(rep.date).fromNow(true)}
