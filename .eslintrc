@@ -4,6 +4,7 @@
     "comma-dangle": 0,
     "react/prop-types": 0,
     "flowtype/define-flow-type": 1,
+    "react/no-unused-prop-types": 0,
   },
   "plugins": [
     "flowtype"

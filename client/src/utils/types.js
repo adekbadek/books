@@ -45,10 +45,3 @@ export type FlashMessageObject = {
   text: string,
   modifier: string,
 }
-
-export type FiltersProps = {
-  filterInput: string,
-  filterType: string,
-  setFilterInput: ActionFunction,
-  setFilterType: ActionFunction,
-}
