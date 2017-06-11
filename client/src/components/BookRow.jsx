@@ -9,6 +9,7 @@ import PopUpMenu from 'components/PopUpMenu'
 import DateChooser from 'components/DateChooser'
 import { borderButtonClasses } from 'utils/styling.js'
 import { DATE_FORMAT } from 'utils/time.js'
+import { getVisibleReps } from 'utils/aux.js'
 
 const ROW_CLASSES = 'pv2 pr3 bb b--black-20'
 
@@ -63,7 +64,7 @@ export default (props: BookRowProps) =>
       />
     </td>
     <td className={ROW_CLASSES}>
-      {props.book.reps.map((date, i) =>
+      {getVisibleReps(props.book).map((date, i) =>
         date && <div
           key={i}
           className={`dib reps-indicator ${moment().isBefore(date) ? 'reps-indicator__upcoming' : ''}`}
@@ -79,7 +80,7 @@ export default (props: BookRowProps) =>
             props.deleteHandler(props.book.id)
           }}
         >remove</button>
-        {props.book.reps.length > 0 && <button
+        {getVisibleReps(props.book).length > 0 && <button
           className={borderButtonClasses}
           onClick={() => {
             props.updateHandler({reps: null})

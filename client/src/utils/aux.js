@@ -16,5 +16,7 @@ export const getAllReps = (books: Array<Book>): Array<Repetition> => {
   return [].concat.apply([], reps)
 }
 
+export const getVisibleReps = (book: Book): Array<*> => book.end_date ? book.reps : []
+
 const MAX_TITLE_LEN = 35
 export const displayBookTitle = (title: string) => title.length > MAX_TITLE_LEN ? `${title.substring(0, MAX_TITLE_LEN).trim()}…` : title

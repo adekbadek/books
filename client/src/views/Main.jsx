@@ -15,6 +15,7 @@ import RouteLink from 'components/RouteLink'
 import Filters from 'components/Filters'
 import withUserInfo from 'components/hoc/withUserInfo'
 
+import { getVisibleReps } from 'utils/aux'
 import actions from 'store/actions'
 
 import {
@@ -188,7 +189,7 @@ export default class Main extends React.Component {
             {start: book.start_date, end: book.end_date, name: book.title}
           ))}
           points={this.props.books.map(book => (
-            {name: book.title, points: book.reps}
+            {name: book.title, points: getVisibleReps(book)}
           ))}
         />
         <Filters />
