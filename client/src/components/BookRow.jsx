@@ -46,6 +46,7 @@ export default (props: BookRowProps) =>
     </td>
     <td className={ROW_CLASSES}>
       <DateChooser
+        isClearable={!props.book.end_date}
         selected={props.book.start_date ? moment(props.book.start_date) : null}
         highlightDates={props.book.end_date && [moment(props.book.end_date)]}
         maxDate={props.book.end_date ? moment(props.book.end_date) : moment()}
