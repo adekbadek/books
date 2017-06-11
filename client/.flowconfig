@@ -19,3 +19,7 @@ module.name_mapper='^views\/\(.*\)$' -> '<PROJECT_ROOT>/src/views/\1'
 module.name_mapper='^views$' -> '<PROJECT_ROOT>/src/views'
 module.name_mapper='^styles\/\(.*\)$' -> '<PROJECT_ROOT>/src/styles/\1'
 module.name_mapper='^styles$' -> '<PROJECT_ROOT>/src/styles'
+
+# webpack loaders
+module.name_mapper='.*\.css$' -> '<PROJECT_ROOT>/config/flow/css-stub.js'
+module.name_mapper='.*\.\(svg\|png\|jpg\|gif\)$' -> '<PROJECT_ROOT>/config/flow/url-loader.js'
