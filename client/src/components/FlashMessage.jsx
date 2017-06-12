@@ -19,7 +19,7 @@ const FlashMessage = (props: FlashMessageProps) =>
   props.message ? (
     <div
       className={cx(
-        'pa2 flash-message',
+        'pa2 flash-message flex flex--spread',
         {[`flash-message--${props.message.modifier}`]: props.message.modifier}
       )}
     >
