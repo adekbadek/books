@@ -1,5 +1,7 @@
 // @flow
 
+import type { Range } from 'utils/types'
+
 import React from 'react'
 import moment from 'moment'
 import cx from 'classnames'
@@ -7,6 +9,11 @@ import cx from 'classnames'
 import { borderButtonClasses } from 'utils/styling.js'
 import { getRangesForDate } from 'utils/time.js'
 import { times } from 'utils/aux.js'
+
+type CalendarPoint = {
+  points: Array<string>,
+  name: string,
+}
 
 const DIMENSIONS = {
   columns: 53,
@@ -19,6 +26,10 @@ const MONTH_DAYS_NAMES = moment.monthsShort()
 const CELL_CLASSNAME = 'calendar__cell'
 
 export default class Calendar extends React.Component {
+  props: {
+    ranges: Array<Range>,
+    points: Array<CalendarPoint>,
+  }
   state: {
     startDate: moment,
   } = {

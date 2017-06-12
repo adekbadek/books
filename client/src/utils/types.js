@@ -9,8 +9,8 @@ export type Book = {
 }
 
 export type Range = {
-  start: string,
-  end: string,
+  start?: string,
+  end?: string,
   name: string,
 }
 
