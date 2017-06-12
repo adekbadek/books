@@ -1,9 +1,12 @@
+$cell_side: 10px
+
 .calendar
+  padding-top: $cell_side + 5px
   &__cell
     position: relative
     background-color: $dark-grey
-    width: 10px
-    height: 10px
+    width: $cell_side
+    height: $cell_side
     margin: 1px
     border: 1px solid transparent
     border-top-color: transparent
@@ -30,3 +33,18 @@
       opacity: .5
     &--today
       border: 1px solid $black
+    &--display-name
+      &:before
+        position: absolute
+        font-size: 9px
+        opacity: .7
+    &--display-day-name
+      &:before
+        content: attr(data-dayname)
+        top: -1px
+        right: $cell_side + 5px
+        text-align: right
+    &--display-month-name
+      &:before
+        content: attr(data-monthname)
+        top: -$cell_side - 5px

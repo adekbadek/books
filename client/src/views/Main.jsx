@@ -173,7 +173,8 @@ export default class Main extends React.Component {
                 <tbody>
                   {this.props.repetitions.map((rep, i) => {
                     return moment().isBefore(rep.date) && <tr key={i}>
-                      <td className='tooltip' data-info={moment(rep.date).format(DATE_FORMAT)}>
+                      <td className='tooltip__wrapper'>
+                        <span className='tooltip' data-info={moment(rep.date).format(DATE_FORMAT)} />
                         {moment(rep.date).fromNow(true)}
                       </td>
                       <td>{displayBookTitle(rep.title)}</td>
