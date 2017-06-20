@@ -16,6 +16,7 @@ import Filters from 'components/Filters'
 import withUserInfo from 'components/hoc/withUserInfo'
 
 import { getVisibleReps } from 'utils/aux'
+import { filteredBooksSelector } from 'store/selectors'
 import actions from 'store/actions'
 
 import {
@@ -35,6 +36,7 @@ const { setBooks } = actions
 @connect(
   state => ({
     books: state.books.books,
+    filteredBooks: filteredBooksSelector(state.books, FILTERS),
     repetitions: getAllReps(state.books.books),
     filterInput: state.books.filterInput,
     filterType: state.books.filterType,
@@ -46,6 +48,7 @@ export default class Main extends React.Component {
   props: {
     setBooks: {books: Array<Book>} => void,
     books: Array<Book>,
+    filteredBooks: Array<Book>,
     repetitions: Array<Repetition>,
     user: User,
     filterInput: string,
@@ -113,13 +116,6 @@ export default class Main extends React.Component {
   }
   componentDidMount () {
     this.refreshBooks()
-  }
-  getBooks = (): Array<Book> => {
-    const query = this.props.filterInput
-    const regexp = new RegExp(query, 'i')
-    return this.props.books
-      .filter(v => !query || v.title.match(regexp))
-      .filter(FILTERS[this.props.filterType].predicate)
   }
   getTodaysReps = (): Array<Repetition> => {
     return this.props.repetitions.filter(rep => moment().isSame(rep.date, 'day'))
@@ -197,7 +193,7 @@ export default class Main extends React.Component {
         <Table
           headers={['Title', 'Start', 'End', 'Reps', 'Actions']}
         >
-          {this.getBooks().map(book =>
+          {this.props.filteredBooks.map(book =>
             <BookRow
               key={book.id}
               book={book}

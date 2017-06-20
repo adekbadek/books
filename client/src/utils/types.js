@@ -40,3 +40,9 @@ export type FlashMessageObject = {
   text: string,
   modifier: string,
 }
+
+export type MainState = {
+  +books: Array<Book>,
+  +filterType: string,
+  +filterInput?: string,
+}
