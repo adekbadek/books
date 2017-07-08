@@ -4,6 +4,7 @@
     "deploy": "rsync -avz -e 'ssh' --exclude-from '.rsync-exclude' . scylla:/home/scylla/books",
     "build:deploy": "npm run build && npm run deploy",
     "build": "(cd client && npm run build)",
+    "postinstall": "cd client/ && yarn install",
     "commit": "git-cz",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },

@@ -6,4 +6,28 @@ Book journal with spaced repetitions.
 
 ## requirements
 
-`node`
+- `node`
+- `ruby`
+- `yarn` for managing JS dependencies
+
+## installing
+
+```shell
+bundle
+npm install
+```
+
+## developing
+
+```shell
+npm start
+```
+
+This project uses [commitizen](https://commitizen.github.io/cz-cli/), please commit with `npm run commit`
+
+## testing
+
+```shell
+cd client/
+npm t
+```
