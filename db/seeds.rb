@@ -9,12 +9,27 @@
 user1 = User.create(email: 'user1@mail.com' , password: '123')
 user2 = User.create(email: 'user2@mail.com' , password: '123')
 
-book_titles_user_1 = ['The Invention of Nature: The Adventures of Alexander von Humboldt, the Lost Hero of Science', 'Slaughterhouse Five', 'Sapiens: A Brief History of Humankind', 'Widnokrąg', 'Ciemno, prawie noc']
-book_titles_user_2 = ['Atlas Shrugger', 'The Fontanaheads', 'Why The Buying']
+book_titles_user_1 = [
+  'The Invention of Nature: The Adventures of Alexander von Humboldt, the Lost Hero of Science',
+  'Slaughterhouse Five',
+  'Sapiens: A Brief History of Humankind',
+  'Widnokrąg',
+  'Ciemno, prawie noc',
+  'Code Complete',
+  'Black Cloud',
+  'Homo Deus',
+  'Obietnica Poranka',
+  'Autobiografia Alicji B. Toklas'
+]
+book_titles_user_2 = [
+  'Atlas Shrugger',
+  'The Fontanaheads',
+  'Why The Buying'
+]
 
 def add_books_to_user(user, titles)
   titles.each_with_index do |book, i|
-    end_date = Time.now - (Random.new.rand * 200).days
+    end_date = Time.now - (Random.new.rand * 150).days
 
     new_book = user.books.create(
       title: book,
