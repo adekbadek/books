@@ -8,7 +8,7 @@ import cx from 'classnames'
 
 import { borderButtonClasses } from 'utils/styling.js'
 import { getRangesForDate } from 'utils/time.js'
-import { times } from 'utils/aux.js'
+import { times, getColorFromString } from 'utils/aux.js'
 
 type CalendarPoint = {
   points: Array<string>,
@@ -34,6 +34,13 @@ export default class Calendar extends React.Component {
     startDate: moment,
   } = {
     startDate: moment().startOf('year'),
+  }
+  getCellStyles = (rangesNames: Array<string>) => {
+    if (rangesNames.length > 0) {
+      return {backgroundColor: getColorFromString(rangesNames.join(), '#00ff00')}
+    } else {
+      return {}
+    }
   }
   render () {
     const displayedMonthNames = []
@@ -62,7 +69,7 @@ export default class Calendar extends React.Component {
                   const dayOfYearIndex = i * 7 + j + 1
                   const date = moment(this.state.startDate).dayOfYear(dayOfYearIndex - this.state.startDate.day())
                   let points = []
-                  const isInRange = getRangesForDate(date, this.props.ranges)
+                  const rangesNames = getRangesForDate(date, this.props.ranges)
                   const isAPoint = !!this.props.points.filter(point => {
                     const is = !!point.points.filter(v => date.isSame(v)).length
                     if (is) {
@@ -86,7 +93,6 @@ export default class Calendar extends React.Component {
                         {[`${CELL_CLASSNAME}--display-day-name`]: displayDayName},
                         {[`${CELL_CLASSNAME}--display-month-name`]: displayMonthName},
                         {[`${CELL_CLASSNAME}--today`]: moment().isSame(date, 'day')},
-                        {[`${CELL_CLASSNAME}--in-range`]: !!isInRange.length},
                         {[`${CELL_CLASSNAME}--point`]: isAPoint},
                         {[`${CELL_CLASSNAME}--point--dimmed`]: isAPoint && moment().isAfter(date, 'day')},
                         {[`${CELL_CLASSNAME}--border-top`]: date.date() === 1},
@@ -94,10 +100,11 @@ export default class Calendar extends React.Component {
                       )}
                       data-dayname={displayDayName ? WEEK_DAYS_NAMES[j] : ''}
                       data-monthname={displayMonthName || ''}
+                      style={this.getCellStyles(rangesNames)}
                     >
-                      {(!!isInRange.length || isAPoint) && <span
+                      {(!!rangesNames.length || isAPoint) && <span
                         className='tooltip'
-                        data-info={`${date.format('DD MMM')}${isInRange.length ? ` | ${isInRange.join(', ')}` : ''}${isAPoint ? ` | rep - ${points.join(', ')}` : ''}`}
+                        data-info={`${date.format('DD MMM')}${rangesNames.length ? ` | ${rangesNames.join(', ')}` : ''}${isAPoint ? ` | rep - ${points.join(', ')}` : ''}`}
                       />}
                     </div>
                   )
