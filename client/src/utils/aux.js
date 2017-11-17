@@ -1,6 +1,7 @@
 // @flow
 
 import color from 'color'
+import memoize from 'lodash.memoize'
 
 import type { Book, Repetition } from 'utils/types'
 
@@ -36,10 +37,12 @@ const intToRGB = (i: number): string => {
   return '00000'.substring(0, 6 - c.length) + c
 }
 
-export const getColorFromString = (str: string, bias?: string): string => {
+const getColorFromStringFunc = (str: string, bias?: string): string => {
   let hexColor = color(`#${intToRGB(hashCode(str))}`)
   if (bias) {
     hexColor = hexColor.mix(color(bias))
   }
   return hexColor.string()
 }
+
+export const getColorFromString = memoize(getColorFromStringFunc)
