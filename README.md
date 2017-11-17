@@ -4,6 +4,8 @@
 
 Book journal with spaced repetitions.
 
+![printscreen](/printscreen.png)
+
 ## requirements
 
 - `node`
