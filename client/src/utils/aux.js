@@ -37,10 +37,9 @@ const intToRGB = (i: number): string => {
 }
 
 export const getColorFromString = (str: string, bias?: string): string => {
-  let hexColor = `#${intToRGB(hashCode(str))}`
-  hexColor = color(hexColor)
+  let hexColor = color(`#${intToRGB(hashCode(str))}`)
   if (bias) {
     hexColor = hexColor.mix(color(bias))
   }
-  return `rgb(${hexColor.values.rgb.join(', ')})`
+  return hexColor.string()
 }

@@ -9,6 +9,7 @@ import cx from 'classnames'
 import { borderButtonClasses } from 'utils/styling.js'
 import { getRangesForDate } from 'utils/time.js'
 import { times, getColorFromString } from 'utils/aux.js'
+import { COLOR } from 'utils/consts.js'
 
 type CalendarPoint = {
   points: Array<string>,
@@ -37,7 +38,7 @@ export default class Calendar extends React.Component {
   }
   getCellStyles = (rangesNames: Array<string>) => {
     if (rangesNames.length > 0) {
-      return {backgroundColor: getColorFromString(rangesNames.join(), '#00ff00')}
+      return {backgroundColor: getColorFromString(rangesNames.join(), COLOR)}
     } else {
       return {}
     }
