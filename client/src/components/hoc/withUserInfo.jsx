@@ -4,6 +4,7 @@ import type { User, ActionFunction } from 'utils/types'
 
 import React from 'react'
 import { connect } from 'react-redux'
+import { isEmpty } from 'ramda'
 
 import {
   request,
@@ -23,11 +24,8 @@ export default (WrappedComponent: () => any) => {
       setUserData: ActionFunction,
     }
     getCurrentUser = () => {
-      if (!this.props.user.email) {
-        request({
-          url: getUserInfoURL(),
-        })
-          .then(res => res.json())
+      if (isEmpty(this.props.user)) {
+        request({url: getUserInfoURL()})
           .then(this.props.setUserData)
       }
     }

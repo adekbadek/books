@@ -73,7 +73,6 @@ export default class Main extends React.Component {
         title: this.state.createBookInputVal,
       },
     })
-      .then(res => res.json())
       .then(book => {
         this.props.setBooks({books: this.props.books.concat([book])})
         this.setState({
@@ -83,14 +82,6 @@ export default class Main extends React.Component {
   }
   refreshBooks = () => {
     request({url: getBooksURL()})
-      .then(res => {
-        if (res.status === 401) {
-          // TODO: handle unauthed
-          console.log('unauthorized')
-        } else if (res.status === 200) {
-          return res.json()
-        }
-      })
       .then(books => books && this.props.setBooks({books}))
   }
   deleteBook = (id: $PropertyType<Book, 'id'>) => {
@@ -108,7 +99,6 @@ export default class Main extends React.Component {
       method: 'PATCH',
       data: updateData,
     })
-      .then(res => res.json())
       .then(book => {
         this.props.setBooks({books: update(updatedBookIndex, book, this.props.books)})
         this.setState({editedBookId: null})

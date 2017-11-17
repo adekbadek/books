@@ -1,11 +1,10 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  post 'authenticate', to: 'users#authenticate'
-  post 'signup', to: 'users#signup'
-  get 'user', to: 'users#user'
-
-  scope '/api' do
+  scope '/v1' do
+    post 'authenticate', to: 'users#authenticate'
+    post 'signup', to: 'users#signup'
+    get 'user', to: 'users#user'
     get :books, to: 'books#index'
     post :books, to: 'books#create'
     delete ':books/:id', to: 'books#remove'

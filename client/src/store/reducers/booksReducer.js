@@ -2,6 +2,8 @@
 
 import type { Action, MainState } from 'utils/types'
 
+import { merge } from 'ramda'
+
 import { FILTER_NAMES } from 'utils/filters.js'
 
 const initialState = {
@@ -13,11 +15,11 @@ export default (state: MainState = initialState, action: Action): MainState => {
   const {payload} = action
   switch (action.type) {
     case 'SET_BOOKS':
-      return Object.assign({}, state, {...payload})
+      return merge(state, {...payload})
     case 'SET_FILTER_INPUT':
-      return Object.assign({}, state, {filterInput: payload})
+      return merge(state, {filterInput: payload})
     case 'SET_FILTER_TYPE':
-      return Object.assign({}, state, {filterType: payload})
+      return merge(state, {filterType: payload})
     default:
       return state
   }
