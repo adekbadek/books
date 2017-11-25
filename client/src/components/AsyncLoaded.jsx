@@ -3,9 +3,11 @@
 import React from 'react'
 import Loadable from 'react-loadable'
 
+import { Loader } from 'components/Loader'
+
 const Loading = ({ isLoading, pastDelay, error }) => {
   if (isLoading && pastDelay) {
-    return <p>Loading...</p>
+    return <Loader show />
   } else if (error && !isLoading) {
     return <p>Error!</p>
   } else {

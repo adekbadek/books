@@ -26,9 +26,7 @@ export const getSignupURL = () => getURL(`/signup`)
 export const getUserInfoURL = () => getURL(`/user`)
 
 export const saveCredentials = (token: string): void => localStorage.setItem(LOCAL_STORAGE_ITEM, token)
-
 export const readCredentials = (): any => localStorage.getItem(LOCAL_STORAGE_ITEM)
-
 export const revokeCredentials = (): void => localStorage.removeItem(LOCAL_STORAGE_ITEM)
 
 export const request = ({url, method = 'GET', data} : {url: string, method?: string, data?: any}): Promise<*> => new Promise((resolve, reject) => {
