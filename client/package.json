@@ -69,7 +69,7 @@
     "eslint-plugin-react": "7.0.1",
     "eslint-plugin-standard": "^3.0.1",
     "flow-bin": "^0.47.0",
-    "flow-typed": "^2.1.2",
+    "flow-typed": "^2.2.3",
     "inquirer": "3.0.6",
     "jest": "20.0.3"
   },
@@ -80,7 +80,7 @@
     "build": "npm run build-css && NODE_PATH=src node scripts/build.js",
     "test": "NODE_PATH=src node scripts/test.js --env=jsdom",
     "flow": "flow",
-    "flow-typed": "flow-typed install"
+    "flow-typed": "flow-typed install --ignoreDeps dev"
   },
   "jest": {
     "collectCoverageFrom": [
