@@ -13,11 +13,13 @@ import Calendar from 'components/Calendar'
 import Table from 'components/Table'
 import RouteLink from 'components/RouteLink'
 import Filters from 'components/Filters'
+import InputForm from 'components/InputForm'
 import withUserInfo from 'components/hoc/withUserInfo'
 
 import {
   getVisibleReps,
   getHeadersAndCols,
+  filterBooksByFilterType,
 } from 'utils/aux'
 import { filteredBooksSelector } from 'store/selectors'
 import actions from 'store/actions'
@@ -38,10 +40,10 @@ const { setBooks } = actions
 @connect(
   state => ({
     books: state.books.books,
-    filteredBooks: filteredBooksSelector(state.books),
+    filteredBooks: filteredBooksSelector(state),
     repetitions: getAllReps(state.books.books),
-    filterInput: state.books.filterInput,
-    filterType: state.books.filterType,
+    filterInput: state.ui.filterInput,
+    filterType: state.ui.filterType,
   }),
   {setBooks}
 )
@@ -65,21 +67,16 @@ export default class Main extends React.Component {
     editedBookId: null,
     authenticated: !!readCredentials(),
   }
-  createBook = (e: SyntheticEvent) => {
-    e.preventDefault()
-
+  createBook = (title: string) => {
     request({
       url: getBooksURL(),
       method: 'POST',
       data: {
-        title: this.state.createBookInputVal,
+        title,
       },
     })
       .then(book => {
         this.props.setBooks({books: this.props.books.concat([book])})
-        this.setState({
-          createBookInputVal: ''
-        })
       })
   }
   refreshBooks = () => {
@@ -149,8 +146,7 @@ export default class Main extends React.Component {
           <tr>
             <td>
               {
-                this.props.books
-                  .filter(v => !v.end_date && moment().isAfter(v.start_date))
+                filterBooksByFilterType(this.props.books, 'CURRENT')
                   .map(book => (
                     <div className='pt1' key={book.id}>{displayBookTitle(book.title)}</div>
                   ))
@@ -206,12 +202,7 @@ export default class Main extends React.Component {
             />
           )}
         </Table>
-        <form onSubmit={this.createBook}>
-          <input type='text' placeholder='title' value={this.state.createBookInputVal} onChange={e => {
-            this.setState({createBookInputVal: e.target.value})
-          }} />
-          <input type='submit' value='add' className='ml1 ba b--black bg-transparent pointer' />
-        </form>
+        <InputForm onSubmit={this.createBook} />
       </div>
     )
   }

@@ -2,8 +2,9 @@
 
 import type { ActionFunction, Book } from 'utils/types'
 
-import React from 'react'
+import * as React from 'react'
 import { connect } from 'react-redux'
+import debounce from 'lodash.debounce'
 
 import { borderButtonClasses } from 'utils/styling.js'
 import { FILTERS, FILTER_NAMES } from 'utils/filters.js'
@@ -12,39 +13,60 @@ import actions from 'store/actions'
 const { setFilterInput, setFilterType } = actions
 
 type FiltersProps = {
-  filterInput: string,
   filterType: string,
-  setFilterInput: ActionFunction,
   setFilterType: ActionFunction,
   filteredBooks: Array<Book>,
+  setFilterInput: ActionFunction,
 }
 
-const Filters = (props: FiltersProps) => {
-  const handleInputChange = e => {
-    props.setFilterInput(e.target.value)
+type FilterState = {
+  inputVal: string,
+}
+
+class Filters extends React.Component {
+  props: FiltersProps
+  state: FilterState = {
+    inputVal: '',
   }
-  return (
-    <div className='mt2'>
-      <div className='dib'>
-        {FILTER_NAMES.map((name, i) => (
-          <button
-            className={`${borderButtonClasses} mr2 ${props.filterType === name ? 'filter--active' : ''}`}
-            key={i}
-            onClick={() => { props.setFilterType(name) }}
-          >
-            {FILTERS[name].label}
-          </button>
-        ))}
+  componentWillUnmount () {
+    this.setFilterInput.cancel()
+  }
+  handleInputChange = ({ target }: SyntheticInputEvent) => {
+    this.setState({inputVal: target.value})
+    this.setFilterInput(target.value)
+  }
+  handleSettingFilterInput = (value: string) => this.props.setFilterInput(value)
+  setFilterInput = debounce(this.handleSettingFilterInput)
+  render () {
+    const { filterType, setFilterType } = this.props
+    return (
+      <div className='mt2'>
+        <div className='dib'>
+          {FILTER_NAMES.map((name, i) => (
+            <button
+              className={`${borderButtonClasses} mr2 ${filterType === name ? 'filter--active' : ''}`}
+              key={i}
+              onClick={() => { setFilterType(name) }}
+            >
+              {FILTERS[name].label}
+            </button>
+          ))}
+        </div>
+        <input
+          className='fr'
+          type='text'
+          placeholder='filter'
+          value={this.state.inputVal}
+          onChange={this.handleInputChange}
+        />
       </div>
-      <input className='fr' type='text' placeholder='filter' value={props.filterInput || ''} onChange={handleInputChange} />
-    </div>
-  )
+    )
+  }
 }
 
 export default connect(
   state => ({
-    filterInput: state.books.filterInput,
-    filterType: state.books.filterType,
+    filterType: state.ui.filterType,
   }),
   { setFilterInput, setFilterType }
 )(Filters)

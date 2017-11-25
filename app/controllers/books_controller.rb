@@ -16,7 +16,10 @@ class BooksController < ApplicationController
 
   def remove
     self.get_authenticated_user.books.destroy(params[:id])
-    render status: 200
+    render(
+      status: 200,
+      json: {id: params[:id]}
+    )
   end
 
   def edit

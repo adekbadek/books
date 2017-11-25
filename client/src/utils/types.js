@@ -45,8 +45,6 @@ export type FlashMessageObject = {
 
 export type MainState = {
   +books: Array<Book>,
-  +filterType: string,
-  +filterInput?: string,
 }
 
 export type CalendarPoint = {

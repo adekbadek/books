@@ -12,6 +12,7 @@ import {
   FILTERS_TABLE_OMISSIONS,
   COLOR,
 } from 'utils/consts'
+import { FILTERS } from 'utils/filters.js'
 
 export const times = (number: number) => [...Array(number)]
 
@@ -77,3 +78,7 @@ export const getCellStyles = (rangesData: Array<Range>, names: Array<string>) =>
     return {}
   }
 }
+
+export const filterBooksByFilterType = (books: Array<Book>, filterType: string) => (
+  books.filter(FILTERS[filterType].predicate)
+)
