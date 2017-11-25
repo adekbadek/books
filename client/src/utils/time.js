@@ -1,20 +1,23 @@
 // @flow
 
-import type moment from 'moment'
-import type { Range } from 'utils/types'
+import type Moment from 'moment'
+import type { Range, CalendarPoint } from 'utils/types'
+import { pluck } from 'ramda'
 
 export const DATE_FORMAT = 'DD MMM YYYY'
 
-// TODO: refactor?
-
-export const getRangesForDate = (date: moment, ranges: Array<Range>) => {
-  let rangeNames = []
-  ranges.map(range => {
-    const is = range.start && range.end && date.isBetween(range.start, range.end, '', '[]')
-    if (is) {
-      rangeNames.push(range.name)
-    }
-    return is
+export const getRangesForDate = (date: Moment, ranges: Array<Range>) => {
+  return ranges.filter(range => {
+    return range.start && range.end && date.isBetween(range.start, range.end, '', '[]')
   })
-  return rangeNames
+}
+
+export const getPointNames = (points: Array<CalendarPoint>, date: Moment) => {
+  const pointsInDate = points
+    .filter(point => (
+      !!point.dates.filter(v => date.isSame(v)).length
+    ))
+    // just to satisfy flow defn of pluck 😕
+    .map(({name}) => ({name}))
+  return pluck('name', pointsInDate)
 }

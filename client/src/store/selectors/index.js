@@ -2,10 +2,18 @@
 
 import type { MainState } from 'utils/types'
 
-export const filteredBooksSelector = (booksState: MainState, filters: {}) => {
-  const query = booksState.filterInput
-  const regexp = query && new RegExp(query, 'i')
-  return booksState.books
-    .filter(v => !query || v.title.match(regexp || ''))
-    .filter(filters[booksState.filterType].predicate)
+import memoize from 'lodash.memoize'
+
+import { FILTERS } from 'utils/filters.js'
+
+const filteredBooksSelectorFn = (state: MainState) => {
+  const query = state.filterInput
+  const regexp = query ? new RegExp(query, 'i') : ''
+  return state.books
+    .filter(book => (
+      (!query || book.title.match(regexp)) &&
+      FILTERS[state.filterType].predicate(book)
+    ))
 }
+
+export const filteredBooksSelector = memoize(filteredBooksSelectorFn)

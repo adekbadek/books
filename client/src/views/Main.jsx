@@ -15,7 +15,10 @@ import RouteLink from 'components/RouteLink'
 import Filters from 'components/Filters'
 import withUserInfo from 'components/hoc/withUserInfo'
 
-import { getVisibleReps } from 'utils/aux'
+import {
+  getVisibleReps,
+  getHeadersAndCols,
+} from 'utils/aux'
 import { filteredBooksSelector } from 'store/selectors'
 import actions from 'store/actions'
 
@@ -28,7 +31,6 @@ import {
   getUserSettingsViewURL,
 } from 'utils/api.js'
 import { getAllReps, displayBookTitle } from 'utils/aux.js'
-import { FILTERS } from 'utils/filters.js'
 import { DATE_FORMAT } from 'utils/time.js'
 
 const { setBooks } = actions
@@ -36,7 +38,7 @@ const { setBooks } = actions
 @connect(
   state => ({
     books: state.books.books,
-    filteredBooks: filteredBooksSelector(state.books, FILTERS),
+    filteredBooks: filteredBooksSelector(state.books),
     repetitions: getAllReps(state.books.books),
     filterInput: state.books.filterInput,
     filterType: state.books.filterType,
@@ -173,19 +175,29 @@ export default class Main extends React.Component {
         </Table>
         <Calendar
           ranges={this.props.books.map(book => (
-            {start: book.start_date, end: book.end_date, name: book.title}
+            {
+              start: book.start_date,
+              end: book.end_date || book.on_hold,
+              name: book.title,
+              isDimmed: !!book.on_hold,
+            }
           ))}
           points={this.props.books.map(book => (
-            {name: book.title, points: getVisibleReps(book)}
+            {
+              name: book.title,
+              dates: getVisibleReps(book),
+            }
           ))}
         />
         <Filters />
         <Table
-          headers={['Title', 'Start', 'End', 'Reps', 'Actions']}
+          headers={getHeadersAndCols(this.props.filterType).headers}
+          tableClassName='table--short-inputs'
         >
           {this.props.filteredBooks.map(book =>
             <BookRow
               key={book.id}
+              columns={getHeadersAndCols(this.props.filterType).cols}
               book={book}
               deleteHandler={this.deleteBook}
               updateHandler={data => this.updateBook(book.id, this.props.books.indexOf(book), data)}

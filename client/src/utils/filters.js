@@ -2,22 +2,22 @@
 
 import type { Book } from 'utils/types'
 
-export const isCurrent = (book: Book) => book.start_date && !book.end_date
-export const isRead = (book: Book) => book.start_date && book.end_date
-export const isToRead = (book: Book) => !book.start_date && !book.end_date
-
 export const FILTERS = {
   CURRENT: {
     label: 'current',
-    predicate: isCurrent,
+    predicate: (book: Book) => book.start_date && !book.end_date && !book.on_hold,
+  },
+  ON_HOLD: {
+    label: 'on hold',
+    predicate: (book: Book) => book.start_date && !book.end_date && book.on_hold,
   },
   READ: {
     label: 'read',
-    predicate: isRead,
+    predicate: (book: Book) => book.start_date && book.end_date && !book.on_hold,
   },
   TO_READ: {
     label: 'to read',
-    predicate: isToRead,
+    predicate: (book: Book) => !book.start_date && !book.end_date && !book.on_hold,
   },
   ALL: {
     label: 'all',

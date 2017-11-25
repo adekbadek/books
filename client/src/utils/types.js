@@ -5,6 +5,7 @@ export type Book = {
   title: string,
   start_date?: string,
   end_date?: string,
+  on_hold?: string,
   reps: Array<string>,
 }
 
@@ -12,6 +13,7 @@ export type Range = {
   start?: string,
   end?: string,
   name: string,
+  isDimmed?: bool,
 }
 
 export type AuthFormFields = {
@@ -45,4 +47,9 @@ export type MainState = {
   +books: Array<Book>,
   +filterType: string,
   +filterInput?: string,
+}
+
+export type CalendarPoint = {
+  dates: Array<string>,
+  name: string,
 }

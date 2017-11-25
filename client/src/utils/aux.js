@@ -1,9 +1,17 @@
 // @flow
 
+import type { Range, Book, Repetition } from 'utils/types'
+
 import color from 'color'
 import memoize from 'lodash.memoize'
+import { all, values, omit, pluck } from 'ramda'
 
-import type { Book, Repetition } from 'utils/types'
+import {
+  MAX_TITLE_LEN,
+  TABLE_STRUCTURE,
+  FILTERS_TABLE_OMISSIONS,
+  COLOR,
+} from 'utils/consts'
 
 export const times = (number: number) => [...Array(number)]
 
@@ -21,7 +29,6 @@ export const getAllReps = (books: Array<Book>): Array<Repetition> => {
 
 export const getVisibleReps = (book: Book): Array<*> => book.end_date ? book.reps : []
 
-const MAX_TITLE_LEN = 35
 export const displayBookTitle = (title: string) => title.length > MAX_TITLE_LEN ? `${title.substring(0, MAX_TITLE_LEN).trim()}…` : title
 
 // https://stackoverflow.com/a/3426956/3772847
@@ -46,3 +53,27 @@ export const getColorFromStringFunc = (str: string, bias?: string): string => {
 }
 
 export const getColorFromString = memoize(getColorFromStringFunc)
+
+export const dimColor = (colorCode: string) => color(colorCode).desaturate(0.85).alpha(0.5).string()
+
+export const getHeadersAndCols = (filterType: string) => {
+  const omissions = FILTERS_TABLE_OMISSIONS[filterType] || []
+  const filteredValues = values(omit(omissions, TABLE_STRUCTURE))
+  return ({
+    headers: pluck('header', filteredValues),
+    cols: pluck('col', filteredValues),
+  })
+}
+
+export const getCellStyles = (rangesData: Array<Range>, names: Array<string>) => {
+  if (rangesData.length > 0) {
+    const areAllDimmed = all(v => !!v.isDimmed, rangesData)
+    let backgroundColor = getColorFromString(names.join(), COLOR)
+    if (areAllDimmed) {
+      backgroundColor = dimColor(backgroundColor)
+    }
+    return {backgroundColor}
+  } else {
+    return {}
+  }
+}

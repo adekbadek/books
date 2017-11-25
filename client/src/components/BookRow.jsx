@@ -11,8 +11,6 @@ import { borderButtonClasses } from 'utils/styling.js'
 import { DATE_FORMAT } from 'utils/time.js'
 import { getVisibleReps } from 'utils/aux.js'
 
-const ROW_CLASSES = 'pv2 pr3 bb b--black-20'
-
 class EditBookTitle extends React.Component {
   render () {
     return (
@@ -34,59 +32,70 @@ type BookRowProps = {
   updateHandler: ({}) => void,
 }
 
-export default (props: BookRowProps) =>
-  <tr>
-    <td className={ROW_CLASSES} onClick={props.onClickHandler}>
-      <div className='dib'>
+const DateCell = ({book, props, prop}) => {
+  const isStart = prop === 'start_date'
+  const isOnHold = prop === 'on_hold'
+  const isEnd = prop === 'end_date'
+  return (
+    <DateChooser
+      selected={book[prop] ? moment(book[prop]) : null}
+      highlightDates={book[prop] && [moment(book[prop])]}
+      onChange={e => props.updateHandler({[prop]: e ? e.format() : null})}
+      placeholderText={`${prop.replace(/_/g, ' ')}`}
+      isClearable={isStart ? !book.end_date && !book.on_hold : true}
+      maxDate={isStart ? (
+        (book.end_date || book.on_hold) ? moment((book.end_date || book.on_hold)) : moment()
+      ) : moment()}
+      minDate={!isStart && book.start_date ? moment(book.start_date) : null}
+      disabled={!isStart && (
+        !book.start_date || (isEnd && book.on_hold) || (isOnHold && book.end_date)
+      )}
+    />
+  )
+}
+
+export default ({book, ...props}: BookRowProps) => {
+  const getCell = (col) => ({
+    title: (
+      <div className='dib' onClick={props.onClickHandler}>
         {props.isEdited
-          ? <EditBookTitle book={props.book} updateHandler={props.updateHandler} />
-          : <span>{props.book.title}</span>
+          ? <EditBookTitle book={book} updateHandler={props.updateHandler} />
+          : <span>{book.title}</span>
         }
       </div>
-    </td>
-    <td className={ROW_CLASSES}>
-      <DateChooser
-        isClearable={!props.book.end_date}
-        selected={props.book.start_date ? moment(props.book.start_date) : null}
-        highlightDates={props.book.end_date && [moment(props.book.end_date)]}
-        maxDate={props.book.end_date ? moment(props.book.end_date) : moment()}
-        placeholderText='Select a start date'
-        onChange={e => props.updateHandler({start_date: e ? e.format() : null})}
-      />
-    </td>
-    <td className={ROW_CLASSES}>
-      <DateChooser
-        selected={props.book.end_date ? moment(props.book.end_date) : null}
-        highlightDates={props.book.start_date && [moment(props.book.start_date)]}
-        minDate={props.book.start_date ? moment(props.book.start_date) : null}
-        maxDate={moment()}
-        placeholderText='Select an end date'
-        onChange={e => props.updateHandler({end_date: e ? e.format() : null})}
-      />
-    </td>
-    <td className={ROW_CLASSES}>
-      {getVisibleReps(props.book).map((date, i) =>
+    ),
+    reps: (
+      getVisibleReps(book).map((date, j) =>
         date && <div
-          key={i}
+          key={j}
           className={`dib reps-indicator ${moment().isBefore(date) ? 'reps-indicator__upcoming' : ''}`}
           title={moment(date).format(DATE_FORMAT)}
         />
-      )}
-    </td>
-    <td className={ROW_CLASSES}>
+      )
+    ),
+    date: <DateCell book={book} props={props} prop={col.prop} />,
+    actions: (
       <PopUpMenu>
         <button
           className={borderButtonClasses}
           onClick={() => {
-            props.deleteHandler(props.book.id)
+            props.deleteHandler(book.id)
           }}
         >remove</button>
-        {getVisibleReps(props.book).length > 0 && <button
+        {getVisibleReps(book).length > 0 && <button
           className={borderButtonClasses}
-          onClick={() => {
-            props.updateHandler({reps: null})
-          }}
+          onClick={() => props.updateHandler({reps: null})}
         >remove reps</button>}
       </PopUpMenu>
-    </td>
-  </tr>
+    ),
+  }[col.component])
+  return (
+    <tr>
+      {props.columns.map((col, i) => (
+        <td key={i} className='pv2 pr3 bb b--black-20'>
+          {getCell(col)}
+        </td>
+      ))}
+    </tr>
+  )
+}

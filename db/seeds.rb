@@ -36,7 +36,13 @@ def add_books_to_user(user, titles)
       start_date: end_date - (Random.new.rand * 20 + 5).days
     )
 
-    if i != 0
+    if i < 2
+      # currently reading
+    elsif i < 4
+      new_book.on_hold = end_date
+    elsif i < 7
+      new_book.start_date = nil
+    else
       new_book.end_date = end_date
     end
 

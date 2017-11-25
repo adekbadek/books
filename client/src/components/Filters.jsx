@@ -1,6 +1,6 @@
 // @flow
 
-import type { ActionFunction } from 'utils/types'
+import type { ActionFunction, Book } from 'utils/types'
 
 import React from 'react'
 import { connect } from 'react-redux'
@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import { borderButtonClasses } from 'utils/styling.js'
 import { FILTERS, FILTER_NAMES } from 'utils/filters.js'
 import actions from 'store/actions'
+
 const { setFilterInput, setFilterType } = actions
 
 type FiltersProps = {
@@ -15,6 +16,7 @@ type FiltersProps = {
   filterType: string,
   setFilterInput: ActionFunction,
   setFilterType: ActionFunction,
+  filteredBooks: Array<Book>,
 }
 
 const Filters = (props: FiltersProps) => {
