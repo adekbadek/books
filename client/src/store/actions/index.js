@@ -11,4 +11,5 @@ export default {
   setBooks: actionCreator('SET_BOOKS'),
   setFilterInput: actionCreator('SET_FILTER_INPUT'),
   setFilterType: actionCreator('SET_FILTER_TYPE'),
+  fetchBooks: actionCreator('BOOKS_FETCH'),
 }

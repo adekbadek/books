@@ -35,7 +35,7 @@ import {
 import { getAllReps, displayBookTitle } from 'utils/aux.js'
 import { DATE_FORMAT } from 'utils/time.js'
 
-const { setBooks } = actions
+const { setBooks, fetchBooks } = actions
 
 @connect(
   state => ({
@@ -45,12 +45,13 @@ const { setBooks } = actions
     filterInput: state.ui.filterInput,
     filterType: state.ui.filterType,
   }),
-  {setBooks}
+  {setBooks, fetchBooks}
 )
 @withUserInfo
 export default class Main extends React.Component {
   props: {
-    setBooks: {books: Array<Book>} => void,
+    setBooks: ({books: Array<Book>}) => void,
+    fetchBooks: () => void,
     books: Array<Book>,
     filteredBooks: Array<Book>,
     repetitions: Array<Repetition>,
@@ -67,6 +68,9 @@ export default class Main extends React.Component {
     editedBookId: null,
     authenticated: !!readCredentials(),
   }
+  componentDidMount () {
+    this.props.fetchBooks()
+  }
   createBook = (title: string) => {
     request({
       url: getBooksURL(),
@@ -78,10 +82,6 @@ export default class Main extends React.Component {
       .then(book => {
         this.props.setBooks({books: this.props.books.concat([book])})
       })
-  }
-  refreshBooks = () => {
-    request({url: getBooksURL()})
-      .then(books => books && this.props.setBooks({books}))
   }
   deleteBook = (id: $PropertyType<Book, 'id'>) => {
     request({
@@ -102,9 +102,6 @@ export default class Main extends React.Component {
         this.props.setBooks({books: update(updatedBookIndex, book, this.props.books)})
         this.setState({editedBookId: null})
       })
-  }
-  componentDidMount () {
-    this.refreshBooks()
   }
   getTodaysReps = (): Array<Repetition> => {
     return this.props.repetitions.filter(rep => moment().isSame(rep.date, 'day'))
