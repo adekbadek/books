@@ -30,6 +30,8 @@ export default (state: State = initialState, action: Action): State => {
       return merge(state, {filterInput: payload})
     case 'SET_FILTER_TYPE':
       return merge(state, {filterType: payload})
+    case 'SET_EDITED_BOOK_ID':
+      return merge(state, {editedBookId: payload})
     default:
       return state
   }

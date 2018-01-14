@@ -51,3 +51,9 @@ export type CalendarPoint = {
   dates: Array<string>,
   name: string,
 }
+
+export type BookUpdatePayload = {
+  id: $PropertyType<Book, 'id'>,
+  updatedBookIndex: number,
+  updateData: {}
+}

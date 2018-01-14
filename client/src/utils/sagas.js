@@ -1,32 +1,90 @@
 // @flow
 
-import { call, put, takeEvery } from 'redux-saga/effects'
+import type { Book, BookUpdatePayload } from 'utils/types'
+
+import { all, call, put, takeEvery, select } from 'redux-saga/effects'
+import { append, update } from 'ramda'
 
 import {
   request,
   getBooksURL,
+  getUserInfoURL,
 } from 'utils/api.js'
 import actions from 'store/actions'
 
-const { setBooks, setFlashMessage } = actions
+const { setBooks, setFlashMessage, setUserData, setEditedBookId } = actions
 
-function * getBooks () {
+function * fetchBooks (_) {
   const books = yield call(request, {url: getBooksURL()})
   yield put(setBooks({books}))
 }
 
-const fetchFromApi = apiCallGenerator => function * performApiCall () {
+function * createBook (title: string) {
+  const book = yield call(
+    request,
+    {
+      url: getBooksURL(),
+      method: 'POST',
+      data: {
+        title,
+      },
+    }
+  )
+  const books = yield select(state => state.books.books)
+  yield put(setBooks({books: append(book, books)}))
+}
+
+function * deleteBook (id: $PropertyType<Book, 'id'>) {
+  yield call(
+    request,
+    {
+      url: getBooksURL(id),
+      method: 'DELETE'
+    }
+  )
+  const books = yield select(state => state.books.books)
+  yield put(setBooks({books: books.filter(v => v.id !== id)}))
+}
+
+function * updateBook ({id, updatedBookIndex, updateData}: BookUpdatePayload) {
+  const book = yield call(
+    request,
+    {
+      url: getBooksURL(id),
+      method: 'PATCH',
+      data: updateData,
+    }
+  )
+  const books = yield select(state => state.books.books)
+  yield put(setBooks({books: update(updatedBookIndex, book, books)}))
+  yield put(setEditedBookId(null))
+}
+
+function * getUserData (_) {
+  const userData = yield call(
+    request,
+    {url: getUserInfoURL()}
+  )
+  yield put(setUserData(userData))
+}
+
+const fetchFromApi = apiCallGenerator => function * performApiCall ({payload}) {
   try {
-    yield apiCallGenerator()
+    yield apiCallGenerator(payload)
   } catch (e) {
     yield put(setFlashMessage({text: e.statusText, modifier: 'error'}))
   }
 }
 
 /*
-  Starts fetchFromApi on each dispatched `BOOKS_FETCH` action.
-  Allows concurrent fetches of user.
+  Starts fetchFromApi on each dispatched action.
 */
 export default function * rootSaga (): Generator<any, any, any> {
-  yield takeEvery('BOOKS_FETCH', fetchFromApi(getBooks))
+  yield all([
+    takeEvery('BOOKS_FETCH', fetchFromApi(fetchBooks)),
+    takeEvery('BOOKS_CREATE', fetchFromApi(createBook)),
+    takeEvery('BOOKS_DELETE', fetchFromApi(deleteBook)),
+    takeEvery('BOOKS_UPDATE', fetchFromApi(updateBook)),
+    takeEvery('GET_USER_DATA', fetchFromApi(getUserData)),
+  ])
 }

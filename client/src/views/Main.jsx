@@ -1,12 +1,11 @@
 // @flow
 
-import type { Book, User, Repetition } from 'utils/types'
+import type { Book, User, Repetition, BookUpdatePayload } from 'utils/types'
 
 import React from 'react'
 import moment from 'moment'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { update } from 'ramda'
 
 import BookRow from 'components/BookRow'
 import Calendar from 'components/Calendar'
@@ -22,20 +21,16 @@ import {
   filterBooksByFilterType,
 } from 'utils/aux'
 import { filteredBooksSelector } from 'store/selectors'
-import actions from 'store/actions'
+import { booksActions, default as actions } from 'store/actions'
 
 import {
-  request,
   readCredentials,
   revokeCredentials,
-  getBooksURL,
   getAuthViewURL,
   getUserSettingsViewURL,
 } from 'utils/api.js'
 import { getAllReps, displayBookTitle } from 'utils/aux.js'
 import { DATE_FORMAT } from 'utils/time.js'
-
-const { setBooks, fetchBooks } = actions
 
 @connect(
   state => ({
@@ -44,68 +39,42 @@ const { setBooks, fetchBooks } = actions
     repetitions: getAllReps(state.books.books),
     filterInput: state.ui.filterInput,
     filterType: state.ui.filterType,
+    editedBookId: state.ui.editedBookId,
   }),
-  {setBooks, fetchBooks}
+  {
+    ...booksActions,
+    setEditedBookId: actions.setEditedBookId,
+  }
 )
 @withUserInfo
 export default class Main extends React.Component {
   props: {
-    setBooks: ({books: Array<Book>}) => void,
     fetchBooks: () => void,
+    createBook: (title: string) => void,
+    deleteBook: () => void,
+    updateBook: (BookUpdatePayload) => void,
+    setEditedBookId: ($PropertyType<Book, 'id'>) => void,
     books: Array<Book>,
     filteredBooks: Array<Book>,
     repetitions: Array<Repetition>,
     user: User,
     filterInput: string,
     filterType: string,
+    editedBookId: null | $PropertyType<Book, 'id'>,
   }
   state: {
     createBookInputVal: string,
-    editedBookId: null | $PropertyType<Book, 'id'>,
     authenticated: boolean,
   } = {
     createBookInputVal: '',
-    editedBookId: null,
     authenticated: !!readCredentials(),
   }
   componentDidMount () {
     this.props.fetchBooks()
   }
-  createBook = (title: string) => {
-    request({
-      url: getBooksURL(),
-      method: 'POST',
-      data: {
-        title,
-      },
-    })
-      .then(book => {
-        this.props.setBooks({books: this.props.books.concat([book])})
-      })
-  }
-  deleteBook = (id: $PropertyType<Book, 'id'>) => {
-    request({
-      url: getBooksURL(id),
-      method: 'DELETE'
-    })
-      .then(() => {
-        this.props.setBooks({books: this.props.books.filter(v => v.id !== id)})
-      })
-  }
-  updateBook = (id: $PropertyType<Book, 'id'>, updatedBookIndex: number, updateData: {}) => {
-    request({
-      url: getBooksURL(id),
-      method: 'PATCH',
-      data: updateData,
-    })
-      .then(book => {
-        this.props.setBooks({books: update(updatedBookIndex, book, this.props.books)})
-        this.setState({editedBookId: null})
-      })
-  }
-  getTodaysReps = (): Array<Repetition> => {
-    return this.props.repetitions.filter(rep => moment().isSame(rep.date, 'day'))
-  }
+  getTodaysReps = (): Array<Repetition> => (
+    this.props.repetitions.filter(rep => moment().isSame(rep.date, 'day'))
+  )
   render () {
     if (!this.state.authenticated) {
       return <Redirect to={getAuthViewURL()} />
@@ -192,14 +161,18 @@ export default class Main extends React.Component {
               key={book.id}
               columns={getHeadersAndCols(this.props.filterType).cols}
               book={book}
-              deleteHandler={this.deleteBook}
-              updateHandler={data => this.updateBook(book.id, this.props.books.indexOf(book), data)}
-              isEdited={this.state.editedBookId === book.id}
-              onClickHandler={() => this.setState({editedBookId: book.id})}
+              deleteHandler={this.props.deleteBook}
+              updateHandler={data => this.props.updateBook({
+                id: book.id,
+                updatedBookIndex: this.props.books.indexOf(book),
+                updateData: data,
+              })}
+              isEdited={this.props.editedBookId === book.id}
+              onClickHandler={() => this.props.setEditedBookId(book.id)}
             />
           )}
         </Table>
-        <InputForm onSubmit={this.createBook} />
+        <InputForm onSubmit={this.props.createBook} />
       </div>
     )
   }
