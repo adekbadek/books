@@ -1,6 +1,6 @@
 # https://blog.codeship.com/running-rails-development-environment-docker
 
-FROM ruby:2.2
+FROM ruby:2.4
 MAINTAINER adam@adamboro.com
 
 # Install apt based dependencies required to run Rails as
