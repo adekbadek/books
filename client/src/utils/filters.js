@@ -29,5 +29,6 @@ export const FILTERS = {
 
 export const FILTER_NAMES = Object.keys(FILTERS)
 
+const memoizeResolver = (type, books) => JSON.stringify({type, books})
 const filterWithTypeFn = (type, books) => books.filter(book => FILTERS[type].predicate(book))
-export const filterWithType = memoize(filterWithTypeFn)
+export const filterWithType = memoize(filterWithTypeFn, memoizeResolver)

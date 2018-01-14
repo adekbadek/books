@@ -3,7 +3,7 @@
 import type { Book, BookUpdatePayload } from 'utils/types'
 
 import { all, call, put, takeEvery, select } from 'redux-saga/effects'
-import { append, update } from 'ramda'
+import { append, findIndex, update } from 'ramda'
 
 import {
   request,
@@ -46,7 +46,7 @@ function * deleteBook (id: $PropertyType<Book, 'id'>) {
   yield put(setBooks({books: books.filter(v => v.id !== id)}))
 }
 
-function * updateBook ({id, updatedBookIndex, updateData}: BookUpdatePayload) {
+function * updateBook ({id, updateData}: BookUpdatePayload) {
   const book = yield call(
     request,
     {
@@ -56,6 +56,7 @@ function * updateBook ({id, updatedBookIndex, updateData}: BookUpdatePayload) {
     }
   )
   const books = yield select(state => state.books.books)
+  const updatedBookIndex = findIndex(v => v.id === id, books)
   yield put(setBooks({books: update(updatedBookIndex, book, books)}))
   yield put(setEditedBookId(null))
 }

@@ -164,7 +164,6 @@ export default class Main extends React.Component {
               deleteHandler={this.props.deleteBook}
               updateHandler={data => this.props.updateBook({
                 id: book.id,
-                updatedBookIndex: this.props.books.indexOf(book),
                 updateData: data,
               })}
               isEdited={this.props.editedBookId === book.id}

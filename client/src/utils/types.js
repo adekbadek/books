@@ -66,6 +66,5 @@ export type CalendarPoint = {
 
 export type BookUpdatePayload = {
   id: $PropertyType<Book, 'id'>,
-  updatedBookIndex: number,
   updateData: {}
 }
