@@ -13,6 +13,8 @@ export default (state: MainState = initialState, action: Action): MainState => {
   switch (action.type) {
     case 'SET_BOOKS':
       return merge(state, {...payload})
+    case 'FLUSH_STORE':
+      return initialState
     default:
       return state
   }

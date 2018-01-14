@@ -25,7 +25,7 @@ import { booksActions, default as actions } from 'store/actions'
 
 import {
   readCredentials,
-  revokeCredentials,
+  handleLogout,
   getAuthViewURL,
   getUserSettingsViewURL,
 } from 'utils/api.js'
@@ -89,7 +89,7 @@ export default class Main extends React.Component {
             url={getAuthViewURL()}
             className='fr'
             borderButton
-            beforeAction={revokeCredentials}
+            beforeAction={handleLogout}
           >logout</RouteLink>
           <RouteLink
             url={getUserSettingsViewURL()}

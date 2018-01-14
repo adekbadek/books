@@ -13,6 +13,7 @@ export default {
   setFilterInput: actionCreator('SET_FILTER_INPUT'),
   setFilterType: actionCreator('SET_FILTER_TYPE'),
   setEditedBookId: actionCreator('SET_EDITED_BOOK_ID'),
+  flushStore: actionCreator('FLUSH_STORE'),
 }
 
 export const booksActions = {

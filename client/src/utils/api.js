@@ -7,7 +7,7 @@ import actions from 'store/actions'
 import history from 'utils/history'
 import { PROD_API_URL, API_VERSION } from 'utils/consts'
 
-const { setLoaderState } = actions
+const { setLoaderState, flushStore } = actions
 
 const LOCAL_STORAGE_ITEM = 'JWT'
 
@@ -27,7 +27,12 @@ export const getUserInfoURL = () => getURL(`/user`)
 
 export const saveCredentials = (token: string): void => localStorage.setItem(LOCAL_STORAGE_ITEM, token)
 export const readCredentials = (): any => localStorage.getItem(LOCAL_STORAGE_ITEM)
-export const revokeCredentials = (): void => localStorage.removeItem(LOCAL_STORAGE_ITEM)
+const revokeCredentials = (): void => localStorage.removeItem(LOCAL_STORAGE_ITEM)
+
+export const handleLogout = (): void => {
+  revokeCredentials()
+  store.dispatch(flushStore())
+}
 
 export const request = ({url, method = 'GET', data} : {url: string, method?: string, data?: any}): Promise<*> => new Promise((resolve, reject) => {
   method === 'GET' && store.dispatch(setLoaderState(true))
