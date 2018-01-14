@@ -1,17 +1,16 @@
 // @flow
 
-import memoize from 'lodash.memoize'
+import type { Store } from 'utils/types'
 
-import { FILTERS } from 'utils/filters.js'
+import { filterWithType } from 'utils/filters'
 
-const filteredBooksSelectorFn = (state) => {
+export const filteredBooksSelector = (state: Store) => {
   const query = state.ui.filterInput
   const regexp = query ? new RegExp(query, 'i') : ''
-  return state.books.books
-    .filter(book => (
-      (!query || book.title.match(regexp)) &&
-      FILTERS[state.ui.filterType].predicate(book)
-    ))
+  const filteredByType = filterWithType(state.ui.filterType, state.books.books)
+  if (query) {
+    return filteredByType.filter(book => book.title.match(regexp))
+  } else {
+    return filteredByType
+  }
 }
-
-export const filteredBooksSelector = memoize(filteredBooksSelectorFn)

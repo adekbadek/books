@@ -43,8 +43,20 @@ export type FlashMessageObject = {
   modifier: string,
 }
 
-export type MainState = {
+export type UiState = {
+  +message: string | null,
+  +displayLoader: boolean | null,
+  +filterType: string,
+  +filterInput?: string,
+}
+
+export type BooksState = {
   +books: Array<Book>,
+}
+
+export type Store = {
+  +books: BooksState,
+  +ui: UiState,
 }
 
 export type CalendarPoint = {

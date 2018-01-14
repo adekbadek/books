@@ -1,6 +1,6 @@
 // @flow
 
-import type { Action, MainState } from 'utils/types'
+import type { Action, BooksState } from 'utils/types'
 
 import { merge } from 'ramda'
 
@@ -8,7 +8,7 @@ const initialState = {
   books: [],
 }
 
-export default (state: MainState = initialState, action: Action): MainState => {
+export default (state: BooksState = initialState, action: Action): BooksState => {
   const {payload} = action
   switch (action.type) {
     case 'SET_BOOKS':

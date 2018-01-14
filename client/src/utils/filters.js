@@ -2,6 +2,8 @@
 
 import type { Book } from 'utils/types'
 
+import memoize from 'lodash.memoize'
+
 export const FILTERS = {
   CURRENT: {
     label: 'current',
@@ -26,3 +28,6 @@ export const FILTERS = {
 }
 
 export const FILTER_NAMES = Object.keys(FILTERS)
+
+const filterWithTypeFn = (type, books) => books.filter(book => FILTERS[type].predicate(book))
+export const filterWithType = memoize(filterWithTypeFn)

@@ -1,17 +1,10 @@
 // @flow
 
-import type { Action } from 'utils/types'
+import type { Action, UiState } from 'utils/types'
 
 import { merge } from 'ramda'
 
 import { FILTER_NAMES } from 'utils/filters.js'
-
-type State = {
-  +message: string | null,
-  +displayLoader: boolean | null,
-  +filterType: string,
-  +filterInput?: string,
-}
 
 const initialState = {
   message: null,
@@ -19,7 +12,7 @@ const initialState = {
   filterType: FILTER_NAMES[0],
 }
 
-export default (state: State = initialState, action: Action): State => {
+export default (state: UiState = initialState, action: Action): UiState => {
   const {payload} = action
   switch (action.type) {
     case 'SET_FLASH_MESSAGE':
