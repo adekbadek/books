@@ -29,8 +29,10 @@ import {
   getAuthViewURL,
   getUserSettingsViewURL,
 } from 'utils/api.js'
-import { getAllReps, displayBookTitle } from 'utils/aux.js'
+import { sortByDates, getAllReps, displayBookTitle } from 'utils/aux.js'
 import { DATE_FORMAT } from 'utils/time.js'
+
+const MAX_REPS = 5
 
 @connect(
   state => ({
@@ -75,12 +77,19 @@ export default class Main extends React.Component {
   getTodaysReps = (): Array<Repetition> => (
     this.props.repetitions.filter(rep => moment().isSame(rep.date, 'day'))
   )
+  getUpcomingReps = (): Array<Repetition> => (
+    this.props.repetitions
+      .filter(({date}) => moment().isBefore(date))
+      .sort(sortByDates)
+  )
   render () {
     if (!this.state.authenticated) {
       return <Redirect to={getAuthViewURL()} />
     }
 
     const todaysReps = this.getTodaysReps()
+    const upcomingReps = this.getUpcomingReps()
+    const hiddenUpcoming = upcomingReps.length - MAX_REPS
     return (
       <div>
         <div className='top'>
@@ -121,15 +130,19 @@ export default class Main extends React.Component {
             <td>
               <table>
                 <tbody>
-                  {this.props.repetitions.map((rep, i) => {
-                    return moment().isBefore(rep.date) && <tr key={i}>
-                      <td className='tooltip__wrapper'>
-                        <span className='tooltip' data-info={moment(rep.date).format(DATE_FORMAT)} />
-                        {moment(rep.date).fromNow(true)}
-                      </td>
-                      <td>{displayBookTitle(rep.title)}</td>
-                    </tr>
-                  })}
+                  {upcomingReps
+                    .slice(0, MAX_REPS)
+                    .map((rep, i) => (
+                      <tr key={i}>
+                        <td className='tooltip__wrapper'>
+                          <span className='tooltip' data-info={moment(rep.date).format(DATE_FORMAT)} />
+                          {moment(rep.date).fromNow(true)}
+                        </td>
+                        <td className='pl2'>{displayBookTitle(rep.title)}</td>
+                      </tr>
+                    ))
+                  }
+                  {hiddenUpcoming > 0 && <tr><td className='pt1'>+ {hiddenUpcoming} more</td></tr>}
                 </tbody>
               </table>
             </td>

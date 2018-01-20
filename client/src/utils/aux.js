@@ -82,3 +82,13 @@ export const getCellStyles = (rangesData: Array<Range>, names: Array<string>) =>
 export const filterBooksByFilterType = (books: Array<Book>, filterType: string) => (
   books.filter(FILTERS[filterType].predicate)
 )
+
+type WithDate = {
+  date: string
+}
+
+export const sortByDates = (a:WithDate, b:WithDate) => {
+  const dateA = new Date(a.date)
+  const dateB = new Date(b.date)
+  return dateA < dateB ? -1 : dateA > dateB ? 1 : 0
+}
