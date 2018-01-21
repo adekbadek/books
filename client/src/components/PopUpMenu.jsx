@@ -10,7 +10,8 @@ export default class PopUpMenu extends React.Component {
   state = {
     open: false,
   }
-  handleClickOutside = () => {
+  handleClickOutside = this.close
+  close = () => {
     this.setState({ open: false })
   }
   render () {
@@ -21,7 +22,10 @@ export default class PopUpMenu extends React.Component {
           onClick={() => this.setState(prevState => ({open: !prevState.open}))}
         >{this.state.open ? '×' : '☰'}</button>
         {this.state.open && (
-          <div className='popup__content pa1 ba b--black'>
+          <div
+            className='popup__content pa1 ba b--black'
+            onClick={this.close}
+          >
             {this.props.children}
           </div>
         )}
