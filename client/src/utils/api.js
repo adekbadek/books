@@ -15,7 +15,7 @@ const isProduction = process.env.NODE_ENV === 'production'
 
 // URLs
 export const getRootViewURL = () => '/'
-export const getAuthViewURL = () => '/auth'
+export const getAuthViewURL = () => '/login'
 export const getUserSettingsViewURL = () => '/settings'
 
 const getURL = endpoint => `${isProduction ? PROD_API_URL : ''}/${API_VERSION}${endpoint}`
