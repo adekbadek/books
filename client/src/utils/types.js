@@ -68,3 +68,5 @@ export type BookUpdatePayload = {
   id: $PropertyType<Book, 'id'>,
   updateData: {}
 }
+
+export type InputEvent = Event & {currentTarget: HTMLInputElement};
