@@ -1,5 +1,5 @@
-// flow-typed signature: bd8e51b6c0c8ba360e9621e1661849f0
-// flow-typed version: dd2e8d3c25/ramda_v0.x.x/flow_>=v0.49.x
+// flow-typed signature: 8561f64c80515f62cf96ef02f64e207a
+// flow-typed version: bd76b9301b/ramda_v0.x.x/flow_>=v0.49.x <=v0.61.x
 
 /* eslint-disable no-unused-vars, no-redeclare */
 
@@ -872,6 +872,12 @@ declare module ramda {
   declare function sort<V, T: Array<V>>(fn: (a: V, b: V) => number, xs: T): T;
   declare function sort<V, T: Array<V>>(
     fn: (a: V, b: V) => number,
+    ...rest: Array<void>
+  ): (xs: T) => T;
+
+  declare function sortWith<V, T: Array<V>>(fns: Array<(a: V, b: V) => number>, xs: T): T;
+  declare function sortWith<V, T: Array<V>>(
+    fns: Array<(a: V, b: V) => number>,
     ...rest: Array<void>
   ): (xs: T) => T;
 
