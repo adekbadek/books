@@ -22,6 +22,10 @@ const MODES = [
   },
 ]
 
+const getRangesInsideYear = (date, ranges) => ranges.filter(v => (
+  date.isSame(v.start, 'year') && date.isSame(v.end, 'year')
+))
+
 export default class TimeViewer extends React.Component {
   state: {
     startDate: moment,
@@ -36,6 +40,7 @@ export default class TimeViewer extends React.Component {
     })
   }
   render () {
+    const readInCurrentYear = getRangesInsideYear(this.state.startDate, this.props.ranges).length
     const Component = MODES[this.state.modeIndex].component
     return (
       <div className='pb4'>
@@ -45,7 +50,10 @@ export default class TimeViewer extends React.Component {
             onClick={this.changeDate(false)}
           ><Icon name='arrow-left' /></button>
           <span className='ph4'>
-            {this.state.startDate.format('YYYY')}
+            {this.state.startDate.year()}&nbsp;
+            <span
+              title={`${readInCurrentYear} books read in ${moment(this.state.startDate).format('YYYY')}`}
+            >({readInCurrentYear})</span>
           </span>
           <button
             className={borderButtonClasses}
