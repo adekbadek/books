@@ -1,13 +1,18 @@
-$cell_side: 10px
+$cell-margin: 1px
+$cell-side: 10px
+$calendar-width: 53 * ($cell-side + $cell-margin * 2)
 
 .calendar
-  padding-top: $cell_side + 5px
+  padding-top: $cell-side + 5px
+  width: $calendar-width
+  margin-left: auto
+  margin-right: auto
   &__cell
     position: relative
     background-color: $dark-grey
-    width: $cell_side
-    height: $cell_side
-    margin: 1px
+    width: $cell-side
+    height: $cell-side
+    margin: $cell-margin
     border: 1px solid transparent
     border-top-color: transparent
     &--point
@@ -40,9 +45,9 @@ $cell_side: 10px
       &:before
         content: attr(data-dayname)
         top: -1px
-        right: $cell_side + 5px
+        right: $cell-side + 5px
         text-align: right
     &--display-month-name
       &:before
         content: attr(data-monthname)
-        top: -$cell_side - 5px
+        top: -$cell-side - 5px
