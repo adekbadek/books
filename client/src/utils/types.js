@@ -1,5 +1,7 @@
 // @flow
 
+import moment from 'moment'
+
 export type Book = {
   id: number,
   title: string,
@@ -13,7 +15,7 @@ export type Range = {
   start?: string,
   end?: string,
   name: string,
-  isDimmed?: bool,
+  isOnHold?: bool,
 }
 
 export type AuthFormFields = {
@@ -70,3 +72,15 @@ export type BookUpdatePayload = {
 }
 
 export type InputEvent = Event & {currentTarget: HTMLInputElement};
+
+export type TimeViewProps = {
+  startDate: moment,
+  /**
+   * ranges to mark on calendar (colored cells)
+   */
+  ranges: Array<Range>,
+  /**
+   * single points to mark with a dot
+   */
+  points: Array<CalendarPoint>,
+}

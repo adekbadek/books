@@ -68,7 +68,7 @@ export const getHeadersAndCols = (filterType: string) => {
 
 export const getCellStyles = (rangesData: Array<Range>, names: Array<string>) => {
   if (rangesData.length > 0) {
-    const areAllDimmed = all(v => !!v.isDimmed, rangesData)
+    const areAllDimmed = all(v => !!v.isOnHold, rangesData)
     let backgroundColor = getColorFromString(names.join(), COLOR)
     if (areAllDimmed) {
       backgroundColor = dimColor(backgroundColor)

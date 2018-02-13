@@ -1,0 +1,37 @@
+.gantt
+  background-color: $main
+  font-size: 12px
+  padding: 4px
+  white-space: nowrap
+  > *
+    position: relative
+    z-index: 1
+  &--on-hold
+    background-color: desaturate($main, 60)
+  &--current
+    background-color: lighten($main, 30)
+    &:after
+      content: ''
+      position: absolute
+      width: 10px
+      right: 0
+      top: 0
+      height: 100%
+      background: linear-gradient(to right, transparent 0%, $white 100%)
+  &__months,
+  &__ranges
+    width: 100%
+    left: 0
+    top: 0
+  &__months
+    font-size: 9px
+    &__item
+      opacity: .7
+      &:after
+        content: ''
+        position: absolute
+        left: 0
+        top: 15px
+        width: 1px
+        height: 100%
+        background-color: $dark-grey

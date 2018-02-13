@@ -8,11 +8,11 @@ import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import BookRow from 'components/BookRow'
-import Calendar from 'components/Calendar'
 import Table from 'components/Table'
 import RouteLink from 'components/RouteLink'
 import Filters from 'components/Filters'
 import InputForm from 'components/InputForm'
+import TimeViewer from 'components/TimeViewer'
 import withUserInfo from 'components/hoc/withUserInfo'
 
 import {
@@ -148,13 +148,13 @@ export default class Main extends React.Component {
             </td>
           </tr>
         </Table>
-        <Calendar
+        <TimeViewer
           ranges={this.props.books.map(book => (
             {
               start: book.start_date,
               end: book.end_date || book.on_hold,
               name: book.title,
-              isDimmed: !!book.on_hold,
+              isOnHold: !!book.on_hold,
             }
           ))}
           points={this.props.books.map(book => (
