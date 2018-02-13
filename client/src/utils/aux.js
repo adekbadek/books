@@ -92,3 +92,9 @@ export const sortByDates = (a:WithDate, b:WithDate) => {
   const dateB = new Date(b.date)
   return dateA < dateB ? -1 : dateA > dateB ? 1 : 0
 }
+
+export const sortRanges = (a:Range, b:Range) => {
+  const dateA = a.start ? new Date(a.start) : 0
+  const dateB = b.start ? new Date(b.start) : 0
+  return dateA < dateB ? -1 : dateA > dateB ? 1 : 0
+}

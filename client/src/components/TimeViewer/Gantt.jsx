@@ -6,13 +6,15 @@ import React from 'react'
 import moment from 'moment'
 import cx from 'classnames'
 
-import { displayBookTitle } from 'utils/aux.js'
+import { sortRanges, displayBookTitle } from 'utils/aux.js'
 
-const getRangesInYear = (year, ranges) => ranges.filter(v => (
-  year.isSame(v.start, 'year') ||
-  year.isSame(v.end, 'year') ||
-  (v.start && !v.end)
-))
+const getRangesInYear = (year, ranges) => ranges
+  .filter(v => (
+    year.isSame(v.start, 'year') ||
+    year.isSame(v.end, 'year') ||
+    (v.start && !v.end)
+  ))
+  .sort(sortRanges)
 
 const ROW_HEIGHT = 23
 const DAYS_IN_YEAR = 365
