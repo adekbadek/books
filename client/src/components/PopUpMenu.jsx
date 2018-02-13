@@ -4,6 +4,7 @@ import React from 'react'
 import withClickOutSide from 'react-click-outside'
 
 import { borderButtonClasses } from 'utils/styling.js'
+import Icon from 'components/Icon'
 
 @withClickOutSide
 export default class PopUpMenu extends React.Component {
@@ -18,9 +19,9 @@ export default class PopUpMenu extends React.Component {
     return (
       <div className='popup'>
         <button
-          className={`${borderButtonClasses} popup__button`}
+          className={borderButtonClasses}
           onClick={() => this.setState(prevState => ({open: !prevState.open}))}
-        >{this.state.open ? '×' : '☰'}</button>
+        ><Icon name={this.state.open ? 'x' : 'menu'} /></button>
         {this.state.open && (
           <div
             className='popup__content pa1 ba b--black'

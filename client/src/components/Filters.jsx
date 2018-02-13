@@ -47,7 +47,7 @@ class Filters extends React.Component {
             const howManyFiltered = filterWithType(type, this.props.books).length
             return (
               <button
-                className={`${borderButtonClasses} mr2 ${filterType === type ? 'filter--active' : ''}`}
+                className={`${borderButtonClasses} mr2 ${filterType === type ? 'button--active' : ''}`}
                 key={i}
                 onClick={() => { setFilterType(type) }}
               >
