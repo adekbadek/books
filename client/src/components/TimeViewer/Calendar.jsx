@@ -11,59 +11,47 @@ import { getRangesForDate, getPointNames } from 'utils/time.js'
 import { times, getCellStyles } from 'utils/aux.js'
 
 const DIMENSIONS = {
-  columns: 53,
-  rows: 7,
+  weeks: 53,
+  weekdays: 7,
 }
-const WEEK_DAYS_NAMES = moment.weekdaysShort()
-const MONTH_DAYS_NAMES = moment.monthsShort()
 const CELL_CLASSNAME = 'calendar__cell'
 
 /**
- * Calendar that displays ranges and points
+ * Calendar that displays ranges and points.
  */
 export default (props: TimeViewProps) => {
-  const displayedMonthNames = []
+  const startDate = moment(props.startDate).startOf('isoWeek')
   return (
     <div>
       <div className='calendar'>
-        {times(DIMENSIONS.columns).map((_, i) => {
+        {times(DIMENSIONS.weeks).map((_, weekIndex) => {
           return (
-            <div key={i} className='dib'>
-              {times(DIMENSIONS.rows).map((_, j) => {
-                const dayOfYearIndex = i * 7 + j + 1
-                const date = moment(props.startDate)
-                  .dayOfYear(dayOfYearIndex - props.startDate.day())
+            <div key={weekIndex} className='dib'>
+              {times(DIMENSIONS.weekdays).map((_, weekdayIndex) => {
+                const dayIndex = weekIndex * DIMENSIONS.weekdays + weekdayIndex
+                const date = moment(startDate).add(dayIndex, 'days')
+
                 const rangesData = getRangesForDate(date, props.ranges)
                 const rangesNames = pluck('name', rangesData.map(({name}) => ({name})))
-                const pointNames = getPointNames(props.points, date)
-                const isFromAnotherYear = props.startDate.get('year') !== date.get('year')
-                const displayDayName = i === 0 && j % 2 !== 0
-                const monthName = MONTH_DAYS_NAMES[date.month()]
-                const displayMonthName = (
-                  j === 0 &&
-                  !isFromAnotherYear &&
-                  displayedMonthNames.indexOf(monthName) < 0 &&
-                  monthName
-                )
-                if (displayMonthName) {
-                  displayedMonthNames.push(displayMonthName)
-                }
+                const pointNames = getPointNames(date, props.points)
+
+                const dayName = weekIndex === 0 && weekdayIndex % 2 !== 0 && date.format('ddd')
+                const monthName = weekdayIndex === 0 && date.date() <= 7 && date.format('MMM')
                 return (
                   <div
-                    key={j}
+                    key={weekdayIndex}
                     className={cx(
                       CELL_CLASSNAME,
-                      {[`${CELL_CLASSNAME}--display-name`]: displayDayName || displayMonthName},
-                      {[`${CELL_CLASSNAME}--display-day-name`]: displayDayName},
-                      {[`${CELL_CLASSNAME}--display-month-name`]: displayMonthName},
+                      {[`${CELL_CLASSNAME}--display-name`]: dayName || monthName},
+                      {[`${CELL_CLASSNAME}--display-day-name`]: dayName},
+                      {[`${CELL_CLASSNAME}--display-month-name`]: monthName},
                       {[`${CELL_CLASSNAME}--today`]: moment().isSame(date, 'day')},
                       {[`${CELL_CLASSNAME}--point`]: !!pointNames.length},
                       {[`${CELL_CLASSNAME}--point--dimmed`]: !!pointNames.length && moment().isAfter(date, 'day')},
                       {[`${CELL_CLASSNAME}--border-top`]: date.date() === 1},
-                      {[`${CELL_CLASSNAME}--dimmed`]: isFromAnotherYear},
                     )}
-                    data-dayname={displayDayName ? WEEK_DAYS_NAMES[j] : ''}
-                    data-monthname={displayMonthName || ''}
+                    data-dayname={dayName || ''}
+                    data-monthname={monthName || ''}
                     style={getCellStyles(rangesData, rangesNames)}
                     >
                     {(!!rangesNames.length || !!pointNames.length) && <span

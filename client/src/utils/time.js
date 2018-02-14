@@ -12,7 +12,7 @@ export const getRangesForDate = (date: Moment, ranges: Array<Range>) => {
   })
 }
 
-export const getPointNames = (points: Array<CalendarPoint>, date: Moment) => {
+export const getPointNames = (date: Moment, points: Array<CalendarPoint>) => {
   const pointsInDate = points
     .filter(point => (
       !!point.dates.filter(v => date.isSame(v)).length

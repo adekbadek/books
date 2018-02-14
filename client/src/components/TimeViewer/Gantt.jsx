@@ -6,26 +6,18 @@ import React from 'react'
 import moment from 'moment'
 import cx from 'classnames'
 
-import { sortRanges, displayBookTitle } from 'utils/aux.js'
+import { displayBookTitle } from 'utils/aux.js'
 
-const getRangesInYear = (year, ranges) => ranges
-  .filter(v => (
-    year.isSame(v.start, 'year') ||
-    year.isSame(v.end, 'year') ||
-    (v.start && !v.end)
-  ))
-  .sort(sortRanges)
-
-const ROW_HEIGHT = 23
 const DAYS_IN_YEAR = 365
+const ROW_HEIGHT = 23
 const CLASSNAME_BASE = 'gantt'
 const MONTH_DAYS_NAMES = moment.monthsShort()
 
 const getDayYearPercentage = (days: number) => Math.round(days * 100 / DAYS_IN_YEAR)
 
 export default (props: TimeViewProps) => {
-  const rangesToDisplay = getRangesInYear(props.startDate, props.ranges)
-  const containerHeight = rangesToDisplay.length * ROW_HEIGHT
+  const containerHeight = props.ranges.length * ROW_HEIGHT
+  const monthIndex = props.startDate.month()
   return (
     <div
       className='posr oh pt3'
@@ -41,7 +33,7 @@ export default (props: TimeViewProps) => {
               )}%`,
               height: `${containerHeight}px`,
             }}
-          >{v}</div>
+          >{MONTH_DAYS_NAMES[(monthIndex + i) % MONTH_DAYS_NAMES.length]}</div>
         ))}
       </div>
       <div
@@ -50,7 +42,7 @@ export default (props: TimeViewProps) => {
           height: `${containerHeight}px`,
         }}
       >
-        {rangesToDisplay.map((range, i) => {
+        {props.ranges.map((range, i) => {
           const diffDaysFromStart = moment(range.start).diff(props.startDate, 'days')
           const diffDaysToEnd = moment(range.end || undefined).diff(props.startDate, 'days')
           const left = Math.max(0, getDayYearPercentage(diffDaysFromStart))
@@ -59,21 +51,21 @@ export default (props: TimeViewProps) => {
             <div
               key={i}
               className={cx(
-              'posa',
-              CLASSNAME_BASE,
+                'posa',
+                CLASSNAME_BASE,
                 {
                   [`${CLASSNAME_BASE}--on-hold`]: range.isOnHold,
                   [`${CLASSNAME_BASE}--current`]: !range.end,
                 }
-            )}
-              title={range.name}
+              )}
+              title={`${range.name}${(range.start && range.end) ? ` (${range.start} - ${range.end})` : ''}`}
               style={{
                 top: `${i * ROW_HEIGHT}px`,
                 width: `${width}%`,
                 height: `${ROW_HEIGHT * 0.85}px`,
                 left: `${left}%`,
               }}
-          >
+            >
               <span>{displayBookTitle(range.name)}</span>
             </div>
           )

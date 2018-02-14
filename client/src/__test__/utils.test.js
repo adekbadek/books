@@ -39,8 +39,8 @@ it('getPointNames', () => {
     name: 'Groucho',
     dates: ['1991-02-23'],
   }
-  const result = getPointNames([point1], moment(date1))
+  const result = getPointNames(moment(date1), [point1])
   expect(result).toContain(point1.name)
   expect(result).not.toContain(point2.name)
-  expect(getPointNames([], moment())).toEqual([])
+  expect(getPointNames(moment(), [])).toEqual([])
 })

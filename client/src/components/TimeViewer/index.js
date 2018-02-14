@@ -1,3 +1,4 @@
+
 // @flow
 
 import React from 'react'
@@ -5,6 +6,7 @@ import moment from 'moment'
 import cx from 'classnames'
 
 import { borderButtonClasses } from 'utils/styling.js'
+import { sortRanges } from 'utils/aux.js'
 import Calendar from 'components/TimeViewer/Calendar'
 import Gantt from 'components/TimeViewer/Gantt'
 import Icon from 'components/Icon'
@@ -22,9 +24,12 @@ const MODES = [
   },
 ]
 
-const getRangesInsideYear = (date, ranges) => ranges.filter(v => (
-  date.isSame(v.start, 'year') && date.isSame(v.end, 'year')
-))
+const getVisibleRanges = (startDate, endDate, ranges) => ranges
+  .filter(v => (
+    moment(v.start).isSameOrBefore(endDate) &&
+    (moment(v.end).isSameOrAfter(startDate) || !v.end)
+  ))
+  .sort(sortRanges)
 
 export default class TimeViewer extends React.Component {
   state: {
@@ -36,11 +41,13 @@ export default class TimeViewer extends React.Component {
   }
   changeDate = (add: boolean = true) => () => {
     this.setState({
-      startDate: add ? moment(this.state.startDate).add(1, 'year') : moment(this.state.startDate).subtract(1, 'year')
+      startDate: add ? moment(this.state.startDate).add(1, 'month') : moment(this.state.startDate).subtract(1, 'month')
     })
   }
   render () {
-    const readInCurrentYear = getRangesInsideYear(this.state.startDate, this.props.ranges).length
+    const endDate = moment(this.state.startDate).add(1, 'year')
+    const visibleRanges = getVisibleRanges(this.state.startDate, endDate, this.props.ranges)
+    const readInCurrentYear = visibleRanges.filter(v => v.end).length
     const Component = MODES[this.state.modeIndex].component
     return (
       <div className='pb4'>
@@ -50,7 +57,7 @@ export default class TimeViewer extends React.Component {
             onClick={this.changeDate(false)}
           ><Icon name='arrow-left' /></button>
           <span className='ph4'>
-            {this.state.startDate.year()}&nbsp;
+            {this.state.startDate.format('MMM \'YY')} - {moment(endDate).subtract(1, 'month').format('MMM \'YY')}&nbsp;
             <span
               title={`${readInCurrentYear} books read in ${moment(this.state.startDate).format('YYYY')}`}
             >({readInCurrentYear})</span>
@@ -71,7 +78,7 @@ export default class TimeViewer extends React.Component {
           </div>
         </div>
         <Component
-          ranges={this.props.ranges}
+          ranges={visibleRanges}
           points={this.props.points}
           startDate={this.state.startDate}
         />
