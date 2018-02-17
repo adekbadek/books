@@ -31,17 +31,19 @@ const getVisibleRanges = (startDate, endDate, ranges) => ranges
   ))
   .sort(sortRanges)
 
+const TIMESCALE = 'month'
+
 export default class TimeViewer extends React.Component {
   state: {
     startDate: moment,
     modeIndex: number,
   } = {
-    startDate: moment().startOf('year'),
+    startDate: moment().startOf(TIMESCALE).subtract(1, 'year').add(1, TIMESCALE),
     modeIndex: 0,
   }
   changeDate = (add: boolean = true) => () => {
     this.setState({
-      startDate: add ? moment(this.state.startDate).add(1, 'month') : moment(this.state.startDate).subtract(1, 'month')
+      startDate: add ? moment(this.state.startDate).add(1, TIMESCALE) : moment(this.state.startDate).subtract(1, TIMESCALE)
     })
   }
   render () {
