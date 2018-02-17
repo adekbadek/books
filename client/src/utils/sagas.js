@@ -12,7 +12,7 @@ import {
 } from 'utils/api.js'
 import actions from 'store/actions'
 
-const { setBooks, setFlashMessage, setUserData, setEditedBookId } = actions
+const { setBooks, setFlashMessage, setUserData } = actions
 
 function * fetchBooks (_) {
   const books = yield call(request, {url: getBooksURL()})
@@ -58,7 +58,6 @@ function * updateBook ({id, updateData}: BookUpdatePayload) {
   const books = yield select(state => state.books.books)
   const updatedBookIndex = findIndex(v => v.id === id, books)
   yield put(setBooks({books: update(updatedBookIndex, book, books)}))
-  yield put(setEditedBookId(null))
 }
 
 function * getUserData (_) {

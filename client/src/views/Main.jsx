@@ -19,7 +19,7 @@ import {
   filterBooksByFilterType,
 } from 'utils/aux'
 import { filteredBooksSelector } from 'store/selectors'
-import { booksActions, default as actions } from 'store/actions'
+import { booksActions } from 'store/actions'
 
 import {
   readCredentials,
@@ -39,10 +39,7 @@ const MAX_REPS = 5
     filterType: state.ui.filterType,
     editedBookId: state.ui.editedBookId,
   }),
-  {
-    ...booksActions,
-    setEditedBookId: actions.setEditedBookId,
-  }
+  booksActions,
 )
 export default class Main extends React.Component {
   props: {
@@ -50,7 +47,6 @@ export default class Main extends React.Component {
     createBook: (title: string) => void,
     deleteBook: () => void,
     updateBook: (BookUpdatePayload) => void,
-    setEditedBookId: ($PropertyType<Book, 'id'>) => void,
     books: Array<Book>,
     filteredBooks: Array<Book>,
     repetitions: Array<Repetition>,
@@ -160,8 +156,6 @@ export default class Main extends React.Component {
                 id: book.id,
                 updateData: data,
               })}
-              isEdited={this.props.editedBookId === book.id}
-              onClickHandler={() => this.props.setEditedBookId(book.id)}
             />
           )}
         </Table>

@@ -6,29 +6,15 @@ import React from 'react'
 import moment from 'moment'
 
 import PopUpMenu from 'components/PopUpMenu'
+import InputField from 'components/InputField'
 import DateChooser from 'components/DateChooser'
 import { borderButtonClasses } from 'utils/styling.js'
 import { DATE_FORMAT } from 'utils/time.js'
 import { getVisibleReps } from 'utils/aux.js'
 
-class EditBookTitle extends React.Component {
-  render () {
-    return (
-      <form className='dib' onSubmit={e => {
-        e.preventDefault()
-        this.props.updateHandler({title: this.refs.input.value})
-      }}>
-        <input autoFocus type='text' defaultValue={this.props.book.title} ref='input' />
-        <input type='submit' value='submit' className={`ml1 ${borderButtonClasses}`} />
-      </form>
-    )
-  }
-}
-
 type BookRowProps = {
   book: Book,
   deleteHandler: $PropertyType<Book, 'id'> => void,
-  onClickHandler: () => void,
   updateHandler: ({}) => void,
 }
 
@@ -57,11 +43,11 @@ const DateCell = ({book, props, prop}) => {
 export default ({book, ...props}: BookRowProps) => {
   const getCell = (col) => ({
     title: (
-      <div className='dib' onClick={props.onClickHandler}>
-        {props.isEdited
-          ? <EditBookTitle book={book} updateHandler={props.updateHandler} />
-          : <span>{book.title}</span>
-        }
+      <div className='dib'>
+        <InputField
+          initialValue={book.title}
+          onSubmit={title => props.updateHandler({title})}
+        />
       </div>
     ),
     reps: (
