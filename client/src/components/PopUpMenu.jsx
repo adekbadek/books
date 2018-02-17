@@ -11,10 +11,10 @@ export default class PopUpMenu extends React.Component {
   state = {
     open: false,
   }
-  handleClickOutside = this.close
   close = () => {
     this.setState({ open: false })
   }
+  handleClickOutside = this.close
   render () {
     return (
       <div className='popup'>
