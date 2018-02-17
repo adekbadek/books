@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { connect } from 'react-redux'
+import { isEmpty } from 'ramda'
 
 import RouteLink from 'components/RouteLink'
 import {
@@ -27,12 +28,12 @@ export default class Header extends React.Component {
         <RouteLink url='/'>
           <h1 className='dib mt0'>books</h1>
         </RouteLink>
-        <RouteLink
+        {!isEmpty(this.props.user) && <RouteLink
           url={getAuthViewURL()}
           className='fr'
           borderButton
           beforeAction={handleLogout}
-        >logout</RouteLink>
+        >logout</RouteLink>}
         <RouteLink
           url={getUserSettingsViewURL()}
           className='fr pa1 pr2'
