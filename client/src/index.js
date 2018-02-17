@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 
 import FlashMessage from 'components/FlashMessage'
 import Loader from 'components/Loader'
+import Header from 'components/Header'
 import history from 'utils/history'
 
 import {
@@ -30,6 +31,7 @@ class App extends React.Component {
           <Loader />
           <Router history={history}>
             <div className='pa4'>
+              <Header />
               <Route exact path={getRootViewURL()} component={AsyncMain} />
               <Route path={getAuthViewURL()} component={AsyncAuth} />
               <Route path={getUserSettingsViewURL()} component={AsyncUserSettings} />

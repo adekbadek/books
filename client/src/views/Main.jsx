@@ -1,6 +1,6 @@
 // @flow
 
-import type { Book, User, Repetition, BookUpdatePayload } from 'utils/types'
+import type { Book, Repetition, BookUpdatePayload } from 'utils/types'
 
 import React from 'react'
 import moment from 'moment'
@@ -9,11 +9,9 @@ import { connect } from 'react-redux'
 
 import BookRow from 'components/BookRow'
 import Table from 'components/Table'
-import RouteLink from 'components/RouteLink'
 import Filters from 'components/Filters'
 import InputForm from 'components/InputForm'
 import TimeViewer from 'components/TimeViewer'
-import withUserInfo from 'components/hoc/withUserInfo'
 
 import {
   getVisibleReps,
@@ -25,9 +23,7 @@ import { booksActions, default as actions } from 'store/actions'
 
 import {
   readCredentials,
-  handleLogout,
   getAuthViewURL,
-  getUserSettingsViewURL,
 } from 'utils/api.js'
 import { sortByDates, getAllReps, displayBookTitle } from 'utils/aux.js'
 import { DATE_FORMAT } from 'utils/time.js'
@@ -48,7 +44,6 @@ const MAX_REPS = 5
     setEditedBookId: actions.setEditedBookId,
   }
 )
-@withUserInfo
 export default class Main extends React.Component {
   props: {
     fetchBooks: () => void,
@@ -59,7 +54,6 @@ export default class Main extends React.Component {
     books: Array<Book>,
     filteredBooks: Array<Book>,
     repetitions: Array<Repetition>,
-    user: User,
     filterInput: string,
     filterType: string,
     editedBookId: null | $PropertyType<Book, 'id'>,
@@ -92,19 +86,6 @@ export default class Main extends React.Component {
     const hiddenUpcoming = upcomingReps.length - MAX_REPS
     return (
       <div>
-        <div className='top'>
-          <h1 className='dib mt0'>books</h1>
-          <RouteLink
-            url={getAuthViewURL()}
-            className='fr'
-            borderButton
-            beforeAction={handleLogout}
-          >logout</RouteLink>
-          <RouteLink
-            url={getUserSettingsViewURL()}
-            className='fr pa1 pr2'
-          >{this.props.user.email}</RouteLink>
-        </div>
         {!!todaysReps.length && (
           <Table
             wrapperClassName='pt2'

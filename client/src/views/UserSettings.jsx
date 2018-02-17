@@ -1,19 +1,11 @@
 // @flow
 
-import type { User } from 'utils/types'
-
 import React from 'react'
 
-import withUserInfo from 'components/hoc/withUserInfo'
+import { connect } from 'react-redux'
 
-@withUserInfo
-export default class UserSettings extends React.Component {
-  props: {
-    user: User,
-  }
-  render () {
-    return (
-      <div>settings for {this.props.user.email}</div>
-    )
-  }
-}
+export default connect(
+  state => ({user: state.user}),
+)(({user}) =>
+  <div>settings for {user.email}</div>
+)
