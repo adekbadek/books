@@ -8,8 +8,9 @@ class ApplicationController < ActionController::API
     books.map{|book|
       book = book.as_json
       reps = book.slice(*rep_keys)
-      serialized_book = book.except(*rep_keys, 'user_id', 'updated_at', 'created_at')
+      serialized_book = book.except(*rep_keys, 'user_id', 'updated_at', 'created_at', 'author_id')
       serialized_book[:reps] = reps.values
+      serialized_book[:author_name] = book['author_id'] && Author.find(book['author_id']).name
       serialized_book
     }
   end

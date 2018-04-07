@@ -26,7 +26,7 @@ class BooksController < ApplicationController
     book = self.get_authenticated_user.books.find(params[:id])
     updates = JSON.parse request.body.read
 
-    book.update(updates.except('reps'))
+    book.update(updates.except('reps', 'author_name'))
 
     # update all reps (end_date might have been set)
     if updates.key?('end_date')
@@ -40,6 +40,15 @@ class BooksController < ApplicationController
         book["rep_#{i}"] = (reps.is_a? Array) ? reps[i] : nil
       end
       book.save!
+    end
+
+    if updates.key?('author_name')
+      if updates['author_name'] == ''
+        book.update(author_id: nil)
+      else
+        assigned_author = Author.find_or_create_by(name: updates['author_name'])
+        book.update(author_id: assigned_author.id)
+      end
     end
 
     render(

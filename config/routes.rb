@@ -9,5 +9,6 @@ Rails.application.routes.draw do
     post :books, to: 'books#create'
     delete ':books/:id', to: 'books#remove'
     patch ':books/:id', to: 'books#edit'
+    get :authors, to: 'authors#index'
   end
 end
