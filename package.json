@@ -6,7 +6,8 @@
     "build": "(cd client && npm run build)",
     "postinstall": "cd client/ && yarn install",
     "commit": "git-cz",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "test": "cd client && npm t"
   },
   "devDependencies": {
     "commitizen": "^2.9.6",

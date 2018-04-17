@@ -33,7 +33,7 @@ export const getVisibleReps = (book: Book): Array<*> => book.end_date ? book.rep
 export const displayBookTitle = (title: string) => title.length > MAX_TITLE_LEN ? `${title.substring(0, MAX_TITLE_LEN).trim()}…` : title
 
 // https://stackoverflow.com/a/3426956/3772847
-const hashCode = (str: string): number => {
+export const hashCode = (str: string): number => {
   let hash = 0
   for (let i = 0; i < str.length; i++) {
     hash = str.charCodeAt(i) + ((hash << 5) - hash)

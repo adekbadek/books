@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getCellStyles 1`] = `
+Object {
+  "backgroundColor": "rgb(30, 157, 0)",
+}
+`;
+
+exports[`getCellStyles 2`] = `
+Object {
+  "backgroundColor": "hsla(108.5, 15%, 30.8%, 0.5)",
+}
+`;
