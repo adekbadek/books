@@ -52,13 +52,13 @@ export default class TimeViewer extends React.Component {
     const readInCurrentYear = visibleRanges.filter(v => v.end).length
     const Component = MODES[this.state.modeIndex].component
     return (
-      <div className='pb4'>
+      <div className='pb4 time-viewer'>
         <div className='pb2 mt4 tc posr'>
           <button
             className={borderButtonClasses}
             onClick={this.changeDate(false)}
           ><Icon name='arrow-left' /></button>
-          <span className='ph4'>
+          <span className='ph4 time-viewer__dates'>
             {this.state.startDate.format('MMM \'YY')} - {moment(endDate).subtract(1, 'month').format('MMM \'YY')}&nbsp;
             <span
               title={`${readInCurrentYear} books read in ${moment(this.state.startDate).format('YYYY')}`}
