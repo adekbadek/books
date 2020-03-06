@@ -25,6 +25,7 @@ client/src/**/*.css
 
 # dependencies
 node_modules
+vendor
 
 # testing
 client/coverage

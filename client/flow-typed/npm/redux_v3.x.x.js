@@ -1,5 +1,5 @@
-// flow-typed signature: cca4916b0213065533df8335c3285a4a
-// flow-typed version: cab04034e7/redux_v3.x.x/flow_>=v0.55.x
+// flow-typed signature: dc0f2e4496833e56eac8ee024b678ba2
+// flow-typed version: be9ff9d3ab/redux_v3.x.x/flow_>=v0.55.x <=v0.88.x
 
 declare module 'redux' {
 
@@ -11,8 +11,9 @@ declare module 'redux' {
 
   */
 
+  declare export type Action = { type: $Subtype<string> };
   declare export type DispatchAPI<A> = (action: A) => A;
-  declare export type Dispatch<A: { type: $Subtype<string> }> = DispatchAPI<A>;
+  declare export type Dispatch<A: Action> = DispatchAPI<A>;
 
   declare export type MiddlewareAPI<S, A, D = Dispatch<A>> = {
     dispatch: D;
@@ -53,7 +54,7 @@ declare module 'redux' {
   declare export function bindActionCreators<A, C: ActionCreator<A, any>, D: DispatchAPI<A>>(actionCreator: C, dispatch: D): C;
   declare export function bindActionCreators<A, K, C: ActionCreators<K, A>, D: DispatchAPI<A>>(actionCreators: C, dispatch: D): C;
 
-  declare export function combineReducers<O: Object, A>(reducers: O): CombinedReducer<$ObjMap<O, <S>(r: Reducer<S, any>) => S>, A>;
+  declare export function combineReducers<O: {}, A>(reducers: O): CombinedReducer<$ObjMap<O, <S>(r: Reducer<S, any>) => S>, A>;
 
   declare export var compose: $Compose;
 }

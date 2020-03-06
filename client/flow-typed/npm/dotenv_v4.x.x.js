@@ -1,5 +1,5 @@
-// flow-typed signature: cf11c66b2c3d752c24fdf3eae1b44e1c
-// flow-typed version: 21e1db763b/dotenv_v4.x.x/flow_>=v0.34.x
+// flow-typed signature: e55dc2010694f6201f756ac5beba2f80
+// flow-typed version: c6154227d1/dotenv_v4.x.x/flow_>=v0.34.x <=v0.103.x
 
 declare module "dotenv" {
   declare type DotenvOptions = {

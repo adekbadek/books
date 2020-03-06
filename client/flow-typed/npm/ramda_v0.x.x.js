@@ -1,5 +1,5 @@
-// flow-typed signature: 6baa9163b830d21d1adf9af2bdb589b2
-// flow-typed version: 9e2812a6a8/ramda_v0.x.x/flow_>=v0.49.x <=v0.61.x
+// flow-typed signature: cdc068216d4704556cb46a7dfc20e8f8
+// flow-typed version: 0570d135f7/ramda_v0.x.x/flow_>=v0.49.x <=v0.61.x
 
 /* eslint-disable no-unused-vars, no-redeclare */
 
@@ -509,8 +509,8 @@ declare module ramda {
   declare function trim(a: string): string;
 
   // *Type
-  declare function is<T>(t: T, ...rest: Array<void>): (v: any) => boolean;
-  declare function is<T>(t: T, v: any): boolean;
+  declare function is<T: Class<mixed>>(t: T): (v: mixed) => boolean;
+  declare function is<T: Class<mixed>>(t: T, v: mixed): boolean;
   declare var propIs: CurriedFunction3<any, string, Object, boolean>;
   declare function type(x: ?any): string;
   declare function isArrayLike(x: any): boolean;

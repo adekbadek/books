@@ -1,5 +1,5 @@
-// flow-typed signature: cf916fca23433d4bbcb7a75f2604407d
-// flow-typed version: f821d89401/react-router-dom_v4.x.x/flow_>=v0.53.x
+// flow-typed signature: 9dd95563025b9c51ea5e443acc69b94d
+// flow-typed version: be05cd918c/react-router-dom_v4.x.x/flow_>=v0.53.x <=v0.62.x
 
 declare module "react-router-dom" {
   declare export class BrowserRouter extends React$Component<{
@@ -69,8 +69,8 @@ declare module "react-router-dom" {
     goForward(): void,
     canGo?: (n: number) => boolean,
     block(
-      callback: (location: Location, action: HistoryAction) => boolean
-    ): void,
+      callback: string | (location: Location, action: HistoryAction) => ?string
+    ): () => void,
     // createMemoryHistory
     index?: number,
     entries?: Array<Location>
@@ -87,8 +87,8 @@ declare module "react-router-dom" {
     history: RouterHistory,
     location: Location,
     match: Match,
-    staticContext?: StaticRouterContext,
-|};
+    staticContext?: StaticRouterContext
+  |};
 
   declare export type GetUserConfirmation = (
     message: string,

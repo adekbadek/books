@@ -1,5 +1,5 @@
-// flow-typed signature: f965116cdb881170be8c42b10554e195
-// flow-typed version: da30fe6876/chalk_v1.x.x/flow_>=v0.25.x
+// flow-typed signature: 5f9bf75f1b9bc7ef040b582f7d134154
+// flow-typed version: c6154227d1/chalk_v1.x.x/flow_>=v0.25.x <=v0.103.x
 
 type $npm$chalk$StyleElement = {
   open: string,
