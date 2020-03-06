@@ -16,10 +16,19 @@ Book journal with spaced repetitions.
 
 ```shell
 bundle
-npm install
+yarn
 ```
 
 ## developing
+
+first time:
+
+```shell
+rails db:migrate RAILS_ENV=development
+rails db:seed
+```
+
+then:
 
 ```shell
 npm start
@@ -30,8 +39,7 @@ This project uses [commitizen](https://commitizen.github.io/cz-cli/), commit wit
 ## testing
 
 ```shell
-cd client/
-npm t
+npm test
 ```
 
 ## running on production
