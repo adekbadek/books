@@ -12,11 +12,16 @@ import {
 } from 'utils/api.js'
 import actions from 'store/actions'
 
-const { setBooks, setFlashMessage, setUserData } = actions
+const { setBooks, addBook, setFlashMessage, setUserData } = actions
 
 function * fetchBooks (_) {
   const books = yield call(request, {url: getBooksURL()})
   yield put(setBooks({books}))
+}
+
+function * fetchSingleBook (bookId) {
+  const book = yield call(request, {url: getBooksURL(bookId)})
+  yield put(addBook(book))
 }
 
 function * createBook (title: string) {
@@ -82,6 +87,7 @@ const fetchFromApi = apiCallGenerator => function * performApiCall ({payload}) {
 export default function * rootSaga (): Generator<any, any, any> {
   yield all([
     takeEvery('BOOKS_FETCH', fetchFromApi(fetchBooks)),
+    takeEvery('BOOKS_FETCH_SINGLE', fetchFromApi(fetchSingleBook)),
     takeEvery('BOOKS_CREATE', fetchFromApi(createBook)),
     takeEvery('BOOKS_DELETE', fetchFromApi(deleteBook)),
     takeEvery('BOOKS_UPDATE', fetchFromApi(updateBook)),

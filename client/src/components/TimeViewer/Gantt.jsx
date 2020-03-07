@@ -6,7 +6,7 @@ import React from 'react'
 import moment from 'moment'
 import cx from 'classnames'
 
-import { displayBookTitle } from 'utils/aux.js'
+import BookLink from 'components/BookLink'
 
 const DAYS_IN_YEAR = 365
 const ROW_HEIGHT = 23
@@ -66,7 +66,7 @@ export default (props: TimeViewProps) => {
                 left: `${left}%`,
               }}
             >
-              <span>{displayBookTitle(range.name)}</span>
+              <BookLink book={{id: range.bookId, title: range.name}} />
             </div>
           )
         })}

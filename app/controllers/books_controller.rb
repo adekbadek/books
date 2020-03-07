@@ -6,6 +6,16 @@ class BooksController < ApplicationController
     )
   end
 
+  def show
+    found_book = self.get_authenticated_user.books.find(params[:id])
+    render(
+      status: 200,
+      json: {
+        book: serialize_books([found_book])[0]
+      }
+    )
+  end
+
   def create
     new_book = self.get_authenticated_user.books.create(JSON.parse request.body.read)
     render(

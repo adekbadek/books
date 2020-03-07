@@ -12,31 +12,27 @@ export const TABLE_STRUCTURE = {
     header: 'Title',
     col: {component: 'title'},
   },
+  author: {
+    header: 'Author',
+    col: {component: 'author'},
+  },
   start: {
     header: 'Start',
     col: {component: 'date', prop: 'start_date'},
   },
-  onHold: {
-    header: 'On Hold',
-    col: {component: 'date', prop: 'on_hold'},
-  },
   end: {
     header: 'Finished',
-    col: {component: 'date', prop: 'end_date'},
+    col: {component: 'date', prop: 'end_date|on_hold'},
   },
   reps: {
     header: 'Reps',
     col: {component: 'reps'},
   },
-  actions: {
-    header: 'Actions',
-    col: {component: 'actions'},
-  },
 }
 
 export const FILTERS_TABLE_OMISSIONS = {
   CURRENT: ['reps'],
-  READ: ['onHold'],
-  ON_HOLD: ['end', 'reps'],
-  TO_READ: ['onHold', 'end', 'reps'],
+  ON_HOLD: ['reps'],
+  READ: [],
+  TO_READ: ['start', 'end', 'reps'],
 }

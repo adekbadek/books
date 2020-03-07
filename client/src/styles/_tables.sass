@@ -1,8 +1,22 @@
 .table
+  &__cell
+    &--dimmed
+      opacity: 0.3
+    &--book-title
+      +from($main-width)
+        width: 300px
   &--align-top
     tr
       vertical-align: top
-
-  &--short-inputs
-    input
-      max-width: 110px
+  &--booklist
+    tbody tr
+      &,
+      td:first-child div
+        transition: all 300ms
+      &:hover
+        background-color: #f7f7f7
+        cursor: pointer
+        td:first-child div
+          transform: translateX(4px)
+    td:not(.table__cell--book-title)
+      width: 100px

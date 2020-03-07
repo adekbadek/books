@@ -2,7 +2,7 @@
 
 import type { Action, BooksState } from 'utils/types'
 
-import { merge } from 'ramda'
+import { merge, uniqBy, prop } from 'ramda'
 
 const initialState = {
   books: [],
@@ -13,6 +13,8 @@ export default (state: BooksState = initialState, action: Action): BooksState =>
   switch (action.type) {
     case 'SET_BOOKS':
       return merge(state, {...payload})
+    case 'ADD_BOOK':
+      return merge(state, {books: uniqBy(prop('id'), [...state.books, action.payload.book])})
     case 'FLUSH_STORE':
       return initialState
     default:

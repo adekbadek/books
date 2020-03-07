@@ -6132,10 +6132,12 @@ react-router@5.1.2:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
-react-textarea-autosize@^5.2.1:
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/react-textarea-autosize/-/react-textarea-autosize-5.2.1.tgz#2b78f9067180f41b08ac59f78f1581abadd61e54"
+react-textarea-autosize@^7.1.2:
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/react-textarea-autosize/-/react-textarea-autosize-7.1.2.tgz#70fdb333ef86bcca72717e25e623e90c336e2cda"
+  integrity sha512-uH3ORCsCa3C6LHxExExhF4jHoXYCQwE5oECmrRsunlspaDAbS4mGKNlWZqjLfInWtFQcf0o1n1jC/NGXFdUBCg==
   dependencies:
+    "@babel/runtime" "^7.1.2"
     prop-types "^15.6.0"
 
 react@^16.13.0:
@@ -6834,6 +6836,11 @@ sockjs@0.3.18:
   dependencies:
     faye-websocket "^0.10.0"
     uuid "^2.0.2"
+
+some-sass-mixins@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/some-sass-mixins/-/some-sass-mixins-2.0.0.tgz#7cc320ac8a6cff994a2466da44d3001d6e3c3e19"
+  integrity sha512-hGN21V253WJ0gypdGSI2Frn2QjpQ1EOE5A9xmoUS6YzHTI8vp5rI5FIFwTO+gKPDhWV9A9arfCA1ZfI1jJ4Avg==
 
 sort-keys@^1.0.0:
   version "1.1.2"

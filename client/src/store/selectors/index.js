@@ -2,6 +2,8 @@
 
 import type { Store } from 'utils/types'
 
+import { find } from 'ramda'
+
 import { filterWithType } from 'utils/filters'
 
 export const filteredBooksSelector = (state: Store) => {
@@ -14,3 +16,7 @@ export const filteredBooksSelector = (state: Store) => {
     return filteredByType
   }
 }
+
+export const bookById = (state: Store) => (bookId: string) => (
+  find(book => book.id === Number(bookId), state.books.books)
+)

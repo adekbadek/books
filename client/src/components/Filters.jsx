@@ -41,7 +41,7 @@ class Filters extends React.Component {
   render () {
     const { filterType, setFilterType } = this.props
     return (
-      <div className='mt2'>
+      <div className='mt2 flex items-center'>
         <div className='dib'>
           {FILTER_NAMES.map((type, i) => {
             const howManyFiltered = filterWithType(type, this.props.books).length

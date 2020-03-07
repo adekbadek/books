@@ -21,6 +21,7 @@ export const getAllReps = (books: Array<Book>): Array<Repetition> => {
     return book.reps
       .filter(v => !!v)
       .map(date => ({
+        bookId: book.id,
         title: book.title,
         date,
       }))

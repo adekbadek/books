@@ -7,8 +7,8 @@ import { isEmpty } from 'ramda'
 import RouteLink from 'components/RouteLink'
 import {
   handleLogout,
-  getAuthViewURL,
-  getUserSettingsViewURL,
+  AUTH_VIEW_URL,
+  USER_SETTINGS_VIEW_URL,
 } from 'utils/api.js'
 import actions from 'store/actions'
 
@@ -29,13 +29,13 @@ export default class Header extends React.Component {
           <h1 className='dib mt0'>books</h1>
         </RouteLink>
         {!isEmpty(this.props.user) && <RouteLink
-          url={getAuthViewURL()}
+          url={AUTH_VIEW_URL}
           className='fr'
           borderButton
           beforeAction={handleLogout}
         >logout</RouteLink>}
         <RouteLink
-          url={getUserSettingsViewURL()}
+          url={USER_SETTINGS_VIEW_URL}
           className='fr pa1 pr2'
         >{this.props.user.email}</RouteLink>
       </div>

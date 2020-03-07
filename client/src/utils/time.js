@@ -3,8 +3,15 @@
 import type Moment from 'moment'
 import type { Range, CalendarPoint } from 'utils/types'
 import { pluck } from 'ramda'
+import moment from 'moment'
 
 export const DATE_FORMAT = 'DD MMM YYYY'
+
+moment.updateLocale('en', {
+  week: {
+    dow: 1,
+  },
+})
 
 export const getRangesForDate = (date: Moment, ranges: Array<Range>) => {
   return ranges.filter(range => {

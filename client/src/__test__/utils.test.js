@@ -60,13 +60,14 @@ it('getColorFromStringFunc', () => {
 
 it('getAllReps', () => {
   const title1 = 'One'
+  const bookId1 = 42
   const title2 = 'Two'
   const rep1 = '2018-04-06'
   const rep2 = '2017-04-06'
   const rep3 = '2016-04-06'
   const books = [
     {
-      id: 0,
+      id: bookId1,
       title: title1,
       reps: [rep1],
     },
@@ -83,7 +84,7 @@ it('getAllReps', () => {
   ]
   const result = getAllReps(books)
   expect(result.length).toEqual(3)
-  expect(result).toContainEqual({title: title1, date: rep1})
+  expect(result).toContainEqual({bookId: bookId1, title: title1, date: rep1})
   expect(result.filter(v => v.title === title2).length).toEqual(books[1].reps.length)
 })
 

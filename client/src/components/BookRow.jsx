@@ -3,53 +3,41 @@
 import type { Book } from 'utils/types'
 
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import moment from 'moment'
+import classnames from 'classnames'
+import { find } from 'ramda'
 
-import PopUpMenu from 'components/PopUpMenu'
-import InputField from 'components/InputField'
-import DateChooser from 'components/DateChooser'
-import { borderButtonClasses } from 'utils/styling.js'
-import { DATE_FORMAT } from 'utils/time.js'
-import { getVisibleReps } from 'utils/aux.js'
+import { DATE_FORMAT } from 'utils/time'
+import { getVisibleReps } from 'utils/aux'
+import { getBookViewUrl } from 'utils/api'
 
 type BookRowProps = {
   book: Book,
-  deleteHandler: $PropertyType<Book, 'id'> => void,
-  updateHandler: ({}) => void,
 }
 
 const DateCell = ({book, props, prop}) => {
-  const isStart = prop === 'start_date'
-  const isOnHold = prop === 'on_hold'
-  const isEnd = prop === 'end_date'
+  const propArray = prop.split('|')
+  const validProp = find(p => Boolean(book[p]), propArray)
   return (
-    <DateChooser
-      selected={book[prop] ? moment(book[prop]) : null}
-      highlightDates={book[prop] && [moment(book[prop])]}
-      onChange={e => props.updateHandler({[prop]: e ? e.format() : null})}
-      placeholderText={`${prop.replace(/_/g, ' ')}`}
-      isClearable={isStart ? !book.end_date && !book.on_hold : true}
-      maxDate={isStart ? (
-        (book.end_date || book.on_hold) ? moment((book.end_date || book.on_hold)) : moment()
-      ) : moment()}
-      minDate={!isStart && book.start_date ? moment(book.start_date) : null}
-      disabled={!isStart && (
-        !book.start_date || (isEnd && book.on_hold) || (isOnHold && book.end_date)
-      )}
-    />
+    <div className={classnames({
+      'table__cell--dimmed': validProp === 'on_hold'
+    })}>
+      {book[validProp] ? moment(book[validProp]).format(DATE_FORMAT) : '-'}
+    </div>
   )
 }
 
 export default ({book, ...props}: BookRowProps) => {
+  const history = useHistory()
+
+  const handleBookClick = () => {
+    history.push(getBookViewUrl(book.id))
+  }
+
   const getCell = (col) => ({
-    title: (
-      <div className='dib'>
-        <InputField
-          initialValue={book.title}
-          onSubmit={title => props.updateHandler({title})}
-        />
-      </div>
-    ),
+    title: <div>{book.title}</div>,
+    author: <div>{book.author_name}</div>,
     reps: (
       getVisibleReps(book).map((date, j) =>
         date && <div
@@ -60,25 +48,15 @@ export default ({book, ...props}: BookRowProps) => {
       )
     ),
     date: <DateCell book={book} props={props} prop={col.prop} />,
-    actions: (
-      <PopUpMenu>
-        <button
-          className={borderButtonClasses}
-          onClick={() => {
-            props.deleteHandler(book.id)
-          }}
-        >remove</button>
-        {getVisibleReps(book).length > 0 && <button
-          className={borderButtonClasses}
-          onClick={() => props.updateHandler({reps: null})}
-        >remove reps</button>}
-      </PopUpMenu>
-    ),
   }[col.component])
+
+  const getClassName = ({component}) => ({
+    title: 'table__cell--book-title',
+  })[component]
   return (
-    <tr>
+    <tr onClick={handleBookClick}>
       {props.columns.map((col, i) => (
-        <td key={i} className='pv2 pr3 bb b--black-20'>
+        <td key={i} className={classnames(getClassName(col), 'pv2 pr3 bb b--black-20')}>
           {getCell(col)}
         </td>
       ))}

@@ -10,6 +10,7 @@ export default {
   setUserData: actionCreator('SET_USER_DATA'),
   getUserData: actionCreator('GET_USER_DATA'),
   setBooks: actionCreator('SET_BOOKS'),
+  addBook: actionCreator('ADD_BOOK'),
   setFilterInput: actionCreator('SET_FILTER_INPUT'),
   setFilterType: actionCreator('SET_FILTER_TYPE'),
   flushStore: actionCreator('FLUSH_STORE'),
@@ -17,6 +18,7 @@ export default {
 
 export const booksActions = {
   fetchBooks: actionCreator('BOOKS_FETCH'),
+  fetchSingleBook: actionCreator('BOOKS_FETCH_SINGLE'),
   createBook: actionCreator('BOOKS_CREATE'),
   deleteBook: actionCreator('BOOKS_DELETE'),
   updateBook: actionCreator('BOOKS_UPDATE'),

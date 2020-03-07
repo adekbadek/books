@@ -14,6 +14,7 @@ export type Book = {
 export type Range = {
   start?: string,
   end?: string,
+  bookId: $PropertyType<Book, 'id'>,
   name: string,
   isOnHold?: bool,
 }
@@ -24,6 +25,7 @@ export type AuthFormFields = {
 }
 
 export type Repetition = {
+  bookId: $PropertyType<Book, 'id'>,
   title: string,
   date: string
 }

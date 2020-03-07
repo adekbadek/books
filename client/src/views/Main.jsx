@@ -1,6 +1,6 @@
 // @flow
 
-import type { Book, Repetition, BookUpdatePayload } from 'utils/types'
+import type { Book, Repetition } from 'utils/types'
 
 import React from 'react'
 import moment from 'moment'
@@ -12,21 +12,19 @@ import Table from 'components/Table'
 import Filters from 'components/Filters'
 import InputForm from 'components/InputForm'
 import TimeViewer from 'components/TimeViewer'
+import BookLink from 'components/BookLink'
 
 import {
   getVisibleReps,
   getHeadersAndCols,
   filterBooksByFilterType,
+  sortByDates,
+  getAllReps,
 } from 'utils/aux'
+import { readCredentials, AUTH_VIEW_URL } from 'utils/api'
+import { DATE_FORMAT } from 'utils/time'
 import { filteredBooksSelector } from 'store/selectors'
 import { booksActions } from 'store/actions'
-
-import {
-  readCredentials,
-  getAuthViewURL,
-} from 'utils/api.js'
-import { sortByDates, getAllReps, displayBookTitle } from 'utils/aux.js'
-import { DATE_FORMAT } from 'utils/time.js'
 
 const MAX_REPS = 5
 
@@ -45,8 +43,6 @@ export default class Main extends React.Component {
   props: {
     fetchBooks: () => void,
     createBook: (title: string) => void,
-    deleteBook: () => void,
-    updateBook: (BookUpdatePayload) => void,
     books: Array<Book>,
     filteredBooks: Array<Book>,
     repetitions: Array<Repetition>,
@@ -74,7 +70,7 @@ export default class Main extends React.Component {
   )
   render () {
     if (!this.state.authenticated) {
-      return <Redirect to={getAuthViewURL()} />
+      return <Redirect to={AUTH_VIEW_URL} />
     }
 
     const todaysReps = this.getTodaysReps()
@@ -100,7 +96,9 @@ export default class Main extends React.Component {
               {
                 filterBooksByFilterType(this.props.books, 'CURRENT')
                   .map(book => (
-                    <div className='pt1' key={book.id}>{displayBookTitle(book.title)}</div>
+                    <div key={book.id}>
+                      <BookLink className='pt1' book={book} />
+                    </div>
                   ))
               }
             </td>
@@ -115,7 +113,9 @@ export default class Main extends React.Component {
                           <span className='tooltip' data-info={moment(rep.date).format(DATE_FORMAT)} />
                           {moment(rep.date).fromNow(true)}
                         </td>
-                        <td className='pl2'>{displayBookTitle(rep.title)}</td>
+                        <td className='pl2'>
+                          <BookLink book={{id: rep.bookId, title: rep.title}} />
+                        </td>
                       </tr>
                     ))
                   }
@@ -131,6 +131,7 @@ export default class Main extends React.Component {
               start: book.start_date,
               end: book.end_date || book.on_hold,
               name: book.title,
+              bookId: book.id,
               isOnHold: !!book.on_hold,
             }
           ))}
@@ -144,18 +145,13 @@ export default class Main extends React.Component {
         <Filters />
         <Table
           headers={getHeadersAndCols(this.props.filterType).headers}
-          tableClassName='table--short-inputs'
+          tableClassName='table--booklist'
         >
           {this.props.filteredBooks.map(book =>
             <BookRow
               key={book.id}
               columns={getHeadersAndCols(this.props.filterType).cols}
               book={book}
-              deleteHandler={this.props.deleteBook}
-              updateHandler={data => this.props.updateBook({
-                id: book.id,
-                updateData: data,
-              })}
             />
           )}
         </Table>

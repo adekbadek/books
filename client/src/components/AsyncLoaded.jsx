@@ -24,6 +24,10 @@ const LoadableMain = AsyncLoaded({
   loader: () => import(/* webpackChunkName: 'Main' */ 'views/Main.jsx')
 })
 
+const LoadableBook = AsyncLoaded({
+  loader: () => import(/* webpackChunkName: 'Main' */ 'views/Book.jsx')
+})
+
 const LoadableAuth = AsyncLoaded({
   loader: () => import(/* webpackChunkName: 'Auth' */ 'views/Auth.jsx')
 })
@@ -33,5 +37,6 @@ const LoadableUserSettings = AsyncLoaded({
 })
 
 export const AsyncMain = () => <LoadableMain />
+export const AsyncBook = ({match: {params: {id}}}) => <LoadableBook bookId={id} />
 export const AsyncAuth = () => <LoadableAuth />
 export const AsyncUserSettings = () => <LoadableUserSettings />

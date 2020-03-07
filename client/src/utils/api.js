@@ -13,11 +13,14 @@ const LOCAL_STORAGE_ITEM = 'JWT'
 
 const isProduction = process.env.NODE_ENV === 'production'
 
-// URLs
-export const getRootViewURL = () => '/'
-export const getAuthViewURL = () => '/login'
-export const getUserSettingsViewURL = () => '/settings'
+// views URLs
+export const ROOT_VIEW_URL = '/'
+export const BOOK_VIEW_URL = '/book/:id'
+export const getBookViewUrl = id => `/book/${id}`
+export const AUTH_VIEW_URL = '/login'
+export const USER_SETTINGS_VIEW_URL = '/settings'
 
+// API URLs
 const getURL = endpoint => `${isProduction ? PROD_API_URL : ''}/${API_VERSION}${endpoint}`
 
 export const getBooksURL = (id?: $PropertyType<Book, 'id'>) => getURL(`/books${id ? `/${id}` : ''}`)
@@ -51,7 +54,7 @@ export const request = ({url, method = 'GET', data} : {url: string, method?: str
       if (res.status >= 400) {
         if (res.status === 401) {
           revokeCredentials()
-          history.push(getAuthViewURL())
+          history.push(AUTH_VIEW_URL)
           setTimeout(() => {
             store.dispatch(actions.setFlashMessage({text: 'please log in'}))
           }, 1)
