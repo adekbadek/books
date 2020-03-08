@@ -53,11 +53,21 @@ class BooksController < ApplicationController
     end
 
     if updates.key?('author_name')
+      if book.author_id
+        removed_author = Author.find(book.author_id)
+      end
+
       if updates['author_name'] == ''
         book.update(author_id: nil)
       else
         assigned_author = Author.find_or_create_by(name: updates['author_name'])
         book.update(author_id: assigned_author.id)
+      end
+
+      if book.author_id
+        if removed_author.books.length === 0
+          removed_author.destroy()
+        end
       end
     end
 

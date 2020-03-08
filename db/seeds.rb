@@ -10,29 +10,73 @@ user1 = User.create(email: 'user1@mail.com' , password: 'qweqweqwe')
 user2 = User.create(email: 'user2@mail.com' , password: 'qweqweqwe')
 
 book_titles_user_1 = [
-  'The Invention of Nature: The Adventures of Alexander von Humboldt, the Lost Hero of Science',
-  'Slaughterhouse Five',
-  'Sapiens: A Brief History of Humankind',
-  'Widnokrąg',
-  'Ciemno, prawie noc',
-  'Code Complete',
-  'Black Cloud',
-  'Homo Deus',
-  'Obietnica Poranka',
-  'Autobiografia Alicji B. Toklas'
+  {
+    'title' => 'The Invention of Nature: The Adventures of Alexander von Humboldt, the Lost Hero of Science',
+    'author' => 'Andrea Wulf'
+  },
+  {
+    'title' => 'Slaughterhouse Five',
+    'author' => 'Kurt Vonnegut'
+  },
+  {
+    'title' => 'Sapiens: A Brief History of Humankind',
+    'author' => 'Noah Yuval Harari'
+  },
+  {
+    'title' => 'Widnokrąg',
+    'author' => 'Wiesław Myśliwski'
+  },
+  {
+    'title' => 'Ciemno, prawie noc',
+    'author' => 'Joanna Bator'
+  },
+  {
+    'title' => 'Code Complete',
+    'author' => 'Steve McConnell'
+  },
+  {
+    'title' => 'Black Cloud',
+    'author' => 'Fred Hoyle'
+  },
+  {
+    'title' => 'Homo Deus',
+    'author' => 'Noah Yuval Harari'
+  },
+  {
+    'title' => 'Obietnica Poranka',
+    'author' => 'Romain Gady'
+  },
+  {
+    'title' => 'Autobiografia Alicji B. Toklas',
+    'author' => 'Gertruda Stein'
+  }
 ]
 book_titles_user_2 = [
-  'Atlas Shrugger',
-  'The Fontanaheads',
-  'Why The Buying'
+  {
+    'title' => 'Atlas Shrugger',
+    'author' => 'Foo Shrugger'
+  },
+  {
+    'title' => 'The Fontanaheads',
+    'author' => 'Bar Fontanaheads'
+  },
+  {
+    'title' => 'Why The Buying',
+    'author' => 'Baz Buying'
+  }
 ]
 
 def add_books_to_user(user, titles)
   titles.each_with_index do |book, i|
     end_date = Time.now - (Random.new.rand * 150).days
 
+    author = Author.find_or_create_by(
+      name: book['author']
+    )
+
     new_book = user.books.create(
-      title: book,
+      title: book['title'],
+      author_id: author['id'],
       start_date: end_date - (Random.new.rand * 20 + 5).days
     )
 

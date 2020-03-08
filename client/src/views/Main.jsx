@@ -83,7 +83,9 @@ export default class Main extends React.Component {
             wrapperClassName='pt2'
             headers={['Today\'s repetitions']}
           >
-            {todaysReps.map((rep, i) => <tr key={i}><td>{rep.title}</td></tr>)}
+            {todaysReps.map((rep, i) => <tr key={i}><td>
+              <BookLink book={{title: rep.title, id: rep.bookId}} />
+            </td></tr>)}
           </Table>
         )}
         <Table
