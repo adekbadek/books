@@ -1,5 +1,11 @@
+$gantt-on-hold-color: desaturate($main, 60)
+$gantt-current-color: lighten($main, 30)
+$gantt-current-color--dark: darken($gantt-current-color, 50)
+
 .gantt
   background-color: $main
+  @media (prefers-color-scheme: dark)
+    background-color: darken($main, 30)
   font-size: 12px
   padding: 4px
   white-space: nowrap
@@ -7,9 +13,13 @@
     position: relative
     z-index: 1
   &--on-hold
-    background-color: desaturate($main, 60)
+    background-color: $gantt-on-hold-color
+    @media (prefers-color-scheme: dark)
+      background-color: darken($gantt-on-hold-color, 20)
   &--current
-    background-color: lighten($main, 30)
+    background-color: $gantt-current-color
+    @media (prefers-color-scheme: dark)
+      background-color: $gantt-current-color--dark
     &:after
       content: ''
       position: absolute
@@ -18,6 +28,8 @@
       top: 0
       height: 100%
       background: linear-gradient(to right, transparent 0%, $white 100%)
+      @media (prefers-color-scheme: dark)
+        background: linear-gradient(to right, $gantt-current-color--dark 0%, $dark-mode-bg 100%)
   &__months,
   &__ranges
     width: 100%

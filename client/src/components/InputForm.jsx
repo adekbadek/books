@@ -17,8 +17,8 @@ export default class InputForm extends React.Component {
   render () {
     return (
       <form onSubmit={this.onSubmit}>
-        <input type='text' placeholder='title' value={this.state.val} onChange={this.onChange} />
-        <input type='submit' value='add' className='ml1 ba b--black bg-transparent pointer' />
+        <input className='pa1 pl2' type='text' placeholder='title' value={this.state.val} onChange={this.onChange} />
+        <input type='submit' value='add' className='pv1 ph2 ml1 ba b--black bg-transparent pointer' />
       </form>
     )
   }

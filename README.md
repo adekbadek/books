@@ -44,6 +44,8 @@ npm test
 
 ## running on production
 
+first, build the necessary images: `docker-compose build`
+
 to launch on production, run `docker-compose up -d`, and then:
 
 start from scratch | restore backup

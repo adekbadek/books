@@ -41,7 +41,7 @@ class Filters extends React.Component {
   render () {
     const { filterType, setFilterType } = this.props
     return (
-      <div className='mt2 flex items-center'>
+      <div className='mt2 flex items-center justify-between'>
         <div className='dib'>
           {FILTER_NAMES.map((type, i) => {
             const howManyFiltered = filterWithType(type, this.props.books).length
@@ -57,7 +57,7 @@ class Filters extends React.Component {
           })}
         </div>
         <input
-          className='fr'
+          className='ph2 pv1'
           type='text'
           placeholder='filter'
           value={this.state.inputVal}

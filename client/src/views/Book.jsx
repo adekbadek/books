@@ -84,7 +84,7 @@ export default connect((state, {bookId}) => {
           <div key={prop} className='flex items-center mb2'>
             <label htmlFor='sdf' className='w-10 mr1'>{label}</label>
             <DateChooser
-              className='ml2'
+              className='ml2 ph2 pv1'
               selected={book[prop] ? moment(book[prop]) : null}
               highlightDates={book[prop] && [moment(book[prop])]}
               onChange={date => handleUpdate(prop)(date ? date.format() : null)}
