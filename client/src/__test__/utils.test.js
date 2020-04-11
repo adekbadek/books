@@ -9,7 +9,6 @@ import {
 import {
   times,
   hashCode,
-  getAllReps,
   getColorFromStringFunc,
   getCellStyles,
 } from 'utils/aux.js'
@@ -56,36 +55,6 @@ it('getColorFromStringFunc', () => {
   const str = 'Zumbo'
   expect(getColorFromStringFunc(str)).toEqual('rgb(43, 24, 63)')
   expect(getColorFromStringFunc(str, '#0000ff')).toEqual('rgb(22, 12, 159)')
-})
-
-it('getAllReps', () => {
-  const title1 = 'One'
-  const bookId1 = 42
-  const title2 = 'Two'
-  const rep1 = '2018-04-06'
-  const rep2 = '2017-04-06'
-  const rep3 = '2016-04-06'
-  const books = [
-    {
-      id: bookId1,
-      title: title1,
-      reps: [rep1],
-    },
-    {
-      id: 1,
-      title: title2,
-      reps: [rep2, rep3],
-    },
-    {
-      id: 2,
-      title: 'Three',
-      reps: [],
-    },
-  ]
-  const result = getAllReps(books)
-  expect(result.length).toEqual(3)
-  expect(result).toContainEqual({bookId: bookId1, title: title1, date: rep1})
-  expect(result.filter(v => v.title === title2).length).toEqual(books[1].reps.length)
 })
 
 it('getCellStyles', () => {

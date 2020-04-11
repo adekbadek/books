@@ -24,12 +24,6 @@ export type AuthFormFields = {
   password: string,
 }
 
-export type Repetition = {
-  bookId: $PropertyType<Book, 'id'>,
-  title: string,
-  date: string
-}
-
 export type User = {
   name: string | null,
   email: string,
@@ -63,11 +57,6 @@ export type Store = {
   +ui: UiState,
 }
 
-export type CalendarPoint = {
-  dates: Array<string>,
-  name: string,
-}
-
 export type BookUpdatePayload = {
   id: $PropertyType<Book, 'id'>,
   updateData: {}
@@ -81,8 +70,4 @@ export type TimeViewProps = {
    * ranges to mark on calendar (colored cells)
    */
   ranges: Array<Range>,
-  /**
-   * single points to mark with a dot
-   */
-  points: Array<CalendarPoint>,
 }

@@ -9,7 +9,6 @@ import classnames from 'classnames'
 import { find } from 'ramda'
 
 import { DATE_FORMAT } from 'utils/time'
-import { getVisibleReps } from 'utils/aux'
 import { getBookViewUrl } from 'utils/api'
 
 type BookRowProps = {
@@ -38,15 +37,6 @@ export default ({book, ...props}: BookRowProps) => {
   const getCell = (col) => ({
     title: <div>{book.title}</div>,
     author: <div>{book.author_name}</div>,
-    reps: (
-      getVisibleReps(book).map((date, j) =>
-        date && <div
-          key={j}
-          className={`dib reps-indicator ${moment().isBefore(date) ? 'reps-indicator__upcoming' : ''}`}
-          title={moment(date).format(DATE_FORMAT)}
-        />
-      )
-    ),
     date: <DateCell book={book} props={props} prop={col.prop} />,
   }[col.component])
 

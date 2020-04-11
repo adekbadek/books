@@ -17,20 +17,6 @@ $calendar-width: 53 * ($cell-side + $cell-margin * 2)
     margin: $cell-margin
     border: 1px solid transparent
     border-top-color: transparent
-    &--point
-      &:after
-        position: absolute
-        top: 1px
-        left: 1px
-        width: 6px
-        height: 6px
-        content: ''
-        border-radius: 50%
-        overflow: hidden
-        background-color: $black
-      &--dimmed
-        &:after
-          opacity: .3
     &--border-top
       border: none
       border-top: 1px solid rgba($black, .5)

@@ -7,7 +7,7 @@ import { pluck } from 'ramda'
 import moment from 'moment'
 import cx from 'classnames'
 
-import { getRangesForDate, getPointNames } from 'utils/time.js'
+import { getRangesForDate } from 'utils/time.js'
 import { times, getCellStyles } from 'utils/aux.js'
 
 const DIMENSIONS = {
@@ -17,7 +17,7 @@ const DIMENSIONS = {
 const CELL_CLASSNAME = 'calendar__cell'
 
 /**
- * Calendar that displays ranges and points.
+ * Calendar that displays ranges.
  */
 export default (props: TimeViewProps) => {
   const startDate = moment(props.startDate).startOf('isoWeek')
@@ -33,7 +33,6 @@ export default (props: TimeViewProps) => {
 
                 const rangesData = getRangesForDate(date, props.ranges)
                 const rangesNames = pluck('name', rangesData.map(({name}) => ({name})))
-                const pointNames = getPointNames(date, props.points)
 
                 const dayName = weekIndex === 0 && weekdayIndex % 2 !== 0 && date.format('ddd')
                 const monthName = weekdayIndex === 0 && date.date() <= 7 && date.format('MMM')
@@ -46,23 +45,19 @@ export default (props: TimeViewProps) => {
                       {[`${CELL_CLASSNAME}--display-day-name`]: dayName},
                       {[`${CELL_CLASSNAME}--display-month-name`]: monthName},
                       {[`${CELL_CLASSNAME}--today`]: moment().isSame(date, 'day')},
-                      {[`${CELL_CLASSNAME}--point`]: !!pointNames.length},
-                      {[`${CELL_CLASSNAME}--point--dimmed`]: !!pointNames.length && moment().isAfter(date, 'day')},
                       {[`${CELL_CLASSNAME}--border-top`]: date.date() === 1},
                     )}
                     data-dayname={dayName || ''}
                     data-monthname={monthName || ''}
                     style={getCellStyles(rangesData, rangesNames)}
                     >
-                    {(!!rangesNames.length || !!pointNames.length) && <span
+                    {(!!rangesNames.length) && <span
                       className='tooltip'
                       data-info={
                         `${
                           date.format('DD MMM')
                         }${
                           rangesNames.length ? ` | ${rangesNames.join(', ')}` : ''
-                        }${
-                          pointNames.length ? ` | rep - ${pointNames.join(', ')}` : ''
                         }`
                       }
                     />}
