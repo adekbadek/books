@@ -12,6 +12,7 @@ import Filters from 'components/Filters'
 import InputForm from 'components/InputForm'
 import TimeViewer from 'components/TimeViewer'
 import BookLink from 'components/BookLink'
+import Todos from 'components/Todos'
 
 import {
   getHeadersAndCols,
@@ -58,6 +59,7 @@ export default class Main extends React.Component {
 
     return (
       <div>
+        <Todos />
         <Table
           wrapperClassName='pt4'
           tableClassName='table--align-top'
