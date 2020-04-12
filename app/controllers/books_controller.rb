@@ -60,12 +60,19 @@ class BooksController < ApplicationController
     end
 
     if updates.key?('end_date') && updates['end_date']
-      Todo.create(
-        user: user,
-        book: book,
-        action: 'prepare_notes',
-        due_date: Date.parse(updates['end_date']) + 14.days
-      )
+      due_date = Date.parse(updates['end_date']) + 14.days
+      existing_prepare_notes_todo = book.todos.find{|todo| !todo.is_completed && todo.action == 'prepare_notes'}
+
+      if existing_prepare_notes_todo
+        existing_prepare_notes_todo.update(due_date: due_date)
+      else
+        Todo.create(
+          user: user,
+          book: book,
+          action: 'prepare_notes',
+          due_date: due_date
+        )
+      end
     end
 
     render(
