@@ -17,5 +17,5 @@ export const filteredBooksSelector = (state: Store) => {
   return filteredByType.sort(sortByDate('end_date', true))
 }
 
-export const bookById = (state: Store) => (bookId: string) =>
+export const bookById = (bookId: string) => (state: Store) =>
   find(book => book.id === Number(bookId), state.books.books)
