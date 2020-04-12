@@ -24,15 +24,11 @@ export const TABLE_STRUCTURE = {
     header: 'Finished',
     col: { component: 'date', prop: 'end_date|on_hold' },
   },
-  reps: {
-    header: 'Reps',
-    col: { component: 'reps' },
-  },
 }
 
 export const FILTERS_TABLE_OMISSIONS = {
-  CURRENT: ['reps'],
-  ON_HOLD: ['reps'],
+  CURRENT: [],
+  ON_HOLD: [],
   READ: [],
-  TO_READ: ['start', 'end', 'reps'],
+  TO_READ: ['start', 'end'],
 }

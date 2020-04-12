@@ -116,12 +116,6 @@ export default connect((state, { bookId }) => {
 
         <div className='mt4'>
           <button
-            className='ba b--black bg-transparent pointer'
-            onClick={() => handleUpdate('reps')(null)}
-          >
-            remove reps
-          </button>
-          <button
             className='ba b--black bg-transparent pointer ml3'
             onClick={handleDeleteBook}
           >

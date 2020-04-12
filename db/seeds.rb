@@ -90,7 +90,7 @@ def add_books_to_user(user, titles)
       new_book.end_date = end_date
     end
 
-    ApplicationController.change_reps(new_book)
+    new_book.save
   end
 end
 

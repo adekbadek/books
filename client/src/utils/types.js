@@ -8,7 +8,6 @@ export type Book = {
   start_date?: string,
   end_date?: string,
   on_hold?: string,
-  reps: Array<string>,
 }
 
 export type Range = {

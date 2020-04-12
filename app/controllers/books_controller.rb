@@ -36,21 +36,7 @@ class BooksController < ApplicationController
     book = self.get_authenticated_user.books.find(params[:id])
     updates = JSON.parse request.body.read
 
-    book.update(updates.except('reps', 'author_name'))
-
-    # update all reps (end_date might have been set)
-    if updates.key?('end_date')
-      ApplicationController.change_reps(book)
-    end
-
-    # then override reps if in updates
-    if updates.key?('reps')
-      reps = updates['reps']
-      3.times do |i|
-        book["rep_#{i}"] = (reps.is_a? Array) ? reps[i] : nil
-      end
-      book.save!
-    end
+    book.update(updates.except('author_name'))
 
     if updates.key?('author_name')
       if book.author_id
