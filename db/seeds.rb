@@ -44,7 +44,7 @@ book_titles_user_1 = [
   },
   {
     'title' => 'Obietnica Poranka',
-    'author' => 'Romain Gady'
+    'author' => 'Roman Gary'
   },
   {
     'title' => 'Autobiografia Alicji B. Toklas',
