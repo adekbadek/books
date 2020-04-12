@@ -8,15 +8,17 @@ Rails.application.routes.draw do
 
     get 'user', to: 'users#user'
 
-    get :books, to: 'books#index'
-    post :books, to: 'books#create'
+    get 'books', to: 'books#index'
+    post 'books', to: 'books#create'
     get 'books/:id', to: 'books#show'
     delete 'books/:id', to: 'books#remove'
     patch 'books/:id', to: 'books#edit'
 
-    get :authors, to: 'authors#index'
+    get 'authors', to: 'authors#index'
 
-    get :todos, to: 'todos#index'
+    get 'todos', to: 'todos#index'
+    get 'todos/all', to: 'todos#all'
     patch 'todos/:id', to: 'todos#edit'
+    delete 'todos/:id', to: 'todos#remove'
   end
 end

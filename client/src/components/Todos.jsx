@@ -4,13 +4,15 @@ import React, { useEffect } from 'react'
 import cx from 'classnames'
 import moment from 'moment'
 import { useSelector, useDispatch } from 'react-redux'
-import { uniqBy, prop, sort } from 'ramda'
+import { uniqBy, prop } from 'ramda'
 
 import Table from 'components/Table'
+import RouteLink from 'components/RouteLink'
 import BookLink from 'components/BookLink'
+import { TODOS_VIEW_URL } from 'utils/api'
 import { borderButtonClasses } from 'utils/styling'
-import { sortByDate } from 'utils/aux'
 import { todosActions } from 'store/actions'
+import { todosCollection } from 'store/selectors'
 
 const translateAction = action =>
   ({
@@ -18,9 +20,20 @@ const translateAction = action =>
     prepare_notes: 'Prepare notes from',
   }[action])
 
-const SingleTodo = ({ todo }) => {
+export const SingleTodo = ({ todo, withRemoveButtons }) => {
   const dispatch = useDispatch()
   const dueMoment = moment(todo.due_date)
+
+  const handleComplete = () =>
+    dispatch(
+      todosActions.updateTodo({
+        id: todo.id,
+        updateData: { is_completed: true },
+      })
+    )
+
+  const handleDelete = () => dispatch(todosActions.deleteTodo(todo.id))
+
   return (
     <div className='flex items-center justify-between pv1'>
       <span>
@@ -32,24 +45,25 @@ const SingleTodo = ({ todo }) => {
       </span>
       <div className='flex items-center'>
         <div
-          className={cx('pr3', { 'light-red': dueMoment.isBefore() })}
+          className={cx('pr3', {
+            'light-red': !todo.is_completed && dueMoment.isBefore(),
+            blue: todo.is_completed,
+          })}
           title={todo.due_date}
         >
           {dueMoment.fromNow()}
         </div>
-        <button
-          className={cx(borderButtonClasses)}
-          onClick={() =>
-            dispatch(
-              todosActions.updateTodo({
-                id: todo.id,
-                updateData: { is_completed: true },
-              })
-            )
-          }
-        >
+        <button className={cx(borderButtonClasses)} onClick={handleComplete}>
           done
         </button>
+        {withRemoveButtons && (
+          <button
+            className={cx(borderButtonClasses, 'ml2')}
+            onClick={handleDelete}
+          >
+            remove
+          </button>
+        )}
       </div>
     </div>
   )
@@ -57,25 +71,38 @@ const SingleTodo = ({ todo }) => {
 
 const Todos = ({ className }) => {
   const dispatch = useDispatch()
-  const todos = useSelector(state => state.todos.todos)
+  const todos = useSelector(todosCollection({ all: false }))
   useEffect(() => {
     dispatch(todosActions.fetchTodos())
   }, [])
 
   return todos.length ? (
-    <Table wrapperClassName={className} headers={[`To-do's`]}>
-      {uniqBy(prop('book_id'), sort(sortByDate('due_date'), todos)).map(
-        todo => (
-          <tr key={todo.id}>
-            <td>
-              <SingleTodo todo={todo} />
-            </td>
-          </tr>
-        )
-      )}
+    <Table
+      wrapperClassName={className}
+      headers={[
+        () => (
+          <RouteLink url={TODOS_VIEW_URL} className='underline'>
+            To-do's
+          </RouteLink>
+        ),
+      ]}
+    >
+      {uniqBy(prop('book_id'), todos).map(todo => (
+        <tr key={todo.id}>
+          <td>
+            <SingleTodo todo={todo} />
+          </td>
+        </tr>
+      ))}
     </Table>
   ) : (
-    <div className={cx(className, 'i')}>Nothing to do, keep on reading.</div>
+    <div className={cx(className, 'i f6')}>
+      Nothing to do, keep on reading. (
+      <RouteLink url={TODOS_VIEW_URL} className='underline'>
+        all to-do's
+      </RouteLink>
+      )
+    </div>
   )
 }
 

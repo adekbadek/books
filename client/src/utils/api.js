@@ -18,6 +18,7 @@ export const ROOT_VIEW_URL = '/'
 export const BOOK_VIEW_URL = '/book/:id'
 export const getBookViewUrl = id => `/book/${id}`
 export const AUTH_VIEW_URL = '/login'
+export const TODOS_VIEW_URL = '/todos'
 export const USER_SETTINGS_VIEW_URL = '/settings'
 
 // API URLs
@@ -28,6 +29,7 @@ export const getBooksURL = (id?: $PropertyType<Book, 'id'>) =>
   getURL(`/books${id ? `/${id}` : ''}`)
 export const getTodosURL = (id?: $PropertyType<Todo, 'id'>) =>
   getURL(`/todos${id ? `/${id}` : ''}`)
+export const getAllTodosURL = () => getURL(`/todos/all`)
 export const getAuthenticateURL = () => getURL(`/authenticate`)
 export const getSignupURL = () => getURL(`/signup`)
 export const getUserInfoURL = () => getURL(`/user`)

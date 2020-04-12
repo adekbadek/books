@@ -2,7 +2,7 @@
 
 import type { Store } from 'utils/types'
 
-import { find } from 'ramda'
+import { filter, complement, prop, find, sort } from 'ramda'
 
 import { filterWithType } from 'utils/filters'
 import { sortByDate } from 'utils/aux'
@@ -19,3 +19,11 @@ export const filteredBooksSelector = (state: Store) => {
 
 export const bookById = (bookId: string) => (state: Store) =>
   find(book => book.id === Number(bookId), state.books.books)
+
+export const todosCollection = ({ all }: { all: boolean } = { all: true }) => ({
+  todos,
+}: Store) =>
+  sort(
+    sortByDate('due_date'),
+    all ? todos.todos : filter(complement(prop('is_completed')), todos.todos)
+  )

@@ -1,11 +1,24 @@
 class TodosController < ApplicationController
   def index
+    todos = self.get_authenticated_user.todos.reject{|todo| todo.is_completed}
     render(
       status: 200,
-      json: serialize_todos(
-        self.get_authenticated_user.todos
-          .reject{|todo| todo.is_completed}
-      )
+      json: serialize_todos(todos)
+    )
+  end
+
+  def all
+    render(
+      status: 200,
+      json: serialize_todos(self.get_authenticated_user.todos)
+    )
+  end
+
+  def remove
+    self.get_authenticated_user.todos.destroy(params[:id])
+    render(
+      status: 200,
+      json: {id: params[:id]}
     )
   end
 

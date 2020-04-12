@@ -14,6 +14,7 @@ import {
   AsyncMain,
   AsyncBook,
   AsyncAuth,
+  AsyncAllTodos,
   AsyncUserSettings,
 } from 'components/AsyncLoaded'
 
@@ -21,6 +22,7 @@ import {
   ROOT_VIEW_URL,
   BOOK_VIEW_URL,
   AUTH_VIEW_URL,
+  TODOS_VIEW_URL,
   USER_SETTINGS_VIEW_URL,
 } from 'utils/api.js'
 import store from 'store'
@@ -39,6 +41,7 @@ const App = () => (
           <Route exact path={ROOT_VIEW_URL} component={AsyncMain} />
           <Route path={BOOK_VIEW_URL} component={AsyncBook} />
           <Route path={AUTH_VIEW_URL} component={AsyncAuth} />
+          <Route path={TODOS_VIEW_URL} component={AsyncAllTodos} />
           <Route path={USER_SETTINGS_VIEW_URL} component={AsyncUserSettings} />
         </div>
       </Router>

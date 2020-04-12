@@ -61,7 +61,7 @@ class BooksController < ApplicationController
 
     if updates.key?('end_date') && updates['end_date']
       due_date = Date.today + 14.days
-      existing_prepare_notes_todo = book.todos.find{|todo| !todo.is_completed && todo.action == 'prepare_notes'}
+      existing_prepare_notes_todo = book.todos.find{ |todo| !todo.is_completed && todo.action == 'prepare_notes' }
 
       if existing_prepare_notes_todo
         existing_prepare_notes_todo.update(due_date: due_date)

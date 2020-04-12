@@ -1,11 +1,17 @@
 // @flow
 
-import type { Book, BookUpdatePayload } from 'utils/types'
+import type { Book, Todo, BookUpdatePayload } from 'utils/types'
 
 import { all, call, put, takeEvery, select } from 'redux-saga/effects'
 import { remove, append, findIndex, update } from 'ramda'
 
-import { request, getBooksURL, getTodosURL, getUserInfoURL } from 'utils/api.js'
+import {
+  request,
+  getBooksURL,
+  getTodosURL,
+  getAllTodosURL,
+  getUserInfoURL,
+} from 'utils/api.js'
 import actions, { todosActions } from 'store/actions'
 
 const { setBooks, addBook, setFlashMessage, setUserData } = actions
@@ -52,9 +58,21 @@ function* updateBook({ id, updateData }: BookUpdatePayload) {
   yield put(setBooks({ books: update(updatedItemIndex, book, books) }))
 }
 
-function* fetchTodos(_) {
-  const todos = yield call(request, { url: getTodosURL() })
-  yield put(todosActions.setTodos({ todos }))
+const fetchTodos = ({ all }) =>
+  function* fetchTodos(_) {
+    const todos = yield call(request, {
+      url: all ? getAllTodosURL() : getTodosURL(),
+    })
+    yield put(todosActions.setTodos({ todos }))
+  }
+
+function* deleteTodo(id: $PropertyType<Todo, 'id'>) {
+  yield call(request, {
+    url: getTodosURL(id),
+    method: 'DELETE',
+  })
+  const todos = yield select(state => state.todos.todos)
+  yield put(todosActions.setTodos({ todos: todos.filter(v => v.id !== id) }))
 }
 
 function* updateTodo({ id, updateData }) {
@@ -102,7 +120,9 @@ export default function* rootSaga(): Generator<any, any, any> {
 
     takeEvery('GET_USER_DATA', fetchFromApi(getUserData)),
 
-    takeEvery('TODOS_FETCH', fetchFromApi(fetchTodos)),
+    takeEvery('TODOS_FETCH', fetchFromApi(fetchTodos({ all: false }))),
+    takeEvery('TODOS_FETCH_ALL', fetchFromApi(fetchTodos({ all: true }))),
     takeEvery('TODOS_UPDATE', fetchFromApi(updateTodo)),
+    takeEvery('TODOS_DELETE', fetchFromApi(deleteTodo)),
   ])
 }
