@@ -18,6 +18,7 @@ class BooksController < ApplicationController
 
   def create
     new_book = self.get_authenticated_user.books.create(JSON.parse request.body.read)
+
     render(
       status: 200,
       json: serialize_books([new_book]).first
@@ -33,7 +34,8 @@ class BooksController < ApplicationController
   end
 
   def edit
-    book = self.get_authenticated_user.books.find(params[:id])
+    user = self.get_authenticated_user
+    book = user.books.find(params[:id])
     updates = JSON.parse request.body.read
 
     book.update(updates.except('author_name'))
@@ -55,6 +57,15 @@ class BooksController < ApplicationController
           removed_author.destroy()
         end
       end
+    end
+
+    if updates.key?('end_date') && updates['end_date']
+      Todo.create(
+        user: user,
+        book: book,
+        action: 'prepare_notes',
+        due_date: Date.parse(updates['end_date']) + 14.days
+      )
     end
 
     render(

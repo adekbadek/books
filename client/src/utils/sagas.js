@@ -3,7 +3,7 @@
 import type { Book, BookUpdatePayload } from 'utils/types'
 
 import { all, call, put, takeEvery, select } from 'redux-saga/effects'
-import { append, findIndex, update } from 'ramda'
+import { remove, append, findIndex, update } from 'ramda'
 
 import { request, getBooksURL, getTodosURL, getUserInfoURL } from 'utils/api.js'
 import actions, { todosActions } from 'store/actions'
@@ -48,13 +48,30 @@ function* updateBook({ id, updateData }: BookUpdatePayload) {
     data: updateData,
   })
   const books = yield select(state => state.books.books)
-  const updatedBookIndex = findIndex(v => v.id === id, books)
-  yield put(setBooks({ books: update(updatedBookIndex, book, books) }))
+  const updatedItemIndex = findIndex(v => v.id === id, books)
+  yield put(setBooks({ books: update(updatedItemIndex, book, books) }))
 }
 
 function* fetchTodos(_) {
   const todos = yield call(request, { url: getTodosURL() })
   yield put(todosActions.setTodos({ todos }))
+}
+
+function* updateTodo({ id, updateData }) {
+  const todo = yield call(request, {
+    url: getTodosURL(id),
+    method: 'PATCH',
+    data: updateData,
+  })
+  const todos = yield select(state => state.todos.todos)
+  const updatedItemIndex = findIndex(v => v.id === id, todos)
+  yield put(
+    todosActions.setTodos({
+      todos: updateData.is_completed
+        ? remove(updatedItemIndex, 1, todos)
+        : update(updatedItemIndex, todo, todos),
+    })
+  )
 }
 
 function* getUserData(_) {
@@ -81,7 +98,10 @@ export default function* rootSaga(): Generator<any, any, any> {
     takeEvery('BOOKS_CREATE', fetchFromApi(createBook)),
     takeEvery('BOOKS_DELETE', fetchFromApi(deleteBook)),
     takeEvery('BOOKS_UPDATE', fetchFromApi(updateBook)),
+
     takeEvery('GET_USER_DATA', fetchFromApi(getUserData)),
+
     takeEvery('TODOS_FETCH', fetchFromApi(fetchTodos)),
+    takeEvery('TODOS_UPDATE', fetchFromApi(updateTodo)),
   ])
 }

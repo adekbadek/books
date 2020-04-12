@@ -10,6 +10,15 @@ export type Book = {
   on_hold?: string,
 }
 
+export type Todo = {
+  id: number,
+  is_completed: boolean,
+  book_id: $PropertyType<Book, 'id'>,
+  book_title: $PropertyType<Book, 'title'>,
+  due_date: string,
+  action: string,
+}
+
 export type Range = {
   start?: string,
   end?: string,

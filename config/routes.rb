@@ -3,14 +3,20 @@ Rails.application.routes.draw do
 
   scope '/v1' do
     post 'authenticate', to: 'users#authenticate'
+
     post 'signup', to: 'users#signup'
+
     get 'user', to: 'users#user'
+
     get :books, to: 'books#index'
     post :books, to: 'books#create'
-    get ':books/:id', to: 'books#show'
-    delete ':books/:id', to: 'books#remove'
-    patch ':books/:id', to: 'books#edit'
+    get 'books/:id', to: 'books#show'
+    delete 'books/:id', to: 'books#remove'
+    patch 'books/:id', to: 'books#edit'
+
     get :authors, to: 'authors#index'
+
     get :todos, to: 'todos#index'
+    patch 'todos/:id', to: 'todos#edit'
   end
 end

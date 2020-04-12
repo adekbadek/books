@@ -29,4 +29,5 @@ export const booksActions = {
 export const todosActions = {
   fetchTodos: actionCreator('TODOS_FETCH'),
   setTodos: actionCreator('SET_TODOS'),
+  updateTodo: actionCreator('TODOS_UPDATE'),
 }

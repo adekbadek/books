@@ -1,6 +1,6 @@
 // @flow
 
-import type { Book, AuthFormFields } from 'utils/types'
+import type { Book, Todo, AuthFormFields } from 'utils/types'
 
 import store from 'store'
 import actions from 'store/actions'
@@ -26,7 +26,8 @@ const getURL = endpoint =>
 
 export const getBooksURL = (id?: $PropertyType<Book, 'id'>) =>
   getURL(`/books${id ? `/${id}` : ''}`)
-export const getTodosURL = () => getURL(`/todos`)
+export const getTodosURL = (id?: $PropertyType<Todo, 'id'>) =>
+  getURL(`/todos${id ? `/${id}` : ''}`)
 export const getAuthenticateURL = () => getURL(`/authenticate`)
 export const getSignupURL = () => getURL(`/signup`)
 export const getUserInfoURL = () => getURL(`/user`)
