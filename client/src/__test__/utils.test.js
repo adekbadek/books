@@ -2,10 +2,7 @@
 
 import moment from 'moment'
 
-import {
-  getRangesForDate,
-  getPointNames,
-} from 'utils/time.js'
+import { getRangesForDate, getPointNames } from 'utils/time.js'
 import {
   times,
   hashCode,
@@ -14,16 +11,10 @@ import {
 } from 'utils/aux.js'
 
 it('getRangesForDate', () => {
-  const range = {start: '2017-05-01', end: '2017-05-19', name: 'Zumbo'}
-  expect(
-    getRangesForDate(moment('2017-05-09'), [range])
-  ).toBeTruthy()
-  expect(
-    getRangesForDate(moment('2017-04-09'), [range])
-  ).toEqual([])
-  expect(
-    getRangesForDate(moment('2016-05-09'), [range])
-  ).toEqual([])
+  const range = { start: '2017-05-01', end: '2017-05-19', name: 'Zumbo' }
+  expect(getRangesForDate(moment('2017-05-09'), [range])).toBeTruthy()
+  expect(getRangesForDate(moment('2017-04-09'), [range])).toEqual([])
+  expect(getRangesForDate(moment('2016-05-09'), [range])).toEqual([])
 })
 
 it('getPointNames', () => {
@@ -58,15 +49,13 @@ it('getColorFromStringFunc', () => {
 })
 
 it('getCellStyles', () => {
-  const ranges = [
-    {name: 'One'},
-    {name: 'Two'},
-  ]
-  const names = [
-    'Some',
-    'Names',
-    'Here,',
-  ]
+  const ranges = [{ name: 'One' }, { name: 'Two' }]
+  const names = ['Some', 'Names', 'Here,']
   expect(getCellStyles(ranges, names)).toMatchSnapshot()
-  expect(getCellStyles(ranges.map(v => ({...v, isOnHold: true})), names)).toMatchSnapshot()
+  expect(
+    getCellStyles(
+      ranges.map(v => ({ ...v, isOnHold: true })),
+      names
+    )
+  ).toMatchSnapshot()
 })

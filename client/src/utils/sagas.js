@@ -10,17 +10,17 @@ import actions, { todosActions } from 'store/actions'
 
 const { setBooks, addBook, setFlashMessage, setUserData } = actions
 
-function * fetchBooks (_) {
+function* fetchBooks(_) {
   const books = yield call(request, { url: getBooksURL() })
   yield put(setBooks({ books }))
 }
 
-function * fetchSingleBook (bookId) {
+function* fetchSingleBook(bookId) {
   const book = yield call(request, { url: getBooksURL(bookId) })
   yield put(addBook(book))
 }
 
-function * createBook ({ title }: { title: string }) {
+function* createBook({ title }: { title: string }) {
   const book = yield call(request, {
     url: getBooksURL(),
     method: 'POST',
@@ -32,7 +32,7 @@ function * createBook ({ title }: { title: string }) {
   yield put(setBooks({ books: append(book, books) }))
 }
 
-function * deleteBook (id: $PropertyType<Book, 'id'>) {
+function* deleteBook(id: $PropertyType<Book, 'id'>) {
   yield call(request, {
     url: getBooksURL(id),
     method: 'DELETE',
@@ -41,7 +41,7 @@ function * deleteBook (id: $PropertyType<Book, 'id'>) {
   yield put(setBooks({ books: books.filter(v => v.id !== id) }))
 }
 
-function * updateBook ({ id, updateData }: BookUpdatePayload) {
+function* updateBook({ id, updateData }: BookUpdatePayload) {
   const book = yield call(request, {
     url: getBooksURL(id),
     method: 'PATCH',
@@ -52,18 +52,18 @@ function * updateBook ({ id, updateData }: BookUpdatePayload) {
   yield put(setBooks({ books: update(updatedBookIndex, book, books) }))
 }
 
-function * fetchTodos (_) {
+function* fetchTodos(_) {
   const todos = yield call(request, { url: getTodosURL() })
   yield put(todosActions.setTodos({ todos }))
 }
 
-function * getUserData (_) {
+function* getUserData(_) {
   const userData = yield call(request, { url: getUserInfoURL() })
   yield put(setUserData(userData))
 }
 
 const fetchFromApi = apiCallGenerator =>
-  function * performApiCall ({ payload }) {
+  function* performApiCall({ payload }) {
     try {
       yield apiCallGenerator(payload)
     } catch (e) {
@@ -74,7 +74,7 @@ const fetchFromApi = apiCallGenerator =>
 /*
   Starts fetchFromApi on each dispatched action.
 */
-export default function * rootSaga (): Generator<any, any, any> {
+export default function* rootSaga(): Generator<any, any, any> {
   yield all([
     takeEvery('BOOKS_FETCH', fetchFromApi(fetchBooks)),
     takeEvery('BOOKS_FETCH_SINGLE', fetchFromApi(fetchSingleBook)),

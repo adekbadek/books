@@ -13,15 +13,14 @@ const ROW_HEIGHT = 23
 const CLASSNAME_BASE = 'gantt'
 const MONTH_DAYS_NAMES = moment.monthsShort()
 
-const getDayYearPercentage = (days: number) => Math.round(days * 100 / DAYS_IN_YEAR)
+const getDayYearPercentage = (days: number) =>
+  Math.round((days * 100) / DAYS_IN_YEAR)
 
 export default (props: TimeViewProps) => {
   const containerHeight = props.ranges.length * ROW_HEIGHT
   const monthIndex = props.startDate.month()
   return (
-    <div
-      className='posr oh pt3'
-    >
+    <div className='posr oh pt3'>
       <div className={cx('posa', `${CLASSNAME_BASE}__months`)}>
         {MONTH_DAYS_NAMES.map((v, i) => (
           <div
@@ -29,11 +28,15 @@ export default (props: TimeViewProps) => {
             className={`posa ${CLASSNAME_BASE}__months__item`}
             style={{
               left: `${getDayYearPercentage(
-                moment(props.startDate).add(i, 'months').diff(props.startDate, 'days')
+                moment(props.startDate)
+                  .add(i, 'months')
+                  .diff(props.startDate, 'days')
               )}%`,
               height: `${containerHeight}px`,
             }}
-          >{MONTH_DAYS_NAMES[(monthIndex + i) % MONTH_DAYS_NAMES.length]}</div>
+          >
+            {MONTH_DAYS_NAMES[(monthIndex + i) % MONTH_DAYS_NAMES.length]}
+          </div>
         ))}
       </div>
       <div
@@ -43,22 +46,28 @@ export default (props: TimeViewProps) => {
         }}
       >
         {props.ranges.map((range, i) => {
-          const diffDaysFromStart = moment(range.start).diff(props.startDate, 'days')
-          const diffDaysToEnd = moment(range.end || undefined).diff(props.startDate, 'days')
+          const diffDaysFromStart = moment(range.start).diff(
+            props.startDate,
+            'days'
+          )
+          const diffDaysToEnd = moment(range.end || undefined).diff(
+            props.startDate,
+            'days'
+          )
           const left = Math.max(0, getDayYearPercentage(diffDaysFromStart))
           const width = getDayYearPercentage(diffDaysToEnd) - left
           return (
             <div
               key={i}
-              className={cx(
-                'posa',
-                CLASSNAME_BASE,
-                {
-                  [`${CLASSNAME_BASE}--on-hold`]: range.isOnHold,
-                  [`${CLASSNAME_BASE}--current`]: !range.end,
-                }
-              )}
-              title={`${range.name}${(range.start && range.end) ? ` (${range.start} - ${range.end})` : ''}`}
+              className={cx('posa', CLASSNAME_BASE, {
+                [`${CLASSNAME_BASE}--on-hold`]: range.isOnHold,
+                [`${CLASSNAME_BASE}--current`]: !range.end,
+              })}
+              title={`${range.name}${
+                range.start && range.end
+                  ? ` (${range.start} - ${range.end})`
+                  : ''
+              }`}
               style={{
                 top: `${i * ROW_HEIGHT}px`,
                 width: `${width}%`,
@@ -66,7 +75,7 @@ export default (props: TimeViewProps) => {
                 left: `${left}%`,
               }}
             >
-              <BookLink book={{id: range.bookId, title: range.name}} />
+              <BookLink book={{ id: range.bookId, title: range.name }} />
             </div>
           )
         })}

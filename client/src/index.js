@@ -14,7 +14,7 @@ import {
   AsyncMain,
   AsyncBook,
   AsyncAuth,
-  AsyncUserSettings
+  AsyncUserSettings,
 } from 'components/AsyncLoaded'
 
 import {
@@ -46,7 +46,4 @@ const App = () => (
   </Provider>
 )
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-)
+ReactDOM.render(<App />, document.getElementById('root'))

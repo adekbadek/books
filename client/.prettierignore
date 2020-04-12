@@ -1,0 +1,5 @@
+*.md
+*.yml
+build
+public
+flow-typed

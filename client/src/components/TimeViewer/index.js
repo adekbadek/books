@@ -54,10 +54,7 @@ const TimeViewer = () => {
   }))
 
   const [startDate, setStartDate] = useState(
-    moment()
-      .startOf(TIMESCALE)
-      .subtract(1, 'year')
-      .add(1, TIMESCALE)
+    moment().startOf(TIMESCALE).subtract(1, 'year').add(1, TIMESCALE)
   )
   const [modeIndex, setModeIndex] = useState(0)
 
@@ -83,9 +80,7 @@ const TimeViewer = () => {
         </button>
         <span className='ph4 time-viewer__dates'>
           {startDate.format("MMM 'YY")} -{' '}
-          {moment(endDate)
-            .subtract(1, 'month')
-            .format("MMM 'YY")}
+          {moment(endDate).subtract(1, 'month').format("MMM 'YY")}
           &nbsp;
           <span
             title={`${readInCurrentYear} books read in ${moment(

@@ -1,5 +1,5 @@
 {
-  "extends": ["standard", "standard-react", "react-app"],
+  "extends": ["standard", "standard-react", "react-app", "plugin:prettier/recommended"],
   "rules": {
     "comma-dangle": 0,
     "react/prop-types": 0,

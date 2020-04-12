@@ -45,10 +45,7 @@ export const getColorFromStringFunc = (str: string, bias?: string): string => {
 export const getColorFromString = memoize(getColorFromStringFunc)
 
 export const dimColor = (colorCode: string) =>
-  color(colorCode)
-    .desaturate(0.85)
-    .alpha(0.5)
-    .string()
+  color(colorCode).desaturate(0.85).alpha(0.5).string()
 
 export const getHeadersAndCols = (filterType: string) => {
   const omissions = FILTERS_TABLE_OMISSIONS[filterType] || []

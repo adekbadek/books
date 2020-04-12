@@ -17,6 +17,5 @@ export const filteredBooksSelector = (state: Store) => {
   }
 }
 
-export const bookById = (state: Store) => (bookId: string) => (
+export const bookById = (state: Store) => (bookId: string) =>
   find(book => book.id === Number(bookId), state.books.books)
-)

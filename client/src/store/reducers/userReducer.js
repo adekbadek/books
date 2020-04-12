@@ -9,7 +9,7 @@ type State = User | {}
 const initialState = {}
 
 export default (state: State = initialState, action: Action): State => {
-  const {payload} = action
+  const { payload } = action
   switch (action.type) {
     case 'SET_USER_DATA':
       return merge(state, payload)
