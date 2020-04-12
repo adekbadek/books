@@ -13,13 +13,13 @@ import {
   getAuthenticateURL,
   getSignupURL,
   authFetch,
-  serializeMessage
+  serializeMessage,
 } from 'utils/api'
 import actions from 'store/actions'
 
 const { setFlashMessage, setUserData } = actions
 
-@connect(null, {setFlashMessage, setUserData})
+@connect(null, { setFlashMessage, setUserData })
 export default class Auth extends React.Component {
   props: {
     setUserData: User => void,
@@ -32,7 +32,7 @@ export default class Auth extends React.Component {
   }
   authenticate = (token: string) => {
     saveCredentials(token)
-    this.setState({authenticated: true})
+    this.setState({ authenticated: true })
   }
   handleSignUp = (fields: AuthFormFields) => {
     authFetch(getSignupURL(), fields)
@@ -57,14 +57,14 @@ export default class Auth extends React.Component {
           return res.json()
         } else {
           this.props.setFlashMessage({
-            text: 'this email/password combination won\'t work',
+            text: "this email/password combination won't work",
             modifier: 'error',
           })
         }
       })
       .then(res => {
         if (res && res.auth_token && res.user) {
-          this.props.setUserData({...res.user})
+          this.props.setUserData({ ...res.user })
           this.authenticate(res.auth_token)
         }
       })
@@ -73,7 +73,12 @@ export default class Auth extends React.Component {
     if (this.state.authenticated) {
       return <Redirect to='/' />
     } else {
-      return <LoginForm handleSubmit={this.handleSubmit} handleSignUp={this.handleSignUp} />
+      return (
+        <LoginForm
+          handleSubmit={this.handleSubmit}
+          handleSignUp={this.handleSignUp}
+        />
+      )
     }
   }
 }

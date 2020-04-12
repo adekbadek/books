@@ -9,7 +9,7 @@ type TableProps = {
   tableClassName?: string,
 }
 
-export default (props: TableProps) =>
+export default (props: TableProps) => (
   <div className={props.wrapperClassName || 'pv4'}>
     <div>
       <table
@@ -18,12 +18,15 @@ export default (props: TableProps) =>
       >
         <thead>
           <tr>
-            {props.headers.map((t, i) => <th key={i} className='bb b--black-20 tl pb2 pr3'>{t}</th>)}
+            {props.headers.map((t, i) => (
+              <th key={i} className='bb b--black-20 tl pb2 pr3'>
+                {t}
+              </th>
+            ))}
           </tr>
         </thead>
-        <tbody className='lh-copy'>
-          {props.children}
-        </tbody>
+        <tbody className='lh-copy'>{props.children}</tbody>
       </table>
     </div>
   </div>
+)

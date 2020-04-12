@@ -13,10 +13,7 @@ const sagaMiddleware = createSagaMiddleware()
 
 export default createStore(
   reducerApp,
-  composeWithDevTools(
-    persistState('books'),
-    applyMiddleware(sagaMiddleware)
-  )
+  composeWithDevTools(persistState('books'), applyMiddleware(sagaMiddleware))
 )
 
 // run the saga

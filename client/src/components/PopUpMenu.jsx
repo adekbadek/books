@@ -20,13 +20,14 @@ export default class PopUpMenu extends React.Component {
       <div className='popup'>
         <button
           className={borderButtonClasses}
-          onClick={() => this.setState(prevState => ({open: !prevState.open}))}
-        ><Icon name={this.state.open ? 'x' : 'menu'} /></button>
+          onClick={() =>
+            this.setState(prevState => ({ open: !prevState.open }))
+          }
+        >
+          <Icon name={this.state.open ? 'x' : 'menu'} />
+        </button>
         {this.state.open && (
-          <div
-            className='popup__content pa1 ba b--black'
-            onClick={this.close}
-          >
+          <div className='popup__content pa1 ba b--black' onClick={this.close}>
             {this.props.children}
           </div>
         )}

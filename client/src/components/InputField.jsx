@@ -23,7 +23,7 @@ export default class InputField extends React.Component {
     id: `id-${String(Math.random()).substring(2)}`,
   }
   handleChange = (e: InputEvent) => {
-    this.setState({value: e.currentTarget.value})
+    this.setState({ value: e.currentTarget.value })
   }
   handleSubmit = () => {
     this.textAreaRef && this.textAreaRef.blur()
@@ -40,10 +40,14 @@ export default class InputField extends React.Component {
   }
   textAreaRef = {}
   render () {
-    const {label, placeholder, wrapperClassName, className} = this.props
+    const { label, placeholder, wrapperClassName, className } = this.props
     return (
       <div className={classnames(wrapperClassName, 'flex items-start')}>
-        {label && <label htmlFor={this.state.id} className='pt2 w-10 mr1'>{label}</label>}
+        {label && (
+          <label htmlFor={this.state.id} className='pt2 w-10 mr1'>
+            {label}
+          </label>
+        )}
         <AutosizingTextarea
           id={this.state.id}
           className={classnames(className || 'pa2')}
@@ -52,7 +56,9 @@ export default class InputField extends React.Component {
           onBlur={this.submit}
           onChange={this.handleChange}
           onKeyPress={this.handleKeyPress}
-          inputRef={v => { this.textAreaRef = v }}
+          inputRef={v => {
+            this.textAreaRef = v
+          }}
         />
       </div>
     )

@@ -11,7 +11,7 @@ const defaultTodos = [
   {id: '2', due: '2 days ago', content: 'Review "Laszlo Third"'},
 ]
 
-const SingleTodo = ({todo}) => (
+const SingleTodo = ({ todo }) => (
   <div className='flex items-center justify-between pv1'>
     <span>{todo.content}</span>
     <div className='flex items-center'>
@@ -21,15 +21,16 @@ const SingleTodo = ({todo}) => (
   </div>
 )
 
-const Todos = ({todos = defaultTodos}) => {
+const Todos = ({ todos = defaultTodos }) => {
   return todos.length ? (
-    <Table
-      wrapperClassName='pt2'
-      headers={['To-do\'s']}
-    >
-      {todos.map((todo) => <tr key={todo.id}><td>
-        <SingleTodo todo={todo} />
-      </td></tr>)}
+    <Table wrapperClassName='pt2' headers={["To-do's"]}>
+      {todos.map(todo => (
+        <tr key={todo.id}>
+          <td>
+            <SingleTodo todo={todo} />
+          </td>
+        </tr>
+      ))}
     </Table>
   ) : null
 }

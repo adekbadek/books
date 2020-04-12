@@ -7,19 +7,23 @@ import memoize from 'lodash.memoize'
 export const FILTERS = {
   CURRENT: {
     label: 'current',
-    predicate: (book: Book) => book.start_date && !book.end_date && !book.on_hold,
+    predicate: (book: Book) =>
+      book.start_date && !book.end_date && !book.on_hold,
   },
   ON_HOLD: {
     label: 'on hold',
-    predicate: (book: Book) => book.start_date && !book.end_date && book.on_hold,
+    predicate: (book: Book) =>
+      book.start_date && !book.end_date && book.on_hold,
   },
   READ: {
     label: 'read',
-    predicate: (book: Book) => book.start_date && book.end_date && !book.on_hold,
+    predicate: (book: Book) =>
+      book.start_date && book.end_date && !book.on_hold,
   },
   TO_READ: {
     label: 'to read',
-    predicate: (book: Book) => !book.start_date && !book.end_date && !book.on_hold,
+    predicate: (book: Book) =>
+      !book.start_date && !book.end_date && !book.on_hold,
   },
   ALL: {
     label: 'all',
@@ -29,6 +33,7 @@ export const FILTERS = {
 
 export const FILTER_NAMES = Object.keys(FILTERS)
 
-const memoizeResolver = (type, books) => JSON.stringify({type, books})
-const filterWithTypeFn = (type, books) => books.filter(book => FILTERS[type].predicate(book))
+const memoizeResolver = (type, books) => JSON.stringify({ type, books })
+const filterWithTypeFn = (type, books) =>
+  books.filter(book => FILTERS[type].predicate(book))
 export const filterWithType = memoize(filterWithTypeFn, memoizeResolver)

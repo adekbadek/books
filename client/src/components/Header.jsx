@@ -12,12 +12,9 @@ import {
 } from 'utils/api.js'
 import actions from 'store/actions'
 
-@connect(
-  state => ({user: state.user}),
-  {
-    getUserData: actions.getUserData,
-  }
-)
+@connect(state => ({ user: state.user }), {
+  getUserData: actions.getUserData,
+})
 export default class Header extends React.Component {
   componentDidMount () {
     this.props.getUserData()
@@ -28,16 +25,19 @@ export default class Header extends React.Component {
         <RouteLink url='/'>
           <h1 className='dib mt0'>books</h1>
         </RouteLink>
-        {!isEmpty(this.props.user) && <RouteLink
-          url={AUTH_VIEW_URL}
-          className='fr'
-          borderButton
-          beforeAction={handleLogout}
-        >logout</RouteLink>}
-        <RouteLink
-          url={USER_SETTINGS_VIEW_URL}
-          className='fr pa1 pr2'
-        >{this.props.user.email}</RouteLink>
+        {!isEmpty(this.props.user) && (
+          <RouteLink
+            url={AUTH_VIEW_URL}
+            className='fr'
+            borderButton
+            beforeAction={handleLogout}
+          >
+            logout
+          </RouteLink>
+        )}
+        <RouteLink url={USER_SETTINGS_VIEW_URL} className='fr pa1 pr2'>
+          {this.props.user.email}
+        </RouteLink>
       </div>
     )
   }

@@ -33,7 +33,7 @@ class Filters extends React.Component {
     this.setFilterInput.cancel()
   }
   handleInputChange = ({ target }: SyntheticInputEvent) => {
-    this.setState({inputVal: target.value})
+    this.setState({ inputVal: target.value })
     this.setFilterInput(target.value)
   }
   handleSettingFilterInput = (value: string) => this.props.setFilterInput(value)
@@ -44,12 +44,17 @@ class Filters extends React.Component {
       <div className='mt2 flex items-center justify-between'>
         <div className='dib'>
           {FILTER_NAMES.map((type, i) => {
-            const howManyFiltered = filterWithType(type, this.props.books).length
+            const howManyFiltered = filterWithType(type, this.props.books)
+              .length
             return (
               <button
-                className={`${borderButtonClasses} mr2 ${filterType === type ? 'button--active' : ''}`}
+                className={`${borderButtonClasses} mr2 ${
+                  filterType === type ? 'button--active' : ''
+                }`}
                 key={i}
-                onClick={() => { setFilterType(type) }}
+                onClick={() => {
+                  setFilterType(type)
+                }}
               >
                 {`${FILTERS[type].label} (${howManyFiltered})`}
               </button>

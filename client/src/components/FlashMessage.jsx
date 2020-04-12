@@ -18,24 +18,22 @@ type FlashMessageProps = {
 const FlashMessage = (props: FlashMessageProps) =>
   props.message ? (
     <div
-      className={cx(
-        'pa2 flash-message flex flex--spread',
-        {[`flash-message--${props.message.modifier}`]: props.message.modifier}
-      )}
+      className={cx('pa2 flash-message flex flex--spread', {
+        [`flash-message--${props.message.modifier}`]: props.message.modifier,
+      })}
     >
       {props.message.text}
       <button
         className={`fr ${borderButtonClasses}`}
         onClick={() => props.setFlashMessage(false)}
-      >close</button>
+      >
+        close
+      </button>
     </div>
   ) : null
 
 const mapStateToProps = state => ({
-  message: state.ui.message
+  message: state.ui.message,
 })
 
-export default connect(
-  mapStateToProps,
-  {setFlashMessage}
-)(FlashMessage)
+export default connect(mapStateToProps, { setFlashMessage })(FlashMessage)

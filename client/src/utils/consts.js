@@ -10,23 +10,23 @@ export const MAX_TITLE_LEN = 35
 export const TABLE_STRUCTURE = {
   title: {
     header: 'Title',
-    col: {component: 'title'},
+    col: { component: 'title' },
   },
   author: {
     header: 'Author',
-    col: {component: 'author'},
+    col: { component: 'author' },
   },
   start: {
     header: 'Start',
-    col: {component: 'date', prop: 'start_date'},
+    col: { component: 'date', prop: 'start_date' },
   },
   end: {
     header: 'Finished',
-    col: {component: 'date', prop: 'end_date|on_hold'},
+    col: { component: 'date', prop: 'end_date|on_hold' },
   },
   reps: {
     header: 'Reps',
-    col: {component: 'reps'},
+    col: { component: 'reps' },
   },
 }
 

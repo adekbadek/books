@@ -16,7 +16,7 @@ export type Range = {
   end?: string,
   bookId: $PropertyType<Book, 'id'>,
   name: string,
-  isOnHold?: bool,
+  isOnHold?: boolean,
 }
 
 export type AuthFormFields = {
@@ -59,10 +59,10 @@ export type Store = {
 
 export type BookUpdatePayload = {
   id: $PropertyType<Book, 'id'>,
-  updateData: {}
+  updateData: {},
 }
 
-export type InputEvent = Event & {currentTarget: HTMLInputElement};
+export type InputEvent = Event & { currentTarget: HTMLInputElement }
 
 export type TimeViewProps = {
   startDate: moment,
