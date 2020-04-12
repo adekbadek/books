@@ -2,65 +2,60 @@
 
 import type { InputEvent } from 'utils/types'
 
+import React, { useState, useRef } from 'react'
 import debounce from 'lodash.debounce'
 import AutosizingTextarea from 'react-textarea-autosize'
-import React from 'react'
 import classnames from 'classnames'
 
-export default class InputField extends React.Component {
-  props: {
-    initialValue: string,
-    onSubmit: (string: string) => void,
-    allowNewline?: boolean,
-    label?: string,
-    placeholder?: string,
-    wrapperClassName?: string,
-    className?: string,
-  }
-  state = {
-    value: this.props.initialValue || '',
-    isEdited: false,
-    id: `id-${String(Math.random()).substring(2)}`,
-  }
-  handleChange = (e: InputEvent) => {
-    this.setState({ value: e.currentTarget.value })
-  }
-  handleSubmit = () => {
-    this.textAreaRef && this.textAreaRef.blur()
-    if (this.state.value !== this.props.initialValue) {
-      this.props.onSubmit(this.state.value)
+const InputField = ({
+  initialValue,
+  onSubmit,
+  label,
+  placeholder,
+  wrapperClassName,
+  className,
+}) => {
+  const [value, setValue] = useState(initialValue || '')
+  const [id] = useState(`id-${String(Math.random()).substring(2)}`)
+
+  const textAreaRef = useRef()
+
+  const handleChange = (e: InputEvent) => setValue(e.currentTarget.value)
+
+  const handleSubmit = () => {
+    textAreaRef.current && textAreaRef.current.blur()
+    if (value !== initialValue) {
+      onSubmit(value)
     }
   }
-  submit = debounce(this.handleSubmit, 200)
-  handleKeyPress = (e: KeyboardEvent) => {
-    if (e.key === 'Enter' && !this.props.allowNewline) {
+  const submit = debounce(handleSubmit, 200)
+
+  const handleKeyPress = (e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
       e.preventDefault()
-      this.submit()
+      submit()
     }
   }
-  textAreaRef = {}
-  render () {
-    const { label, placeholder, wrapperClassName, className } = this.props
-    return (
-      <div className={classnames(wrapperClassName, 'flex items-start')}>
-        {label && (
-          <label htmlFor={this.state.id} className='pt2 w-10 mr1'>
-            {label}
-          </label>
-        )}
-        <AutosizingTextarea
-          id={this.state.id}
-          className={classnames(className || 'pa2')}
-          placeholder={placeholder}
-          value={this.state.value}
-          onBlur={this.submit}
-          onChange={this.handleChange}
-          onKeyPress={this.handleKeyPress}
-          inputRef={v => {
-            this.textAreaRef = v
-          }}
-        />
-      </div>
-    )
-  }
+
+  return (
+    <div className={classnames(wrapperClassName, 'flex items-start')}>
+      {label && (
+        <label htmlFor={id} className='pt2 w-10 mr1'>
+          {label}
+        </label>
+      )}
+      <AutosizingTextarea
+        id={id}
+        className={classnames(className || 'pa2')}
+        placeholder={placeholder}
+        value={value}
+        onBlur={submit}
+        onChange={handleChange}
+        onKeyPress={handleKeyPress}
+        inputRef={textAreaRef}
+      />
+    </div>
+  )
 }
+
+export default InputField

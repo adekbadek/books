@@ -20,7 +20,7 @@ function * fetchSingleBook (bookId) {
   yield put(addBook(book))
 }
 
-function * createBook (title: string) {
+function * createBook ({ title }: { title: string }) {
   const book = yield call(request, {
     url: getBooksURL(),
     method: 'POST',

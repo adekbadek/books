@@ -1,9 +1,7 @@
 // @flow
 
-import type { ActionFunction, Book } from 'utils/types'
-
-import * as React from 'react'
-import { connect } from 'react-redux'
+import React, { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import debounce from 'lodash.debounce'
 
 import { borderButtonClasses } from 'utils/styling.js'
@@ -12,71 +10,49 @@ import actions from 'store/actions'
 
 const { setFilterInput, setFilterType } = actions
 
-type FiltersProps = {
-  filterType: string,
-  setFilterType: ActionFunction,
-  books: Array<Book>,
-  filteredBooks: Array<Book>,
-  setFilterInput: ActionFunction,
-}
+const Filters = () => {
+  const books = useSelector(state => state.books.books)
+  const filterType = useSelector(state => state.ui.filterType)
+  const dispatch = useDispatch()
+  const [inputVal, setInputVal] = useState('')
 
-type FilterState = {
-  inputVal: string,
-}
+  const handleFilterInputChange = (value: string) =>
+    dispatch(setFilterInput(value))
+  const handleFilterInputChangeDebounced = debounce(handleFilterInputChange)
+  const handleInputChange = ({ target }: SyntheticInputEvent) => {
+    setInputVal(target.value)
+    handleFilterInputChangeDebounced(target.value)
+  }
 
-class Filters extends React.Component {
-  props: FiltersProps
-  state: FilterState = {
-    inputVal: '',
-  }
-  componentWillUnmount () {
-    this.setFilterInput.cancel()
-  }
-  handleInputChange = ({ target }: SyntheticInputEvent) => {
-    this.setState({ inputVal: target.value })
-    this.setFilterInput(target.value)
-  }
-  handleSettingFilterInput = (value: string) => this.props.setFilterInput(value)
-  setFilterInput = debounce(this.handleSettingFilterInput)
-  render () {
-    const { filterType, setFilterType } = this.props
-    return (
-      <div className='mt2 flex items-center justify-between'>
-        <div className='dib'>
-          {FILTER_NAMES.map((type, i) => {
-            const howManyFiltered = filterWithType(type, this.props.books)
-              .length
-            return (
-              <button
-                className={`${borderButtonClasses} mr2 ${
-                  filterType === type ? 'button--active' : ''
-                }`}
-                key={i}
-                onClick={() => {
-                  setFilterType(type)
-                }}
-              >
-                {`${FILTERS[type].label} (${howManyFiltered})`}
-              </button>
-            )
-          })}
-        </div>
-        <input
-          className='ph2 pv1'
-          type='text'
-          placeholder='filter'
-          value={this.state.inputVal}
-          onChange={this.handleInputChange}
-        />
+  return (
+    <div className='mt2 flex items-center justify-between'>
+      <div className='dib'>
+        {FILTER_NAMES.map((type, i) => {
+          const howManyFiltered = filterWithType(type, books).length
+          return (
+            <button
+              className={`${borderButtonClasses} mr2 ${
+                filterType === type ? 'button--active' : ''
+              }`}
+              key={i}
+              onClick={() => {
+                dispatch(setFilterType(type))
+              }}
+            >
+              {`${FILTERS[type].label} (${howManyFiltered})`}
+            </button>
+          )
+        })}
       </div>
-    )
-  }
+      <input
+        className='ph2 pv1'
+        type='text'
+        placeholder='filter'
+        value={inputVal}
+        onChange={handleInputChange}
+      />
+    </div>
+  )
 }
 
-export default connect(
-  state => ({
-    books: state.books.books,
-    filterType: state.ui.filterType,
-  }),
-  { setFilterInput, setFilterType }
-)(Filters)
+export default Filters

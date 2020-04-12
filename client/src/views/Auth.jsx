@@ -1,10 +1,10 @@
 // @flow
 
-import type { AuthFormFields, FlashMessageObject, User } from 'utils/types'
+import type { AuthFormFields } from 'utils/types'
 
 import React from 'react'
-import { Redirect } from 'react-router-dom'
-import { connect } from 'react-redux'
+import { Redirect, useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 import LoginForm from 'components/LoginForm'
 import {
@@ -16,39 +16,33 @@ import {
   serializeMessage,
 } from 'utils/api'
 import actions from 'store/actions'
+import { ROOT_VIEW_URL } from 'utils/api.js'
 
-const { setFlashMessage, setUserData } = actions
+const Auth = () => {
+  const dispatch = useDispatch()
+  const history = useHistory()
 
-@connect(null, { setFlashMessage, setUserData })
-export default class Auth extends React.Component {
-  props: {
-    setUserData: User => void,
-    setFlashMessage: FlashMessageObject => void,
-  }
-  state: {
-    authenticated: boolean,
-  } = {
-    authenticated: !!readCredentials(),
-  }
-  authenticate = (token: string) => {
-    saveCredentials(token)
-    this.setState({ authenticated: true })
-  }
-  handleSignUp = (fields: AuthFormFields) => {
+  const displayErrorFlashMessage = error =>
+    dispatch(
+      actions.setFlashMessage({
+        text: serializeMessage(error),
+        modifier: 'error',
+      })
+    )
+
+  const handleSignUp = (fields: AuthFormFields) => {
     authFetch(getSignupURL(), fields)
       .then(res => res.json())
       .then(res => {
         if (res.error) {
-          this.props.setFlashMessage({
-            text: serializeMessage(res.error),
-            modifier: 'error',
-          })
-        } else if (!res.error && res.auth_token) {
-          this.authenticate(res.auth_token)
+          displayErrorFlashMessage(res.error)
+        } else if (res.auth_token) {
+          saveCredentials(res.auth_token)
         }
       })
   }
-  handleSubmit = (e: SyntheticEvent, fields: AuthFormFields) => {
+
+  const handleSubmit = (e: SyntheticEvent, fields: AuthFormFields) => {
     e.preventDefault()
 
     authFetch(getAuthenticateURL(), fields)
@@ -56,29 +50,25 @@ export default class Auth extends React.Component {
         if (res.status === 200) {
           return res.json()
         } else {
-          this.props.setFlashMessage({
-            text: "this email/password combination won't work",
-            modifier: 'error',
+          displayErrorFlashMessage({
+            error: ["email/password combination won't work"],
           })
         }
       })
       .then(res => {
         if (res && res.auth_token && res.user) {
-          this.props.setUserData({ ...res.user })
-          this.authenticate(res.auth_token)
+          dispatch(actions.setUserData({ ...res.user }))
+          saveCredentials(res.auth_token)
+          history.push(ROOT_VIEW_URL)
         }
       })
   }
-  render () {
-    if (this.state.authenticated) {
-      return <Redirect to='/' />
-    } else {
-      return (
-        <LoginForm
-          handleSubmit={this.handleSubmit}
-          handleSignUp={this.handleSignUp}
-        />
-      )
-    }
+
+  if (readCredentials()) {
+    return <Redirect to={ROOT_VIEW_URL} />
+  } else {
+    return <LoginForm handleSubmit={handleSubmit} handleSignUp={handleSignUp} />
   }
 }
+
+export default Auth
