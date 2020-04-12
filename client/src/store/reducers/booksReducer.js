@@ -18,7 +18,7 @@ export default (
       return merge(state, { ...payload })
     case 'ADD_BOOK':
       return merge(state, {
-        books: uniqBy(prop('id'), [...state.books, action.payload.book]),
+        books: uniqBy(prop('id'), [action.payload.book, ...state.books]),
       })
     case 'FLUSH_STORE':
       return initialState
