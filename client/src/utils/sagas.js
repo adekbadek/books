@@ -72,6 +72,7 @@ function* updateTodo({ id, updateData }) {
         : update(updatedItemIndex, todo, todos),
     })
   )
+  yield put(todosActions.fetchTodos())
 }
 
 function* getUserData(_) {

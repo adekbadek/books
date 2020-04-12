@@ -10,10 +10,23 @@ class TodosController < ApplicationController
   end
 
   def edit
-    todo = self.get_authenticated_user.todos.find(params[:id])
+    user = self.get_authenticated_user
+    todo = user.todos.find(params[:id])
     updates = JSON.parse request.body.read
 
     todo.update(updates)
+
+    # Add spaced repetitions after notes are prepared.
+    if updates.key?('is_completed') && updates['is_completed'] && todo.action == 'prepare_notes'
+      [10, 30, 60].each do |offset|
+        Todo.create(
+          user: user,
+          book: todo.book,
+          action: 'review',
+          due_date: Date.today + offset.days
+        )
+      end
+    end
 
     render(
       status: 200,

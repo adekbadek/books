@@ -4,6 +4,7 @@ import React, { useEffect } from 'react'
 import cx from 'classnames'
 import moment from 'moment'
 import { useSelector, useDispatch } from 'react-redux'
+import { uniqBy, prop, sort } from 'ramda'
 
 import Table from 'components/Table'
 import BookLink from 'components/BookLink'
@@ -63,13 +64,15 @@ const Todos = ({ className }) => {
 
   return todos.length ? (
     <Table wrapperClassName={className} headers={[`To-do's`]}>
-      {todos.sort(sortByDate('due_date')).map(todo => (
-        <tr key={todo.id}>
-          <td>
-            <SingleTodo todo={todo} />
-          </td>
-        </tr>
-      ))}
+      {uniqBy(prop('book_id'), sort(sortByDate('due_date'), todos)).map(
+        todo => (
+          <tr key={todo.id}>
+            <td>
+              <SingleTodo todo={todo} />
+            </td>
+          </tr>
+        )
+      )}
     </Table>
   ) : (
     <div className={cx(className, 'i')}>Nothing to do, keep on reading.</div>
