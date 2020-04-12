@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  is_completed: false
+  book: one
+  user: one
+  action: 
+  due_date: 2020-04-12
+
+two:
+  is_completed: false
+  book: two
+  user: two
+  action: 
+  due_date: 2020-04-12

@@ -26,6 +26,7 @@ const getURL = endpoint =>
 
 export const getBooksURL = (id?: $PropertyType<Book, 'id'>) =>
   getURL(`/books${id ? `/${id}` : ''}`)
+export const getTodosURL = () => getURL(`/todos`)
 export const getAuthenticateURL = () => getURL(`/authenticate`)
 export const getSignupURL = () => getURL(`/signup`)
 export const getUserInfoURL = () => getURL(`/user`)

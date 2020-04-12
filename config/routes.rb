@@ -11,5 +11,6 @@ Rails.application.routes.draw do
     delete ':books/:id', to: 'books#remove'
     patch ':books/:id', to: 'books#edit'
     get :authors, to: 'authors#index'
+    get :todos, to: 'todos#index'
   end
 end

@@ -5,8 +5,8 @@ import type { Book, BookUpdatePayload } from 'utils/types'
 import { all, call, put, takeEvery, select } from 'redux-saga/effects'
 import { append, findIndex, update } from 'ramda'
 
-import { request, getBooksURL, getUserInfoURL } from 'utils/api.js'
-import actions from 'store/actions'
+import { request, getBooksURL, getTodosURL, getUserInfoURL } from 'utils/api.js'
+import actions, { todosActions } from 'store/actions'
 
 const { setBooks, addBook, setFlashMessage, setUserData } = actions
 
@@ -52,6 +52,11 @@ function * updateBook ({ id, updateData }: BookUpdatePayload) {
   yield put(setBooks({ books: update(updatedBookIndex, book, books) }))
 }
 
+function * fetchTodos (_) {
+  const todos = yield call(request, { url: getTodosURL() })
+  yield put(todosActions.setTodos({ todos }))
+}
+
 function * getUserData (_) {
   const userData = yield call(request, { url: getUserInfoURL() })
   yield put(setUserData(userData))
@@ -77,5 +82,6 @@ export default function * rootSaga (): Generator<any, any, any> {
     takeEvery('BOOKS_DELETE', fetchFromApi(deleteBook)),
     takeEvery('BOOKS_UPDATE', fetchFromApi(updateBook)),
     takeEvery('GET_USER_DATA', fetchFromApi(getUserData)),
+    takeEvery('TODOS_FETCH', fetchFromApi(fetchTodos)),
   ])
 }

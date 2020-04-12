@@ -2,7 +2,9 @@
 
 import type { Action } from 'utils/types'
 
-const actionCreator = (type: $PropertyType<Action, 'type'>) => (payload: $PropertyType<Action, 'payload'>) => ({type, payload})
+const actionCreator = (type: $PropertyType<Action, 'type'>) => (
+  payload: $PropertyType<Action, 'payload'>
+) => ({ type, payload })
 
 export default {
   setFlashMessage: actionCreator('SET_FLASH_MESSAGE'),
@@ -22,4 +24,9 @@ export const booksActions = {
   createBook: actionCreator('BOOKS_CREATE'),
   deleteBook: actionCreator('BOOKS_DELETE'),
   updateBook: actionCreator('BOOKS_UPDATE'),
+}
+
+export const todosActions = {
+  fetchTodos: actionCreator('TODOS_FETCH'),
+  setTodos: actionCreator('SET_TODOS'),
 }

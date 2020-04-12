@@ -88,6 +88,16 @@ def add_books_to_user(user, titles)
       new_book.start_date = nil
     else
       new_book.end_date = end_date
+      todo_action = 'review'
+      if i % 2 == 0
+        todo_action = 'prepare_notes'
+      end
+      todo = Todo.create(
+        user: user,
+        book: new_book,
+        action: todo_action,
+        due_date: end_date + 5.days
+      )
     end
 
     new_book.save
