@@ -16,6 +16,7 @@ export type Todo = {
   book_id: $PropertyType<Book, 'id'>,
   book_title: $PropertyType<Book, 'title'>,
   due_date: string,
+  completed_on: string,
   action: string,
 }
 

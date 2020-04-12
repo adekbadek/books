@@ -13,6 +13,7 @@ import { TODOS_VIEW_URL } from 'utils/api'
 import { borderButtonClasses } from 'utils/styling'
 import { todosActions } from 'store/actions'
 import { todosCollection } from 'store/selectors'
+import { DATE_FORMAT } from 'utils/time'
 
 const translateAction = action =>
   ({
@@ -49,9 +50,11 @@ export const SingleTodo = ({ todo, withRemoveButtons }) => {
             'light-red': !todo.is_completed && dueMoment.isBefore(),
             blue: todo.is_completed,
           })}
-          title={todo.due_date}
+          title={todo.completed_on || todo.due_date}
         >
-          {dueMoment.fromNow()}
+          {todo.completed_on
+            ? `Completed on ${moment(todo.completed_on).format(DATE_FORMAT)}`
+            : dueMoment.fromNow()}
         </div>
         <button className={cx(borderButtonClasses)} onClick={handleComplete}>
           done
