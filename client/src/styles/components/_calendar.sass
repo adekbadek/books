@@ -10,7 +10,7 @@ $calendar-width: 53 * ($cell-side + $cell-margin * 2)
   &__cell
     position: relative
     background-color: $dark-grey
-    @media (prefers-color-scheme: dark)
+    @include dark-mode
       background-color: #6b6b6b
     width: $cell-side
     height: $cell-side

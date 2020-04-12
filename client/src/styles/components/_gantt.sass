@@ -4,7 +4,7 @@ $gantt-current-color--dark: darken($gantt-current-color, 50)
 
 .gantt
   background-color: $main
-  @media (prefers-color-scheme: dark)
+  @include dark-mode
     background-color: darken($main, 30)
   font-size: 12px
   padding: 4px
@@ -14,11 +14,11 @@ $gantt-current-color--dark: darken($gantt-current-color, 50)
     z-index: 1
   &--on-hold
     background-color: $gantt-on-hold-color
-    @media (prefers-color-scheme: dark)
+    @include dark-mode
       background-color: darken($gantt-on-hold-color, 20)
   &--current
     background-color: $gantt-current-color
-    @media (prefers-color-scheme: dark)
+    @include dark-mode
       background-color: $gantt-current-color--dark
     &:after
       content: ''
@@ -28,7 +28,7 @@ $gantt-current-color--dark: darken($gantt-current-color, 50)
       top: 0
       height: 100%
       background: linear-gradient(to right, transparent 0%, $white 100%)
-      @media (prefers-color-scheme: dark)
+      @include dark-mode
         background: linear-gradient(to right, $gantt-current-color--dark 0%, $dark-mode-bg 100%)
   &__months,
   &__ranges
