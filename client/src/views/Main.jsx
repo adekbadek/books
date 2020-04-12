@@ -32,22 +32,24 @@ export default () => {
   }
   return (
     <div>
-      <Todos />
-      <Table
-        wrapperClassName='pt4'
-        tableClassName='table--align-top'
-        headers={['Currently reading']}
-      >
-        <tr>
-          <td>
-            {filterBooksByFilterType(books, 'CURRENT').map(book => (
-              <div key={book.id}>
-                <BookLink className='pt1' book={book} />
-              </div>
-            ))}
-          </td>
-        </tr>
-      </Table>
+      <div className='flex flex-wrap flex-column flex-row-l'>
+        <Todos className='pt2 flex-auto w-60-l' />
+        <Table
+          wrapperClassName='pt2 pl4-l flex-auto w-40-l'
+          tableClassName='table--align-top'
+          headers={['Currently reading']}
+        >
+          <tr>
+            <td>
+              {filterBooksByFilterType(books, 'CURRENT').map(book => (
+                <div key={book.id}>
+                  <BookLink className='pt1' book={book} />
+                </div>
+              ))}
+            </td>
+          </tr>
+        </Table>
+      </div>
       <TimeViewer />
       <Filters />
       <Table

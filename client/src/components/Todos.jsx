@@ -2,6 +2,7 @@
 
 import React, { useEffect } from 'react'
 import cx from 'classnames'
+import moment from 'moment'
 import { useSelector, useDispatch } from 'react-redux'
 
 import Table from 'components/Table'
@@ -13,11 +14,12 @@ import { todosActions } from 'store/actions'
 const translateAction = action =>
   ({
     review: 'Review',
-    prepare_notes: 'Prepare Notes for',
+    prepare_notes: 'Prepare notes from',
   }[action])
 
 const SingleTodo = ({ todo }) => {
   const dispatch = useDispatch()
+  const dueMoment = moment(todo.due_date)
   return (
     <div className='flex items-center justify-between pv1'>
       <span>
@@ -28,7 +30,12 @@ const SingleTodo = ({ todo }) => {
         />
       </span>
       <div className='flex items-center'>
-        <div className='pr3'>{todo.due_date}</div>
+        <div
+          className={cx('pr3', { 'light-red': dueMoment.isBefore() })}
+          title={todo.due_date}
+        >
+          {dueMoment.fromNow()}
+        </div>
         <button
           className={cx(borderButtonClasses)}
           onClick={() =>
@@ -47,7 +54,7 @@ const SingleTodo = ({ todo }) => {
   )
 }
 
-const Todos = () => {
+const Todos = ({ className }) => {
   const dispatch = useDispatch()
   const todos = useSelector(state => state.todos.todos)
   useEffect(() => {
@@ -55,8 +62,8 @@ const Todos = () => {
   }, [])
 
   return todos.length ? (
-    <Table wrapperClassName='pt2' headers={["To-do's"]}>
-      {todos.sort(sortByDate('due_date', true)).map(todo => (
+    <Table wrapperClassName={className} headers={[`To-do's`]}>
+      {todos.sort(sortByDate('due_date')).map(todo => (
         <tr key={todo.id}>
           <td>
             <SingleTodo todo={todo} />
@@ -65,7 +72,7 @@ const Todos = () => {
       ))}
     </Table>
   ) : (
-    <div className='i'>Nothing to do, keep on reading.</div>
+    <div className={cx(className, 'i')}>Nothing to do, keep on reading.</div>
   )
 }
 

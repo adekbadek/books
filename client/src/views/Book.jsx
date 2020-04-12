@@ -116,7 +116,7 @@ export default connect((state, { bookId }) => {
 
         <div className='mt4'>
           <button
-            className='ba b--black bg-transparent pointer ml3'
+            className='ba b--black bg-transparent pointer'
             onClick={handleDeleteBook}
           >
             delete book
