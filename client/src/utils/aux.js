@@ -77,18 +77,13 @@ export const filterBooksByFilterType = (
   filterType: string
 ) => books.filter(FILTERS[filterType].predicate)
 
-type WithDate = {
-  date: string,
-}
-
-export const sortByDates = (a: WithDate, b: WithDate) => {
-  const dateA = new Date(a.date)
-  const dateB = new Date(b.date)
+export const sortByDate = (keyName: string, isReverse: boolean = false) => (
+  a: Object,
+  b: Object
+) => {
+  const dateA = new Date(isReverse ? b[keyName] : a[keyName])
+  const dateB = new Date(isReverse ? a[keyName] : b[keyName])
   return dateA < dateB ? -1 : dateA > dateB ? 1 : 0
 }
 
-export const sortRanges = (a: Range, b: Range) => {
-  const dateA = a.start ? new Date(a.start) : 0
-  const dateB = b.start ? new Date(b.start) : 0
-  return dateA < dateB ? -1 : dateA > dateB ? 1 : 0
-}
+export const sortRanges = sortByDate('start')

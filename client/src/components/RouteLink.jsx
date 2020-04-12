@@ -11,9 +11,10 @@ type RouteLinkProps = {
   children: Children,
   className?: string,
   beforeAction?: () => void,
+  isUnderlined?: boolean,
 }
 
-export default (props: RouteLinkProps) => {
+const RouteLink = (props: RouteLinkProps) => {
   const onClick = history => e => {
     e.preventDefault()
     props.beforeAction && props.beforeAction()
@@ -36,3 +37,5 @@ export default (props: RouteLinkProps) => {
     />
   )
 }
+
+export default RouteLink
