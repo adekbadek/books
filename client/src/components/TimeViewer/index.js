@@ -54,7 +54,7 @@ const TimeViewer = ({ className }) => {
   }))
 
   const [startDate, setStartDate] = useState(
-    moment().startOf(TIMESCALE).subtract(1, 'year').add(1, TIMESCALE)
+    moment().startOf(TIMESCALE).subtract(1, 'year').add(2, TIMESCALE)
   )
   const [modeIndex, setModeIndex] = useState(0)
 
