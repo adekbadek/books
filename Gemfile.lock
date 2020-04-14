@@ -48,6 +48,8 @@ GEM
       dotenv (= 2.2.1)
       railties (>= 3.2, < 5.2)
     erubi (1.6.0)
+    faker (2.2.1)
+      i18n (>= 0.8)
     ffi (1.9.18)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
@@ -133,6 +135,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   byebug
   dotenv-rails
+  faker (~> 2.2)
   jwt
   listen (>= 3.0.5, < 3.2)
   pg
@@ -146,4 +149,4 @@ DEPENDENCIES
   tzinfo-data
 
 BUNDLED WITH
-   1.14.6
+   1.17.2

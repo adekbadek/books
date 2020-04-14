@@ -1,73 +1,16 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+require 'faker'
 
 user1 = User.create(email: 'user1@mail.com' , password: 'qweqweqwe')
-user2 = User.create(email: 'user2@mail.com' , password: 'qweqweqwe')
 
-book_titles_user_1 = [
-  {
-    'title' => 'The Invention of Nature: The Adventures of Alexander von Humboldt, the Lost Hero of Science',
-    'author' => 'Andrea Wulf'
-  },
-  {
-    'title' => 'Slaughterhouse Five',
-    'author' => 'Kurt Vonnegut'
-  },
-  {
-    'title' => 'Sapiens: A Brief History of Humankind',
-    'author' => 'Noah Yuval Harari'
-  },
-  {
-    'title' => 'Widnokrąg',
-    'author' => 'Wiesław Myśliwski'
-  },
-  {
-    'title' => 'Ciemno, prawie noc',
-    'author' => 'Joanna Bator'
-  },
-  {
-    'title' => 'Code Complete',
-    'author' => 'Steve McConnell'
-  },
-  {
-    'title' => 'Black Cloud',
-    'author' => 'Fred Hoyle'
-  },
-  {
-    'title' => 'Homo Deus',
-    'author' => 'Noah Yuval Harari'
-  },
-  {
-    'title' => 'Obietnica Poranka',
-    'author' => 'Roman Gary'
-  },
-  {
-    'title' => 'Autobiografia Alicji B. Toklas',
-    'author' => 'Gertruda Stein'
-  }
-]
-book_titles_user_2 = [
-  {
-    'title' => 'Atlas Shrugger',
-    'author' => 'Foo Shrugger'
-  },
-  {
-    'title' => 'The Fontanaheads',
-    'author' => 'Bar Fontanaheads'
-  },
-  {
-    'title' => 'Why The Buying',
-    'author' => 'Baz Buying'
-  }
-]
+books_total = 50
 
-def add_books_to_user(user, titles)
-  titles.each_with_index do |book, i|
+book_titles_user_1 = books_total.times.map{|i| {
+  'title' => Faker::Book.title,
+  'author' => Faker::Book.author,
+}}
+
+def add_books_to_user(user, books, books_total)
+  books.each_with_index do |book, i|
     end_date = Time.now - (Random.new.rand * 150).days
 
     author = Author.find_or_create_by(
@@ -80,11 +23,11 @@ def add_books_to_user(user, titles)
       start_date: end_date - (Random.new.rand * 20 + 5).days
     )
 
-    if i < 2
+    if i < books_total * 0.1
       # currently reading
-    elsif i < 4
+    elsif i < books_total * 0.3
       new_book.on_hold = end_date
-    elsif i < 7
+    elsif i < books_total * 0.6
       new_book.start_date = nil
     else
       new_book.end_date = end_date
@@ -104,5 +47,4 @@ def add_books_to_user(user, titles)
   end
 end
 
-add_books_to_user(user1, book_titles_user_1)
-add_books_to_user(user2, book_titles_user_2)
+add_books_to_user(user1, book_titles_user_1, books_total)
