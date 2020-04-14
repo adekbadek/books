@@ -16,7 +16,7 @@ const AllTodos = ({ bookId }) => {
   }, [])
 
   return (
-    <Table>
+    <Table wrapperClassName='pb4'>
       {todos.map(todo => (
         <tr key={todo.id}>
           <td>

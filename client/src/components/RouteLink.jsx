@@ -2,37 +2,32 @@
 
 import React, { Children } from 'react'
 import { Route } from 'react-router-dom'
-import cx from 'classnames'
 
-import { buttonClasses, borderButtonClasses } from 'utils/styling.js'
+import Button from 'components/Button'
 
 type RouteLinkProps = {
   url: string,
   children: Children,
   className?: string,
   beforeAction?: () => void,
-  isUnderlined?: boolean,
 }
 
-const RouteLink = (props: RouteLinkProps) => {
+const RouteLink = ({ beforeAction, url, ...props }: RouteLinkProps) => {
   const onClick = history => e => {
     e.preventDefault()
-    props.beforeAction && props.beforeAction()
-    history.push(props.url)
+    beforeAction && beforeAction()
+    history.push(url)
   }
   return (
     <Route
       render={({ history }) => (
-        <a
-          className={cx(
-            props.className,
-            props.borderButton ? borderButtonClasses : buttonClasses
-          )}
-          href={props.url}
+        <Button
+          as='a'
+          isWithoutBorder
+          href={url}
           onClick={onClick(history)}
-        >
-          {props.children}
-        </a>
+          {...props}
+        />
       )}
     />
   )

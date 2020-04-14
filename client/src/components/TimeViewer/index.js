@@ -2,10 +2,10 @@
 
 import React, { useState } from 'react'
 import moment from 'moment'
-import cx from 'classnames'
 import { useSelector } from 'react-redux'
+import cx from 'classnames'
 
-import { borderButtonClasses } from 'utils/styling.js'
+import Button from 'components/Button'
 import { sortRanges } from 'utils/aux.js'
 import Calendar from 'components/TimeViewer/Calendar'
 import Gantt from 'components/TimeViewer/Gantt'
@@ -38,7 +38,7 @@ const getVisibleRanges = (startDate, endDate, ranges) =>
 
 const TIMESCALE = 'month'
 
-const TimeViewer = () => {
+const TimeViewer = ({ className }) => {
   const books = useSelector(state => state.books.books)
 
   const ranges = books.map(book => ({
@@ -73,16 +73,17 @@ const TimeViewer = () => {
   const Component = MODES[modeIndex].component
 
   return (
-    <div className='pb4 time-viewer'>
-      <div className='pb2 mt4 tc posr'>
-        <button className={borderButtonClasses} onClick={changeDate(false)}>
+    <div className={cx(className, 'pb4 time-viewer')}>
+      <div className='pb2 mb4 tc posr'>
+        <Button onClick={changeDate(false)}>
           <Icon name='arrow-left' />
-        </button>
-        <span className='ph4 time-viewer__dates'>
+        </Button>
+        <span className='ph4 time-viewer__dates unselect'>
           {startDate.format("MMM 'YY")} -{' '}
           {moment(endDate).subtract(1, 'month').format("MMM 'YY")}
           &nbsp;
           <span
+            className='unselect'
             title={`${readInCurrentYear} books read in ${moment(
               startDate
             ).format('YYYY')}`}
@@ -90,21 +91,20 @@ const TimeViewer = () => {
             ({readInCurrentYear})
           </span>
         </span>
-        <button className={borderButtonClasses} onClick={changeDate(true)}>
+        <Button onClick={changeDate(true)}>
           <Icon name='arrow-right' />
-        </button>
+        </Button>
         <div className='posa' style={{ top: 0, right: 0 }}>
           {MODES.map((v, i) => (
-            <button
-              className={cx(borderButtonClasses, 'ml2', {
-                'button--active': modeIndex === i,
-              })}
+            <Button
+              className='ml2'
+              isActive={modeIndex === i}
               onClick={() => setModeIndex(i)}
               title={v.title}
               key={i}
             >
               <Icon {...v.iconProps} />
-            </button>
+            </Button>
           ))}
         </div>
       </div>

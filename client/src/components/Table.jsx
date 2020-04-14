@@ -9,7 +9,7 @@ type TableProps = {
   tableClassName?: string,
 }
 
-export default (props: TableProps) => (
+const Table = (props: TableProps) => (
   <div className={props.wrapperClassName || 'pv4'}>
     <div>
       <table
@@ -20,7 +20,7 @@ export default (props: TableProps) => (
           <thead>
             <tr>
               {props.headers.map((t, i) => (
-                <th key={i} className='bb b--black-20 tl pb2 pr3'>
+                <th key={i} className='bb b--black-20 tl pb2 pr3 f4'>
                   {typeof t === 'string' ? t : t()}
                 </th>
               ))}
@@ -32,3 +32,5 @@ export default (props: TableProps) => (
     </div>
   </div>
 )
+
+export default Table

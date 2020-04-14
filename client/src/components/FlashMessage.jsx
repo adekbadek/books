@@ -6,7 +6,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import cx from 'classnames'
 
-import { borderButtonClasses } from 'utils/styling.js'
+import Button from 'components/Button'
 import actions from 'store/actions'
 const { setFlashMessage } = actions
 
@@ -18,17 +18,16 @@ type FlashMessageProps = {
 const FlashMessage = (props: FlashMessageProps) =>
   props.message ? (
     <div
-      className={cx('pa2 flash-message flex flex--spread', {
+      className={cx('flash-message', {
         [`flash-message--${props.message.modifier}`]: props.message.modifier,
       })}
     >
-      {props.message.text}
-      <button
-        className={`fr ${borderButtonClasses}`}
-        onClick={() => props.setFlashMessage(false)}
-      >
-        close
-      </button>
+      <div className='pv2 ph4 mw8 m-auto  flex flex--spread'>
+        {props.message.text}
+        <Button className='fr' onClick={() => props.setFlashMessage(false)}>
+          close
+        </Button>
+      </div>
     </div>
   ) : null
 

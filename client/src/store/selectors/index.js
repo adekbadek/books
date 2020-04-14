@@ -12,9 +12,9 @@ export const filteredBooksSelector = (state: Store) => {
   const regexp = query ? new RegExp(query, 'i') : ''
   let filteredByType = filterWithType(state.ui.filterType, state.books.books)
   if (query) {
-    filteredByType.filter(book => book.title.match(regexp))
+    filteredByType = filteredByType.filter(book => book.title.match(regexp))
   }
-  return filteredByType.sort(sortByDate('end_date', true))
+  return filteredByType.sort(sortByDate('start_date', true))
 }
 
 export const bookById = (bookId: string) => (state: Store) =>

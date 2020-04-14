@@ -9,8 +9,8 @@ import { uniqBy, prop } from 'ramda'
 import Table from 'components/Table'
 import RouteLink from 'components/RouteLink'
 import BookLink from 'components/BookLink'
+import Button from 'components/Button'
 import { TODOS_VIEW_URL } from 'utils/api'
-import { borderButtonClasses } from 'utils/styling'
 import { todosActions } from 'store/actions'
 import { todosCollection } from 'store/selectors'
 import { DATE_FORMAT } from 'utils/time'
@@ -56,16 +56,11 @@ export const SingleTodo = ({ todo, withRemoveButtons }) => {
             ? `Completed on ${moment(todo.completed_on).format(DATE_FORMAT)}`
             : dueMoment.fromNow()}
         </div>
-        <button className={cx(borderButtonClasses)} onClick={handleComplete}>
-          done
-        </button>
+        <Button onClick={handleComplete}>done</Button>
         {withRemoveButtons && (
-          <button
-            className={cx(borderButtonClasses, 'ml2')}
-            onClick={handleDelete}
-          >
+          <Button className='ml2' onClick={handleDelete}>
             remove
-          </button>
+          </Button>
         )}
       </div>
     </div>

@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&display=swap');
+
 @font-face {
   font-family: 'icomoon';
-  src:  url('../fonts/icomoon.eot?t6ro1r');
-  src:  url('../fonts/icomoon.eot?t6ro1r#iefix') format('embedded-opentype'),
+  src: url('../fonts/icomoon.eot?t6ro1r');
+  src: url('../fonts/icomoon.eot?t6ro1r#iefix') format('embedded-opentype'),
     url('../fonts/icomoon.ttf?t6ro1r') format('truetype'),
     url('../fonts/icomoon.woff?t6ro1r') format('woff'),
     url('../fonts/icomoon.svg?t6ro1r#icomoon') format('svg');
@@ -9,7 +11,8 @@
   font-style: normal;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[class^='icon-'],
+[class*=' icon-'] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'icomoon' !important;
   speak: none;
@@ -24,25 +27,24 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-
 .icon-arrow-left:before {
-  content: "\e900";
+  content: '\e900';
 }
 .icon-arrow-right:before {
-  content: "\e901";
+  content: '\e901';
 }
 .icon-calendar:before {
-  content: "\e902";
+  content: '\e902';
 }
 .icon-log-out:before {
-  content: "\e905";
+  content: '\e905';
 }
 .icon-menu:before {
-  content: "\e903";
+  content: '\e903';
 }
 .icon-sliders:before {
-  content: "\e904";
+  content: '\e904';
 }
 .icon-x:before {
-  content: "\e906";
+  content: '\e906';
 }

@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import BookRow from 'components/BookRow'
 import Table from 'components/Table'
 import Filters from 'components/Filters'
-import InputForm from 'components/InputForm'
+import InputForm from 'components/forms/InputForm'
 import TimeViewer from 'components/TimeViewer'
 import BookLink from 'components/BookLink'
 import Todos from 'components/Todos'
@@ -19,7 +19,7 @@ import { booksActions } from 'store/actions'
 
 export default () => {
   const books = useSelector(state => state.books.books)
-  const filteredBooks = useSelector(state => filteredBooksSelector(state))
+  const filteredBooks = useSelector(filteredBooksSelector)
   const filterType = useSelector(state => state.ui.filterType)
 
   const dispatch = useDispatch()
@@ -32,25 +32,23 @@ export default () => {
   }
   return (
     <div>
-      <div className='flex flex-wrap flex-column flex-row-l'>
-        <Todos className='pt2 flex-auto w-60-l' />
+      <div className='flex flex-wrap flex-column flex-row-l mb5'>
         <Table
-          wrapperClassName='pt2 pl4-l flex-auto w-40-l'
+          wrapperClassName='pt2 pr5-l flex-auto w-40-l'
           tableClassName='table--align-top'
           headers={['Currently reading']}
         >
-          <tr>
-            <td>
-              {filterBooksByFilterType(books, 'CURRENT').map(book => (
-                <div key={book.id}>
-                  <BookLink className='pt1' book={book} />
-                </div>
-              ))}
-            </td>
-          </tr>
+          {filterBooksByFilterType(books, 'CURRENT').map(book => (
+            <tr key={book.id}>
+              <td className='pv1'>
+                <BookLink book={book} />
+              </td>
+            </tr>
+          ))}
         </Table>
+        <Todos className='pt2 flex-auto w-60-l' />
       </div>
-      <TimeViewer />
+      <TimeViewer className='mb5' />
       <Filters />
       <Table
         headers={getHeadersAndCols(filterType).headers}

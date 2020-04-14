@@ -5,8 +5,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import moment from 'moment'
 
-import InputField from 'components/InputField'
+import InputField from 'components/forms/InputField'
 import DateChooser from 'components/DateChooser'
+import Button from 'components/Button'
 import { bookById } from 'store/selectors'
 import { booksActions } from 'store/actions'
 import { ROOT_VIEW_URL } from 'utils/api.js'
@@ -46,7 +47,7 @@ const Book = ({ bookId }) => {
     <div>
       <InputField
         placeholder='add title'
-        className='b w-100 pa0 f2 mv4'
+        className='b w-100 pa0 f1 mv4'
         initialValue={book.title}
         onSubmit={handleUpdate('title')}
       />
@@ -113,12 +114,7 @@ const Book = ({ bookId }) => {
       })}
 
       <div className='mt4'>
-        <button
-          className='ba b--black bg-transparent pointer'
-          onClick={handleDeleteBook}
-        >
-          delete book
-        </button>
+        <Button onClick={handleDeleteBook}>delete book</Button>
       </div>
     </div>
   )

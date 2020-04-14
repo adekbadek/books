@@ -4,7 +4,8 @@ import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import debounce from 'lodash.debounce'
 
-import { borderButtonClasses } from 'utils/styling.js'
+import Button from 'components/Button'
+import Input from 'components/forms/Input'
 import { FILTERS, FILTER_NAMES, filterWithType } from 'utils/filters.js'
 import actions from 'store/actions'
 
@@ -19,9 +20,9 @@ const Filters = () => {
   const handleFilterInputChange = (value: string) =>
     dispatch(setFilterInput(value))
   const handleFilterInputChangeDebounced = debounce(handleFilterInputChange)
-  const handleInputChange = ({ target }: SyntheticInputEvent) => {
-    setInputVal(target.value)
-    handleFilterInputChangeDebounced(target.value)
+  const handleInputChange = (value: string) => {
+    setInputVal(value)
+    handleFilterInputChangeDebounced(value)
   }
 
   return (
@@ -30,23 +31,18 @@ const Filters = () => {
         {FILTER_NAMES.map((type, i) => {
           const howManyFiltered = filterWithType(type, books).length
           return (
-            <button
-              className={`${borderButtonClasses} mr2 ${
-                filterType === type ? 'button--active' : ''
-              }`}
+            <Button
+              isActive={filterType === type}
+              className='mr3'
               key={i}
-              onClick={() => {
-                dispatch(setFilterType(type))
-              }}
+              onClick={() => dispatch(setFilterType(type))}
             >
               {`${FILTERS[type].label} (${howManyFiltered})`}
-            </button>
+            </Button>
           )
         })}
       </div>
-      <input
-        className='ph2 pv1'
-        type='text'
+      <Input
         placeholder='filter'
         value={inputVal}
         onChange={handleInputChange}

@@ -1,7 +1,11 @@
 body
   margin: 0
   padding: 0
-  font-family: sans-serif
+  &,
+  button,
+  input,
+  textarea
+    font-family: 'IBM Plex Sans', sans-serif
 
 button
   border-radius: 0
@@ -31,3 +35,9 @@ textarea
 input
   border-style: solid
   border-width: 1px
+
+table
+  tbody:before
+    line-height: 1px
+    content: "\200C"
+    display: block

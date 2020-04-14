@@ -20,23 +20,24 @@ const Header = () => {
   }, [])
 
   return (
-    <div className='top'>
+    <div className='flex justify-between items-start mb5'>
       <RouteLink url='/'>
-        <h1 className='dib mt0'>books</h1>
+        <h1 className='f1 dib ma0'>books</h1>
       </RouteLink>
-      {!isEmpty(user) && (
-        <RouteLink
-          url={AUTH_VIEW_URL}
-          className='fr'
-          borderButton
-          beforeAction={handleLogout}
-        >
-          logout
+      <div className='flex items-center'>
+        <RouteLink url={USER_SETTINGS_VIEW_URL} className='mr3'>
+          {user.email}
         </RouteLink>
-      )}
-      <RouteLink url={USER_SETTINGS_VIEW_URL} className='fr pa1 pr2'>
-        {user.email}
-      </RouteLink>
+        {!isEmpty(user) && (
+          <RouteLink
+            url={AUTH_VIEW_URL}
+            isWithoutBorder={false}
+            beforeAction={handleLogout}
+          >
+            logout
+          </RouteLink>
+        )}
+      </div>
     </div>
   )
 }
