@@ -67,6 +67,8 @@ export const SingleTodo = ({ todo, withRemoveButtons }) => {
   )
 }
 
+const MAX_TODOS_DISPLAYED = 6
+
 const Todos = ({ className }) => {
   const dispatch = useDispatch()
   const todos = useSelector(todosCollection({ all: false }))
@@ -74,24 +76,39 @@ const Todos = ({ className }) => {
     dispatch(todosActions.fetchTodos())
   }, [])
 
-  return todos.length ? (
+  const todosToDisplay = uniqBy(prop('book_id'), todos)
+  const overflow = todosToDisplay.length - MAX_TODOS_DISPLAYED
+
+  return todosToDisplay.length ? (
     <Table
       wrapperClassName={className}
       headers={[
-        () => (
-          <RouteLink url={TODOS_VIEW_URL} className='underline'>
-            To-do's
-          </RouteLink>
-        ),
+        () =>
+          overflow > 0 ? (
+            "To-do's"
+          ) : (
+            <RouteLink url={TODOS_VIEW_URL} className='underline'>
+              To-do's
+            </RouteLink>
+          ),
       ]}
     >
-      {uniqBy(prop('book_id'), todos).map(todo => (
+      {todosToDisplay.slice(0, MAX_TODOS_DISPLAYED).map(todo => (
         <tr key={todo.id}>
           <td>
             <SingleTodo todo={todo} />
           </td>
         </tr>
       ))}
+      {overflow > 0 && (
+        <tr>
+          <td className='pt2'>
+            <RouteLink url={TODOS_VIEW_URL} className='underline'>
+              + {overflow} more
+            </RouteLink>
+          </td>
+        </tr>
+      )}
     </Table>
   ) : (
     <div className={cx(className, 'i f6')}>
