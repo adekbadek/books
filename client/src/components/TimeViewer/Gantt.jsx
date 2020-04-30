@@ -59,7 +59,7 @@ export default (props: TimeViewProps) => {
           return (
             <div
               key={i}
-              className={cx('posa', CLASSNAME_BASE, {
+              className={cx('posa br1', CLASSNAME_BASE, {
                 [`${CLASSNAME_BASE}--on-hold`]: range.isOnHold,
                 [`${CLASSNAME_BASE}--current`]: !range.end,
               })}
