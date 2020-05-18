@@ -97,14 +97,11 @@ const Todos = ({ className }) => {
     <Table
       wrapperClassName={className}
       headers={[
-        () =>
-          overflow > 0 ? (
-            "To-do's"
-          ) : (
-            <RouteLink url={TODOS_VIEW_URL} className='underline'>
-              To-do's
-            </RouteLink>
-          ),
+        () => (
+          <RouteLink url={TODOS_VIEW_URL} className='underline'>
+            To-do's
+          </RouteLink>
+        ),
       ]}
     >
       {todosToDisplay.slice(0, MAX_TODOS_DISPLAYED).map(todo => (
