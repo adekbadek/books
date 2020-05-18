@@ -25,7 +25,7 @@ const AllTodos = ({ bookId }) => {
   const renderSingle = todo => (
     <tr key={todo.id}>
       <td>
-        <SingleTodo todo={todo} withRemoveButtons />
+        <SingleTodo todo={todo} withRemoveButtons shouldUpdateAll />
       </td>
     </tr>
   )

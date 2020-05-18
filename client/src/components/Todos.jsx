@@ -21,16 +21,20 @@ const translateAction = action =>
     prepare_notes: 'Prepare notes from',
   }[action])
 
-export const SingleTodo = ({ todo, withRemoveButtons }) => {
+export const SingleTodo = ({ todo, withRemoveButtons, shouldUpdateAll }) => {
   const dispatch = useDispatch()
   const dueMoment = moment(todo.due_date)
   const isDisabled = todo.isBeingUpdated
 
-  const handleComplete = () =>
+  const toggleComplete = isCompleted => () =>
     dispatch(
       todosActions.updateTodo({
         id: todo.id,
-        updateData: { is_completed: true },
+        updateData: {
+          is_completed: isCompleted,
+          ...(!isCompleted && { completed_on: null }),
+        },
+        shouldUpdateAll,
       })
     )
 
@@ -61,8 +65,11 @@ export const SingleTodo = ({ todo, withRemoveButtons }) => {
             ? `Completed on ${moment(todo.completed_on).format(DATE_FORMAT)}`
             : dueMoment.fromNow()}
         </div>
-        <Button disabled={isDisabled} onClick={handleComplete}>
-          done
+        <Button
+          disabled={isDisabled}
+          onClick={toggleComplete(!todo.is_completed)}
+        >
+          {todo.is_completed ? 'undo' : 'done'}
         </Button>
         {withRemoveButtons && (
           <Button disabled={isDisabled} className='ml2' onClick={handleDelete}>

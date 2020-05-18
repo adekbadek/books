@@ -75,7 +75,7 @@ function* deleteTodo(id: $PropertyType<Todo, 'id'>) {
   yield put(todosActions.setTodos({ todos: todos.filter(v => v.id !== id) }))
 }
 
-function* updateTodo({ id, updateData }) {
+function* updateTodo({ id, updateData, shouldUpdateAll }) {
   const todo = yield call(request, {
     url: getTodosURL(id),
     method: 'PATCH',
@@ -90,7 +90,11 @@ function* updateTodo({ id, updateData }) {
         : update(updatedItemIndex, todo, todos),
     })
   )
-  yield put(todosActions.fetchTodos())
+  // An update to a Todo might create Todos, so let's fetch all
+  const updateAction = shouldUpdateAll
+    ? todosActions.fetchAllTodos()
+    : todosActions.fetchTodos()
+  yield put(updateAction)
 }
 
 function* getUserData(_) {
