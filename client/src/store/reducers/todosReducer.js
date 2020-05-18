@@ -2,7 +2,7 @@
 
 import type { Action, TodosState } from 'utils/types'
 
-import { merge } from 'ramda'
+import { merge, assoc, findIndex, propEq, lensPath, over } from 'ramda'
 
 const initialState = {
   todos: [],
@@ -16,6 +16,13 @@ export default (
   switch (action.type) {
     case 'SET_TODOS':
       return merge(state, { ...payload })
+    case 'TODOS_UPDATE':
+      const todoIndex = findIndex(propEq('id', payload.id), state.todos)
+      return over(
+        lensPath(['todos', todoIndex]),
+        assoc('isBeingUpdated', true),
+        state
+      )
     case 'FLUSH_STORE':
       return initialState
     default:

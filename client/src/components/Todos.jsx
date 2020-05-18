@@ -24,6 +24,7 @@ const translateAction = action =>
 export const SingleTodo = ({ todo, withRemoveButtons }) => {
   const dispatch = useDispatch()
   const dueMoment = moment(todo.due_date)
+  const isDisabled = todo.isBeingUpdated
 
   const handleComplete = () =>
     dispatch(
@@ -36,7 +37,11 @@ export const SingleTodo = ({ todo, withRemoveButtons }) => {
   const handleDelete = () => dispatch(todosActions.deleteTodo(todo.id))
 
   return (
-    <div className='flex items-center justify-between pv1'>
+    <div
+      className={cx('flex items-center justify-between pv1', {
+        'o-50': isDisabled,
+      })}
+    >
       <span>
         {translateAction(todo.action)}{' '}
         <BookLink
@@ -56,9 +61,11 @@ export const SingleTodo = ({ todo, withRemoveButtons }) => {
             ? `Completed on ${moment(todo.completed_on).format(DATE_FORMAT)}`
             : dueMoment.fromNow()}
         </div>
-        <Button onClick={handleComplete}>done</Button>
+        <Button disabled={isDisabled} onClick={handleComplete}>
+          done
+        </Button>
         {withRemoveButtons && (
-          <Button className='ml2' onClick={handleDelete}>
+          <Button disabled={isDisabled} className='ml2' onClick={handleDelete}>
             remove
           </Button>
         )}
