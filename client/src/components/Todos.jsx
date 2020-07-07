@@ -10,6 +10,7 @@ import Table from 'components/Table'
 import RouteLink from 'components/RouteLink'
 import BookLink from 'components/BookLink'
 import Button from 'components/Button'
+import LiveTime from 'components/LiveTime'
 import { TODOS_VIEW_URL } from 'utils/api'
 import { todosActions } from 'store/actions'
 import { todosCollection } from 'store/selectors'
@@ -54,17 +55,22 @@ export const SingleTodo = ({ todo, withRemoveButtons, shouldUpdateAll }) => {
         />
       </span>
       <div className='flex items-center'>
-        <div
+        <LiveTime
+          todo={todo}
+          title={todo.completed_on || todo.due_date}
           className={cx('pr3', {
-            'light-red': !todo.is_completed && dueMoment.isBefore(),
             blue: todo.is_completed,
           })}
-          title={todo.completed_on || todo.due_date}
+          getDynamicClassName={() =>
+            cx({ 'light-red': !todo.is_completed && dueMoment.isBefore() })
+          }
         >
-          {todo.completed_on
-            ? `Completed on ${moment(todo.completed_on).format(DATE_FORMAT)}`
-            : dueMoment.fromNow()}
-        </div>
+          {() =>
+            todo.completed_on
+              ? `Completed on ${moment(todo.completed_on).format(DATE_FORMAT)}`
+              : dueMoment.fromNow()
+          }
+        </LiveTime>
         <Button
           disabled={isDisabled}
           onClick={toggleComplete(!todo.is_completed)}
