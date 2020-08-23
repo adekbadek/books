@@ -52,7 +52,7 @@ class BooksController < ApplicationController
         book.update(author_id: assigned_author.id)
       end
 
-      if book.author_id
+      if book.author_id && removed_author
         if removed_author.books.length === 0
           removed_author.destroy()
         end
