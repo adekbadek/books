@@ -1,6 +1,6 @@
 require 'faker'
 
-user1 = User.create(email: 'user1@mail.com' , password: 'qweqweqwe')
+user1 = User.create(email: 'user1@mail.com' , password: 'password')
 
 books_total = 50
 
