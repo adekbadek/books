@@ -30,22 +30,8 @@ const Auth = () => {
       })
     )
 
-  const handleSignUp = (fields: AuthFormFields) => {
-    authFetch(getSignupURL(), fields)
-      .then(res => res.json())
-      .then(res => {
-        if (res.error) {
-          displayErrorFlashMessage(res.error)
-        } else if (res.auth_token) {
-          saveCredentials(res.auth_token)
-        }
-      })
-  }
-
-  const handleSubmit = (e: SyntheticEvent, fields: AuthFormFields) => {
-    e.preventDefault()
-
-    authFetch(getAuthenticateURL(), fields)
+  const handleSubmit = url => (fields: AuthFormFields) => {
+    authFetch(url, fields)
       .then(res => {
         if (res.status === 200) {
           return res.json()
@@ -67,7 +53,12 @@ const Auth = () => {
   if (readCredentials()) {
     return <Redirect to={ROOT_VIEW_URL} />
   } else {
-    return <LoginForm handleSubmit={handleSubmit} handleSignUp={handleSignUp} />
+    return (
+      <LoginForm
+        handleSubmit={handleSubmit(getAuthenticateURL())}
+        handleSignUp={handleSubmit(getSignupURL())}
+      />
+    )
   }
 }
 

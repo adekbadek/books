@@ -17,7 +17,7 @@ const LoginForm = ({ handleSubmit, handleSignUp }) => {
 
   const submitForm = (e: SyntheticEvent) => {
     e.preventDefault()
-    isValid() && handleSubmit(e, inputsVals)
+    isValid() && handleSubmit(inputsVals)
   }
   const changeState = (key: string) => (value: string) => {
     setInputsVals({
