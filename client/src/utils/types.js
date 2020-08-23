@@ -8,6 +8,7 @@ export type Book = {
   start_date?: string,
   end_date?: string,
   on_hold?: string,
+  reason?: string,
 }
 
 export type Todo = {

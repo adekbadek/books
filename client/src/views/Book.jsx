@@ -56,7 +56,7 @@ const Book = ({ bookId }) => {
         placeholder='add author'
         initialValue={book.author_name}
         onSubmit={handleUpdate('author_name')}
-        wrapperClassName='mb1'
+        wrapperClassName='mb3'
       />
 
       {[
@@ -112,6 +112,14 @@ const Book = ({ bookId }) => {
           </div>
         )
       })}
+
+      <InputField
+        label='Reason:'
+        placeholder='add a reason'
+        initialValue={book.reason}
+        onSubmit={handleUpdate('reason')}
+        wrapperClassName='mb1 mt3'
+      />
 
       <div className='mt4'>
         <Button onClick={handleDeleteBook}>delete book</Button>
