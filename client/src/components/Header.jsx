@@ -20,11 +20,8 @@ const Header = () => {
   }, [])
 
   return (
-    <div className='flex justify-between items-start mb5'>
-      <RouteLink url='/'>
-        <h1 className='f1 dib ma0'>books</h1>
-      </RouteLink>
-      <div className='flex items-center'>
+    <div className='flex justify-between items-start mb3 mb5-ns flex-wrap'>
+      <div className='flex items-center justify-between w-100 mb2'>
         <RouteLink url={USER_SETTINGS_VIEW_URL} className='mr3'>
           {user.email}
         </RouteLink>
@@ -38,6 +35,9 @@ const Header = () => {
           </RouteLink>
         )}
       </div>
+      <RouteLink url='/'>
+        <h1 className='f1 dib ma0'>books</h1>
+      </RouteLink>
     </div>
   )
 }

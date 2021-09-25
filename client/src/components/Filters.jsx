@@ -26,14 +26,14 @@ const Filters = () => {
   }
 
   return (
-    <div className='mt2 flex items-center justify-between'>
-      <div className='dib'>
+    <div className='mt2 flex items-center justify-between flex-wrap'>
+      <div className='dib mb1'>
         {FILTER_NAMES.map((type, i) => {
           const howManyFiltered = filterWithType(type, books).length
           return (
             <Button
               isActive={filterType === type}
-              className='mr3'
+              className='mr3 mb3'
               key={i}
               onClick={() => dispatch(setFilterType(type))}
             >

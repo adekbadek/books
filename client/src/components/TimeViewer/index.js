@@ -74,27 +74,29 @@ const TimeViewer = ({ className }) => {
 
   return (
     <div className={cx(className, 'pb4 time-viewer')}>
-      <div className='pb2 mb4 tc posr'>
-        <Button onClick={changeDate(false)}>
-          <Icon name='arrow-left' />
-        </Button>
-        <span className='ph4 time-viewer__dates unselect'>
-          {startDate.format("MMM 'YY")} -{' '}
-          {moment(endDate).subtract(1, 'month').format("MMM 'YY")}
-          &nbsp;
-          <span
-            className='unselect'
-            title={`${readInCurrentYear} books read in ${moment(
-              startDate
-            ).format('YYYY')}`}
-          >
-            ({readInCurrentYear})
+      <div className='mb4 flex justify-end justify-between-ns flex-wrap '>
+        <div className='pb2 tc flex-auto flex justify-between justify-center-ns items-center'>
+          <Button onClick={changeDate(false)}>
+            <Icon name='arrow-left' />
+          </Button>
+          <span className='ph4 time-viewer__dates unselect'>
+            {startDate.format("MMM 'YY")} -{' '}
+            {moment(endDate).subtract(1, 'month').format("MMM 'YY")}
+            &nbsp;
+            <span
+              className='unselect'
+              title={`${readInCurrentYear} books read in ${moment(
+                startDate
+              ).format('YYYY')}`}
+            >
+              ({readInCurrentYear})
+            </span>
           </span>
-        </span>
-        <Button onClick={changeDate(true)}>
-          <Icon name='arrow-right' />
-        </Button>
-        <div className='posa' style={{ top: 0, right: 0 }}>
+          <Button onClick={changeDate(true)}>
+            <Icon name='arrow-right' />
+          </Button>
+        </div>
+        <div className=''>
           {MODES.map((v, i) => (
             <Button
               className='ml2'
